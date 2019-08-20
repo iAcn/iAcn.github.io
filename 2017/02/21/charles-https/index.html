@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","width":160,"display":"always","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文">
+<meta name="keywords" content="Android逆向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Charles 抓包 Android 端 https">
+<meta property="og:url" content="https://iacn.me/2017/02/21/charles-https/index.html">
+<meta property="og:site_name" content="碎流烟">
+<meta property="og:description" content="在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/02/17/58a6e1bcb4bb8.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/02/17/58a6e1bd05e86.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/02/17/58a6e47c2d282.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/02/17/58a6e47c411e0.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/02/17/58a6e1bd44721.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/02/17/58a6e1bcc9402.png">
+<meta property="og:updated_time" content="2019-08-13T08:37:43.640Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Charles 抓包 Android 端 https">
+<meta name="twitter:description" content="在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2017/02/17/58a6e1bcb4bb8.png">
+  <link rel="canonical" href="https://iacn.me/2017/02/21/charles-https/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Charles 抓包 Android 端 https | 碎流烟</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="site-title">碎流烟</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://iacn.me/2017/02/21/charles-https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cuteic">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="碎流烟">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">Charles 抓包 Android 端 https
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2017-02-21 20:05:31" itemprop="dateCreated datePublished" datetime="2017-02-21T20:05:31+08:00">2017-02-21</time>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ol>
+<li><p>在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文</p>
+<a id="more"></a>
+</li>
+<li><p>首先需要安装 Charles 的证书到手机端<br>点击下图位置的 Save Charles Root Certificate 将会把证书文件导出，你需要选择一个导出位置<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcb4bb8.png" alt="1.png"><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd05e86.png" alt="2.png"></p>
+</li>
+<li><p>导出后将其移动到手机的内置存储，然后在 <strong>设置 - 安全 - 从存储设备安装</strong> 安装该证书<br>（我的手机是 Android 原生 6.0 的 ROM，个别手机的位置可能不同）<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c2d282.png" alt="3.png"></p>
+</li>
+<li><p>需要注意的是，在安装时弹出的提示框中 <strong>凭据用途</strong> 一项，应该选择 <strong>WLAN</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c411e0.png" alt="4.png"></p>
+</li>
+<li><p>之后在 PC 端 Charles 的 SSL Proxying Settings 里 <strong>添加你想要抓包的链接的主机名</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd44721.png" alt="5.png"></p>
+</li>
+</ol>
+<ol start="6">
+<li>重新发起连接后，发现之前显示小锁图标的 https 请求已经可以正常抓取了<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcc9402.png" alt="6.png"></li>
+</ol>
+<p>Ps.关于抓包中抓到的 connect 请求<br>connect 是为了建立 http tunnel 而存在的。connect 是 http 众多方法中的其中一种，它跟 post、get、put、options 方法是并列的。但是它的使用场景很特殊，只有在受限制的网络环境中（防火墙、NAT、代理器）并且是 https 通信时，客户端会使用 http connect 请求代理服务器，代理服务器使用 connect 方法与目标服务器建立 http tunnel。通道建立后，客户端与服务器进行通信，代理服务器就像透明一样，只是接收、转发 tcp stream<br>这个引用自 <a href="http://blog.csdn.net/wangjun5159/article/details/54142016" target="_blank" rel="noopener">http://blog.csdn.net/wangjun5159/article/details/54142016</a>，详细的可以查看原文</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cuteic</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://iacn.me/2017/02/21/charles-https/" title="Charles 抓包 Android 端 https">https://iacn.me/2017/02/21/charles-https/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Android逆向/" rel="tag"># Android逆向</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/02/14/modify-edittext-color/" rel="next" title="Android 多主题之 EditText">
+                  <i class="fa fa-chevron-left"></i> Android 多主题之 EditText
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/02/28/win10-usb-to-console/" rel="prev" title="Windows10 USB-To-Console 串口驱动 (x86 x64)">
+                  Windows10 USB-To-Console 串口驱动 (x86 x64) <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzk4My8xMDUxOA=="></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cuteic</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/iAcn" title="GitHub &rarr; https://github.com/iAcn" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:cuteic@foxmail.com" title="E-Mail &rarr; mailto:cuteic@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.omico.me" title="https://blog.omico.me" rel="noopener" target="_blank">Omico</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nfz.moe" title="https://blog.nfz.moe" rel="noopener" target="_blank">neoFelhz</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cuteic</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>

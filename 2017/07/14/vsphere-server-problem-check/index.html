@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","width":160,"display":"always","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误 这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路">
+<meta name="keywords" content="网络,vSphere">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vShere Client 无法连接 vCenter 故障排查思路">
+<meta property="og:url" content="https://iacn.me/2017/07/14/vsphere-server-problem-check/index.html">
+<meta property="og:site_name" content="碎流烟">
+<meta property="og:description" content="问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误 这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg">
+<meta property="og:image" content="https://i.loli.net/2017/07/14/5968b6b4dfdaf.png">
+<meta property="og:updated_time" content="2019-08-13T08:35:39.554Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vShere Client 无法连接 vCenter 故障排查思路">
+<meta name="twitter:description" content="问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误 这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg">
+  <link rel="canonical" href="https://iacn.me/2017/07/14/vsphere-server-problem-check/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>vShere Client 无法连接 vCenter 故障排查思路 | 碎流烟</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="site-title">碎流烟</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://iacn.me/2017/07/14/vsphere-server-problem-check/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cuteic">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="碎流烟">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">vShere Client 无法连接 vCenter 故障排查思路
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2017-07-14 21:15:46" itemprop="dateCreated datePublished" datetime="2017-07-14T21:15:46+08:00">2017-07-14</time>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误<br><img src="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg" alt></p>
+<p>这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路</p>
+<a id="more"></a>
+
+<p><strong>1. 检查网络连接情况；检查 vCenter 的 IP，用户名，密码是否正确</strong></p>
+<blockquote>
+<p>这个在大多数出现在实验环境中，生产环境中一般不会出现这种错误<br>解决办法也没什么好说的，ping 检查连接，用户名密码换成正确的</p>
+</blockquote>
+<p><strong>2. 检查 vCenter 的 Web Client 能否正常访问</strong></p>
+<blockquote>
+<p>vCenter 是可以从 Web 端访问管理的<br>URL 是：<a href="https://client-hostname:port/vsphere-client" target="_blank" rel="noopener">https://client-hostname:port/vsphere-client</a><br>默认情况下此端口为 9443，但可在 vSphere Web Client 安装过程中更改此端口</p>
+</blockquote>
+<p>这里打开并输入正确的用户名密码，发现可以正常访问，说明 vCenter 整个本身是没有什么问题的</p>
+<p><strong>3. 检查 VMware VirtualCenter Server 服务是否已经启动</strong></p>
+<blockquote>
+<p>VMware VirtualCenter Server 是 vCenter 的核心服务，无法连接的原因大部分是因为这个服务没有启动<br>使用 <strong>远程桌面</strong> 连接到 vCenter 所在的虚拟机，打开 <strong>服务器管理器 - 诊断 - 服务</strong>，找到这个服务，检查其状态</p>
+</blockquote>
+<p>我所在的环境是一个 vCenter 虚拟机通过 Platform Services Controller 去管理多个安装了 VMWare ESXi 底机。由于所在环境出于安全起见，在 vCenter Server 安装时禁止了 vCenter 虚拟机的远程桌面权限，所以这里采用另一种方式跳转上去</p>
+<p>由于 VMWare ESXi 底机是允许通过 vSphere Client 连接去管理单个的实体服务器的，而这种方式不需要依赖 VMware VirtualCenter Server 服务。所以我这里先连接 vCenter 虚拟机所在的那台实体服务器，再在其中打开控制台</p>
+<p>打开后检查，发现这个服务确实是没有正常启动<br><img src="https://i.loli.net/2017/07/14/5968b6b4dfdaf.png" alt="2.png"></p>
+<p><strong>4. VMware VirtualCenter Server 服务无法正常启动</strong></p>
+<blockquote>
+<p>一般来说，若是该服务没有启动，手动启用后便可恢复正常。但有些情况下无法手动启动，这时候就要结合具体情况来分析了<br>vCenter Server 的正常运行是需要依赖数据库的，所以先应该检查数据库的相关服务有没有正常运行<br>vCenter Server 在安装时是会将其核心服务设置为开机自启的。所以，如果在其启动时数据库服务没有正常运行，就会出现问题。我习惯的做法是将数据库相关服务的启动类型设置为 <strong>自动</strong>，而把 vCenter Server 相关服务设置为 <strong>自动（延迟启动）</strong>，来保证数据库服务优于 vCenter Server 服务启动。</p>
+</blockquote>
+<p><strong>5. VMware VirtualCenter Server 服务正常启动了还是不能连接</strong></p>
+<blockquote>
+<p>通常情况下，vCenter Server，vCenter 依赖的数据库和其他业务服务都是分开机器安装的，但也有安装在一台虚拟机中的情况<br>因为 vCenter Server 需要使用 80 端口，所以保证该端口的正常通信是必要的。可以使用 telnet 命令来检查端口是否已经开启，例如 telnet 10.100.100.14 80。如果不通，就要检查各防火墙的出入栈规则了<br>另外 Web 服务也会占用 80 端口来进行通信，这个也要仔细甄别</p>
+</blockquote>
+<p>关于 vCenter 服务的相关问题实在太多，这里只是整理了一些思路来帮助检查<br>对于这种问题没有什么好办法，就是查看日志来找问题原因。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cuteic</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://iacn.me/2017/07/14/vsphere-server-problem-check/" title="vShere Client 无法连接 vCenter 故障排查思路">https://iacn.me/2017/07/14/vsphere-server-problem-check/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/网络/" rel="tag"># 网络</a>
+            
+              <a href="/tags/vSphere/" rel="tag"># vSphere</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/06/07/multisim-for-android-6-0/" rel="next" title="Android 6.0 上的双卡相关开发">
+                  <i class="fa fa-chevron-left"></i> Android 6.0 上的双卡相关开发
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/08/16/linux-netcat/" rel="prev" title="Linux 下 nc 命令的简单介绍">
+                  Linux 下 nc 命令的简单介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzk4My8xMDUxOA=="></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cuteic</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/iAcn" title="GitHub &rarr; https://github.com/iAcn" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:cuteic@foxmail.com" title="E-Mail &rarr; mailto:cuteic@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.omico.me" title="https://blog.omico.me" rel="noopener" target="_blank">Omico</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nfz.moe" title="https://blog.nfz.moe" rel="noopener" target="_blank">neoFelhz</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cuteic</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>

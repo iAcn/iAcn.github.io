@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","width":160,"display":"always","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="本文算是此系列的第一篇，我打算写写济南公交的服务端 API。当下的环境，基本每个应用都会具备联网请求数据的功能，公交客户端这种实时性很强的应用更是如此。既然我们打算做一个第三方客户端，那么第一步就是先要拿到各个车辆的实时数据。下面我会通过抓包来分析原版 369 出行的各个请求，关于抓包过程之前我也写过一篇文章介绍，这里就不多赘述了。 因为请求众多，这里只针对实际需要用到的数据进行说明，无用的类似请">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泉城公交开发手记（二） API分析">
+<meta property="og:url" content="https://iacn.me/2018/01/16/jinan-bus-note2/index.html">
+<meta property="og:site_name" content="碎流烟">
+<meta property="og:description" content="本文算是此系列的第一篇，我打算写写济南公交的服务端 API。当下的环境，基本每个应用都会具备联网请求数据的功能，公交客户端这种实时性很强的应用更是如此。既然我们打算做一个第三方客户端，那么第一步就是先要拿到各个车辆的实时数据。下面我会通过抓包来分析原版 369 出行的各个请求，关于抓包过程之前我也写过一篇文章介绍，这里就不多赘述了。 因为请求众多，这里只针对实际需要用到的数据进行说明，无用的类似请">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2018/01/16/5a5dd471d6076.png">
+<meta property="og:image" content="https://i.loli.net/2018/01/16/5a5dd472c0322.png">
+<meta property="og:image" content="https://i.loli.net/2018/01/16/5a5dd472c2733.png">
+<meta property="og:updated_time" content="2019-08-13T08:43:41.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="泉城公交开发手记（二） API分析">
+<meta name="twitter:description" content="本文算是此系列的第一篇，我打算写写济南公交的服务端 API。当下的环境，基本每个应用都会具备联网请求数据的功能，公交客户端这种实时性很强的应用更是如此。既然我们打算做一个第三方客户端，那么第一步就是先要拿到各个车辆的实时数据。下面我会通过抓包来分析原版 369 出行的各个请求，关于抓包过程之前我也写过一篇文章介绍，这里就不多赘述了。 因为请求众多，这里只针对实际需要用到的数据进行说明，无用的类似请">
+<meta name="twitter:image" content="https://i.loli.net/2018/01/16/5a5dd471d6076.png">
+  <link rel="canonical" href="https://iacn.me/2018/01/16/jinan-bus-note2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>泉城公交开发手记（二） API分析 | 碎流烟</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="site-title">碎流烟</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://iacn.me/2018/01/16/jinan-bus-note2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cuteic">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="碎流烟">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">泉城公交开发手记（二） API分析
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-16 18:36:23" itemprop="dateCreated datePublished" datetime="2018-01-16T18:36:23+08:00">2018-01-16</time>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文算是此系列的第一篇，我打算写写济南公交的服务端 API。当下的环境，基本每个应用都会具备联网请求数据的功能，公交客户端这种实时性很强的应用更是如此。既然我们打算做一个第三方客户端，那么第一步就是先要拿到各个车辆的实时数据。下面我会通过抓包来分析原版 369 出行的各个请求，关于抓包过程之前我也写过一篇文章介绍，这里就不多赘述了。</p>
+<p>因为请求众多，这里只针对实际需要用到的数据进行说明，无用的类似请求广告图片什么的就不写了。</p>
+<p>首次打开提示需要登录用户名，这部分其实是无用的。正常的流程会在用户登录时服务端返回一个 Token，后续请求会携带这个 Token。然而 369 出行的这个登录流程完全是无用的，登录的成功与否只是决定能不能进入下一个页面。还有一个值得吐槽的是整个登录流程用户名密码明文传输…</p>
+<a id="more"></a>
+
+<h4 id="0-参数说明"><a href="#0-参数说明" class="headerlink" title="0. 参数说明"></a>0. 参数说明</h4><p>向微步服务器的所有请求都需要在 Header 中加上 <strong>version</strong> 参数，值是版本号，示例<br>version = android-insigma.waybook.jinan-2337，后面不再说明。</p>
+<p>Json 返回的变量名，也是只说明一次的，后面重复的也不会再说明。</p>
+<hr>
+<h4 id="1-首页"><a href="#1-首页" class="headerlink" title="1. 首页"></a>1. 首页</h4><p>GET –&gt; <a href="http://www.iwaybook.com/server-ue2/rest/servers-v2/370100" target="_blank" rel="noopener">http://www.iwaybook.com/server-ue2/rest/servers-v2/370100</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">370100</td>
+<td align="center">济南市身份证号六位数字地址码</td>
+</tr>
+</tbody></table>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: &#123;</span><br><span class="line">		<span class="attr">"id"</span>: <span class="number">3</span>,</span><br><span class="line">		<span class="attr">"name"</span>: <span class="string">"370100"</span>,</span><br><span class="line">		<span class="attr">"httpAddr"</span>: <span class="string">"60.216.101.229"</span>,</span><br><span class="line">		<span class="attr">"functions"</span>: <span class="string">"&#123;\"bus\":&#123;\"httpAddr\":\"60.216.101.229\",\"transfertype\":\"1\"&#125;&#125;"</span>,</span><br><span class="line">		<span class="attr">"state"</span>: <span class="number">1</span>,</span><br><span class="line">		<span class="attr">"useToken"</span>: <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">httpAddr</td>
+<td align="center">下一步请求的服务器地址</td>
+</tr>
+</tbody></table>
+<hr>
+<p>GET –&gt; <a href="http://jinan.iwaybook.com/download/update.json" target="_blank" rel="noopener">http://jinan.iwaybook.com/download/update.json</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">version</td>
+<td align="center">当前已安装的版本</td>
+</tr>
+</tbody></table>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: &#123;</span><br><span class="line">		<span class="attr">"versionCode"</span>: <span class="number">2337</span>,</span><br><span class="line">		<span class="attr">"versionName"</span>: <span class="string">"3.3.7"</span>,</span><br><span class="line">		<span class="attr">"descriptions"</span>: [<span class="string">"1.增加了“车辆租赁”"</span>],</span><br><span class="line">		<span class="attr">"must"</span>: <span class="literal">false</span>,</span><br><span class="line">		<span class="attr">"url"</span>: <span class="string">"http://60.216.101.229/download/jinan.apk"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">versionCode</td>
+<td align="center">最新 versionCode</td>
+</tr>
+<tr>
+<td align="center">versionName</td>
+<td align="center">最新 versionName</td>
+</tr>
+<tr>
+<td align="center">descriptions</td>
+<td align="center">更新日志</td>
+</tr>
+<tr>
+<td align="center">must</td>
+<td align="center">如果为 true，会强制更新，不然无法进入。false 则不会</td>
+</tr>
+<tr>
+<td align="center">url</td>
+<td align="center">最新版本下载链接</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="2-车辆搜索界面"><a href="#2-车辆搜索界面" class="headerlink" title="2. 车辆搜索界面"></a>2. 车辆搜索界面</h4><p>搜索界面的车辆相似查询<br><img src="https://i.loli.net/2018/01/16/5a5dd471d6076.png" alt="device-2018-01-16-154733.png"></p>
+<p>GET –&gt; <a href="http://60.216.101.229/server-ue2/rest/buslines/simple/370100/118/0/20" target="_blank" rel="noopener">http://60.216.101.229/server-ue2/rest/buslines/simple/370100/118/0/20</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">60.216.101.229</td>
+<td align="center">上文中请求获取到的 httpAddr，后续也是这个地址</td>
+</tr>
+<tr>
+<td align="center">118</td>
+<td align="center">路线编号</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">从第几个条目请求</td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td align="center">请求多少个条目</td>
+</tr>
+</tbody></table>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: &#123;</span><br><span class="line">		<span class="attr">"pageParam"</span>: &#123;</span><br><span class="line">			<span class="attr">"offset"</span>: <span class="number">0</span>,</span><br><span class="line">			<span class="attr">"len"</span>: <span class="number">20</span>,</span><br><span class="line">			<span class="attr">"totalNum"</span>: <span class="number">2</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">"result"</span>: [&#123;</span><br><span class="line">			<span class="attr">"id"</span>: <span class="string">"223"</span>,</span><br><span class="line">			<span class="attr">"lineName"</span>: <span class="string">"118"</span>,</span><br><span class="line">			<span class="attr">"startStationName"</span>: <span class="string">"公交祝甸车场"</span>,</span><br><span class="line">			<span class="attr">"endStationName"</span>: <span class="string">"市立五院"</span>,</span><br><span class="line">			<span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:11 AM"</span></span><br><span class="line">		&#125;, &#123;</span><br><span class="line">			<span class="attr">"id"</span>: <span class="string">"224"</span>,</span><br><span class="line">			<span class="attr">"lineName"</span>: <span class="string">"118"</span>,</span><br><span class="line">			<span class="attr">"startStationName"</span>: <span class="string">"市立五院"</span>,</span><br><span class="line">			<span class="attr">"endStationName"</span>: <span class="string">"公交祝甸车场"</span>,</span><br><span class="line">			<span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:31 AM"</span></span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">id</td>
+<td align="center">路线ID</td>
+</tr>
+<tr>
+<td align="center">lineName</td>
+<td align="center">路线编号</td>
+</tr>
+<tr>
+<td align="center">startStationName</td>
+<td align="center">始发站</td>
+</tr>
+<tr>
+<td align="center">endStationName</td>
+<td align="center">终点站</td>
+</tr>
+<tr>
+<td align="center">updateTime</td>
+<td align="center">信息更新时间</td>
+</tr>
+</tbody></table>
+<p>这里需要注意同一路车的去程与返程是两个不同的 ID</p>
+<hr>
+<h4 id="3-路线详情界面"><a href="#3-路线详情界面" class="headerlink" title="3. 路线详情界面"></a>3. 路线详情界面</h4><p><img src="https://i.loli.net/2018/01/16/5a5dd472c0322.png" alt="device-2018-01-16-172339.png"></p>
+<p>GET –&gt; <a href="http://60.216.101.229/server-ue2/rest/buslines/370100/223" target="_blank" rel="noopener">http://60.216.101.229/server-ue2/rest/buslines/370100/223</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">223</td>
+<td align="center">路线ID</td>
+</tr>
+</tbody></table>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"status"</span>: &#123;</span><br><span class="line">    <span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"result"</span>: &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"223"</span>,</span><br><span class="line">    <span class="attr">"area"</span>: <span class="number">370100</span>,</span><br><span class="line">    <span class="attr">"lineName"</span>: <span class="string">"118"</span>,</span><br><span class="line">    <span class="attr">"startStationName"</span>: <span class="string">"公交祝甸车场"</span>,</span><br><span class="line">    <span class="attr">"endStationName"</span>: <span class="string">"市立五院"</span>,</span><br><span class="line">    <span class="attr">"stations"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="string">"1"</span>,</span><br><span class="line">        <span class="attr">"area"</span>: <span class="number">370100</span>,</span><br><span class="line">        <span class="attr">"stationName"</span>: <span class="string">"公交祝甸车场"</span>,</span><br><span class="line">        <span class="attr">"lng"</span>: <span class="number">117.09900257524</span>,</span><br><span class="line">        <span class="attr">"lat"</span>: <span class="number">36.703679321059</span>,</span><br><span class="line">        <span class="attr">"buslines"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"state"</span>: <span class="string">"0"</span>,</span><br><span class="line">        <span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:11 AM"</span>,</span><br><span class="line">        <span class="attr">"distance"</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">"busLineList"</span>: []</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="string">"2"</span>,</span><br><span class="line">        <span class="attr">"area"</span>: <span class="number">370100</span>,</span><br><span class="line">        <span class="attr">"stationName"</span>: <span class="string">"祝甸"</span>,</span><br><span class="line">        <span class="attr">"lng"</span>: <span class="number">117.09818542729</span>,</span><br><span class="line">        <span class="attr">"lat"</span>: <span class="number">36.701505610837</span>,</span><br><span class="line">        <span class="attr">"buslines"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"state"</span>: <span class="string">"0"</span>,</span><br><span class="line">        <span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:11 AM"</span>,</span><br><span class="line">        <span class="attr">"distance"</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">"busLineList"</span>: []</span><br><span class="line">      &#125;</span><br><span class="line">      ...</span><br><span class="line">      ...</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"ticketPrice"</span>: <span class="string">"票价一元"</span>,</span><br><span class="line">    <span class="attr">"operationTime"</span>: <span class="string">"祝甸5:30－00:00  市立五院"</span>,</span><br><span class="line">    <span class="attr">"owner"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="attr">"linePoints"</span>: <span class="string">"117.09900257524_36.703679321059,117.09818542729_36.701505610837,117.09402184523_36.701017213509,117.09066994065_36.700634744005..."</span>,</span><br><span class="line">    <span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:11 AM"</span>,</span><br><span class="line">    <span class="attr">"state"</span>: <span class="string">"0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">stations</td>
+<td align="center">是一个 List。该路线所有站点的信息</td>
+</tr>
+<tr>
+<td align="center">stationName</td>
+<td align="center">站点名</td>
+</tr>
+<tr>
+<td align="center">lng</td>
+<td align="center">经度坐标</td>
+</tr>
+<tr>
+<td align="center">lat</td>
+<td align="center">纬度坐标</td>
+</tr>
+<tr>
+<td align="center">state</td>
+<td align="center">站点状态。0 可用，1 不可用</td>
+</tr>
+<tr>
+<td align="center">ticketPrice</td>
+<td align="center">票价</td>
+</tr>
+<tr>
+<td align="center">linePoints</td>
+<td align="center">所有站点的坐标。以下划线_分隔经度和纬度</td>
+</tr>
+</tbody></table>
+<p>该路线的所有站点会在 stations 中体现，stations 的大小就是该路线所有站点的数量。<br>这里的 lng, lat 经纬度属于百度 BD09 坐标，后面会详细说明。<br>linePoints 是一些字符串，所有站点的坐标。实际没什么用处，因为上文的 stations 中已经包含各个站点的信息了。</p>
+<hr>
+<p>GET –&gt; <a href="http://60.216.101.229/server-ue2/rest/buses/busline/370100/223" target="_blank" rel="noopener">http://60.216.101.229/server-ue2/rest/buses/busline/370100/223</a></p>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: [&#123;</span><br><span class="line">		<span class="attr">"busId"</span>: <span class="string">"4635"</span>,</span><br><span class="line">		<span class="attr">"lng"</span>: <span class="number">116.973701</span>,</span><br><span class="line">		<span class="attr">"lat"</span>: <span class="number">36.66398</span>,</span><br><span class="line">		<span class="attr">"velocity"</span>: <span class="number">22.883572962605573</span>,</span><br><span class="line">		<span class="attr">"isArrvLft"</span>: <span class="string">"2"</span>,</span><br><span class="line">		<span class="attr">"stationSeqNum"</span>: <span class="number">23</span>,</span><br><span class="line">		<span class="attr">"status"</span>: <span class="string">"1"</span>,</span><br><span class="line">		<span class="attr">"buslineId"</span>: <span class="string">"223"</span>,</span><br><span class="line">		<span class="attr">"actTime"</span>: <span class="string">"Jan 16, 2018 03:50:04 PM"</span>,</span><br><span class="line">		<span class="attr">"cardId"</span>: <span class="string">"4635"</span>,</span><br><span class="line">		<span class="attr">"orgName"</span>: <span class="string">""</span>,</span><br><span class="line">		<span class="attr">"averageVelocity"</span>: <span class="number">9.565269318966328</span>,</span><br><span class="line">		<span class="attr">"coordinate"</span>: <span class="number">0</span></span><br><span class="line">	&#125;, &#123;</span><br><span class="line">		<span class="attr">"busId"</span>: <span class="string">"4631"</span>,</span><br><span class="line">		<span class="attr">"lng"</span>: <span class="number">116.957313</span>,</span><br><span class="line">		<span class="attr">"lat"</span>: <span class="number">36.654813</span>,</span><br><span class="line">		<span class="attr">"velocity"</span>: <span class="number">50.211262538794415</span>,</span><br><span class="line">		<span class="attr">"isArrvLft"</span>: <span class="string">"2"</span>,</span><br><span class="line">		<span class="attr">"stationSeqNum"</span>: <span class="number">27</span>,</span><br><span class="line">		<span class="attr">"status"</span>: <span class="string">"1"</span>,</span><br><span class="line">		<span class="attr">"buslineId"</span>: <span class="string">"223"</span>,</span><br><span class="line">		<span class="attr">"actTime"</span>: <span class="string">"Jan 16, 2018 03:49:54 PM"</span>,</span><br><span class="line">		<span class="attr">"cardId"</span>: <span class="string">"4631"</span>,</span><br><span class="line">		<span class="attr">"orgName"</span>: <span class="string">""</span>,</span><br><span class="line">		<span class="attr">"averageVelocity"</span>: <span class="number">9.178488660594233</span>,</span><br><span class="line">		<span class="attr">"coordinate"</span>: <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">busId</td>
+<td align="center">车辆自编号</td>
+</tr>
+<tr>
+<td align="center">stationSeqNum</td>
+<td align="center">即将到达第多少个站</td>
+</tr>
+<tr>
+<td align="center">actTime</td>
+<td align="center">最后活动时间</td>
+</tr>
+<tr>
+<td align="center">cardId</td>
+<td align="center">报站器ID</td>
+</tr>
+<tr>
+<td align="center">averageVelocity</td>
+<td align="center">平均时速</td>
+</tr>
+</tbody></table>
+<p>busId 是该车的自编号，由济南公交公司分配，方便管理<br>stationSeqNum 即将到达第几个站，参见上文的 stations<br>这里的 lng, lat 经纬度属于地球 WGS-84 坐标</p>
+<p>可以看到这里使用的坐标系统和上文中的不同，这里就简略介绍一下这几种坐标的区别。</p>
+<p>WGS-84 坐标系，是国际标准坐标系。从专业 GPS 设备中取出的数据遵循这种坐标，也是国际地图提供商所使用的坐标系。</p>
+<p>GCJ-02 坐标系，也叫国测局坐标系，又称火星坐标。是由中国国家测绘局指定的一种大地坐标系。会对原始坐标进行算法加密，加入随机偏移，隐藏真实位置。理论上不可逆推。国测局规定国内出版的各种地图系统（包括电子形式），必须至少采用 GCJ-02 对地理位置进行首次加密。</p>
+<p>BD-09 坐标系，是百度公司的加密算法坐标系，同样是一种偏移算法。该算法不公开。据传是从 GCJ-02 加密而来，也不一定，也许直接从 WGS-84 转换而来也不得而知</p>
+<p>这三种坐标系的互相转换，网上也有流传方法，但并不完美。</p>
+<hr>
+<h4 id="3-公告界面"><a href="#3-公告界面" class="headerlink" title="3. 公告界面"></a>3. 公告界面</h4><p><img src="https://i.loli.net/2018/01/16/5a5dd472c2733.png" alt="device-2018-01-16-181855.png"></p>
+<p>GET –&gt; <a href="http://60.216.101.229/server-ue2/rest/busAnnouncements/370100/all/0/20" target="_blank" rel="noopener">http://60.216.101.229/server-ue2/rest/busAnnouncements/370100/all/0/20</a></p>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: &#123;</span><br><span class="line">		<span class="attr">"pageParam"</span>: &#123;</span><br><span class="line">			<span class="attr">"offset"</span>: <span class="number">0</span>,</span><br><span class="line">			<span class="attr">"len"</span>: <span class="number">20</span>,</span><br><span class="line">			<span class="attr">"totalNum"</span>: <span class="number">238</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">"result"</span>: [&#123;</span><br><span class="line">			<span class="attr">"id"</span>: <span class="string">"ab9f877a737f42688cd16d73065cd39f"</span>,</span><br><span class="line">			<span class="attr">"area"</span>: <span class="number">370100</span>,</span><br><span class="line">			<span class="attr">"title"</span>: <span class="string">"1月13日起,140路调整部分运行路段"</span>,</span><br><span class="line">			<span class="attr">"content"</span>: <span class="string">"受蓝翔路道路施工影响，1月13日起，140路调整部分运行路段。\n\n140路调整后沿蓝翔中路向东、东宇大街向南、粟山路向东再向南、小清河北路向东恢复原线，新设时代总部基地西门、东宇花园、粟山路东宇大街、东沙王庄、粟山路黄岗路、王炉庄北、粟山路永鼎路站点，将王炉庄站点迁移至粟山路路口东侧，撤销蓝翔中路中段、蓝翔路蓝翔中路、时代总部基地、卢庄工业园、蓝翔路粟山路、北辛庄北、北辛庄站点。"</span>,</span><br><span class="line">			<span class="attr">"publisher"</span>: <span class="string">"济南市公共交通总公司"</span>,</span><br><span class="line">			<span class="attr">"updateTime"</span>: <span class="string">"Jan 11, 2018 03:51:21 PM"</span>,</span><br><span class="line">			<span class="attr">"state"</span>: <span class="string">"1"</span>,</span><br><span class="line">			<span class="attr">"valid"</span>: <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">		...</span><br><span class="line">		...</span><br><span class="line">		]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">totalNum</td>
+<td align="center">全部公告数量</td>
+</tr>
+<tr>
+<td align="center">title</td>
+<td align="center">标题</td>
+</tr>
+<tr>
+<td align="center">content</td>
+<td align="center">内容</td>
+</tr>
+<tr>
+<td align="center">publisher</td>
+<td align="center">发布人</td>
+</tr>
+<tr>
+<td align="center">updateTime</td>
+<td align="center">发布时间</td>
+</tr>
+<tr>
+<td align="center">valid</td>
+<td align="center">是否可用</td>
+</tr>
+</tbody></table>
+<hr>
+<p>有了这些必要的信息，已经可以开始做一个第三方的客户端了。下一篇文章，将会详细介绍自定义线路图 View 的实现。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cuteic</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://iacn.me/2018/01/16/jinan-bus-note2/" title="泉城公交开发手记（二） API分析">https://iacn.me/2018/01/16/jinan-bus-note2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Android/" rel="tag"># Android</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/01/07/jinan-bus-note1/" rel="next" title="泉城公交开发手记（一） 说明">
+                  <i class="fa fa-chevron-left"></i> 泉城公交开发手记（一） 说明
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/03/14/network-security-configuration-newer-than-android-n/" rel="prev" title="绕过 Android 7.0+ 网络安全配置">
+                  绕过 Android 7.0+ 网络安全配置 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzk4My8xMDUxOA=="></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cuteic</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/iAcn" title="GitHub &rarr; https://github.com/iAcn" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:cuteic@foxmail.com" title="E-Mail &rarr; mailto:cuteic@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.omico.me" title="https://blog.omico.me" rel="noopener" target="_blank">Omico</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nfz.moe" title="https://blog.nfz.moe" rel="noopener" target="_blank">neoFelhz</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#0-参数说明"><span class="nav-text">0. 参数说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-首页"><span class="nav-text">1. 首页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-车辆搜索界面"><span class="nav-text">2. 车辆搜索界面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-路线详情界面"><span class="nav-text">3. 路线详情界面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-公告界面"><span class="nav-text">3. 公告界面</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cuteic</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>

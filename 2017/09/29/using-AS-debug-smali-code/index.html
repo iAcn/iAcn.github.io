@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","width":160,"display":"always","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="0x1 准备一台可以正常运行 Android Studio / IDEA 的电脑一个顺手的 Smali 代码反编译工具smalidea 插件，可从 这里 获取，baksmali 工具也有你需要有一个目标 APK 文件，这里我新建的一个测试项目为例 0x2 开始">
+<meta name="keywords" content="Android逆向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Android Studio 动态调试 Smali 代码">
+<meta property="og:url" content="https://iacn.me/2017/09/29/using-AS-debug-smali-code/index.html">
+<meta property="og:site_name" content="碎流烟">
+<meta property="og:description" content="0x1 准备一台可以正常运行 Android Studio / IDEA 的电脑一个顺手的 Smali 代码反编译工具smalidea 插件，可从 这里 获取，baksmali 工具也有你需要有一个目标 APK 文件，这里我新建的一个测试项目为例 0x2 开始">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2017/09/29/59ce048d5612b.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/29/59ce0733c6924.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/29/59ce164cd918e.png">
+<meta property="og:updated_time" content="2019-08-13T08:34:30.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Android Studio 动态调试 Smali 代码">
+<meta name="twitter:description" content="0x1 准备一台可以正常运行 Android Studio / IDEA 的电脑一个顺手的 Smali 代码反编译工具smalidea 插件，可从 这里 获取，baksmali 工具也有你需要有一个目标 APK 文件，这里我新建的一个测试项目为例 0x2 开始">
+<meta name="twitter:image" content="https://i.loli.net/2017/09/29/59ce048d5612b.png">
+  <link rel="canonical" href="https://iacn.me/2017/09/29/using-AS-debug-smali-code/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>使用 Android Studio 动态调试 Smali 代码 | 碎流烟</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="site-title">碎流烟</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://iacn.me/2017/09/29/using-AS-debug-smali-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cuteic">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="碎流烟">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">使用 Android Studio 动态调试 Smali 代码
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2017-09-29 18:01:20" itemprop="dateCreated datePublished" datetime="2017-09-29T18:01:20+08:00">2017-09-29</time>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="0x1-准备"><a href="#0x1-准备" class="headerlink" title="0x1 准备"></a>0x1 准备</h3><p>一台可以正常运行 Android Studio / IDEA 的电脑<br>一个顺手的 Smali 代码反编译工具<br>smalidea 插件，可从 <a href="https://bitbucket.org/JesusFreke/smali/downloads/" target="_blank" rel="noopener">这里</a> 获取，baksmali 工具也有<br>你需要有一个目标 APK 文件，这里我新建的一个测试项目为例</p>
+<h3 id="0x2-开始"><a href="#0x2-开始" class="headerlink" title="0x2 开始"></a>0x2 开始</h3><a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 方便测试，尽可能多用些中间变量</span></span><br><span class="line">        <span class="keyword">double</span> radius = <span class="number">15</span>;</span><br><span class="line">        <span class="keyword">double</span> square = Math.pow(radius, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">double</span> area = Math.PI * square;</span><br><span class="line"></span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, String.valueOf(area), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打开 Android Studio，进入 <strong>File -&gt; Settings -&gt; Plugins</strong>，点击 <strong>Install plugin from disk</strong> 按钮，选择并安装 smalidea 插件</p>
+<p>反编译源 apk 文件，生成 out 文件夹，然后从 Android Studio 的 <strong>File -&gt; New -&gt; Import Project</strong>，导入 out 文件夹，记得选择 Source Folder</p>
+<p>成功导入后你就可以发现 Smali 代码的关键字已经可以高亮显示了</p>
+<p>再次打开 Android Studio，点击 <strong>Run -&gt; Edit Configurations</strong>，新建 Remote 类型的调试器，如图<br><img src="https://i.loli.net/2017/09/29/59ce048d5612b.png" alt="snipaste_20170929_162948.png"></p>
+<p>以调试模式在手机端或模拟器运行目标应用</p>
+<blockquote>
+<p>adb shell am start -D -n me.iacn.testapplication/.MainActivity</p>
+</blockquote>
+<p>此时目标应用会在打开时处于挂起状态，然后</p>
+<blockquote>
+<p>adb shell ps</p>
+</blockquote>
+<p>在其中找到以目标应用包名为 NAME 的一个进程，查看他的 PID<br><img src="https://i.loli.net/2017/09/29/59ce0733c6924.png" alt="snipaste_20170929_164110.png"></p>
+<blockquote>
+<p>adb forward tcp:6666 jdwp:5444</p>
+</blockquote>
+<p>其中，forward 为刚才新建 Remote 调试器时所填的本地端口。jdwp 为在上面所查看的目标应用 PID。此种方式实际上是利用 Remote 调试器，通过本地端口 6666 连接手机调试目标应用</p>
+<p>此时回到 Android Studio，下一个断点，然后 <strong>Run -&gt; debug Unnameed</strong>，稍等一会儿，就可以从 Debugger 面板里查看调试结果了<br><img src="https://i.loli.net/2017/09/29/59ce164cd918e.png" alt="snipaste_20170929_174415.png"></p>
+<p>需要注意的是，有时寄存器的值不会直接在 Variables 面板里显示出来，需要将想要查看的变量添加到 Watch 中，然后在 Watch 面板中查看</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Cuteic</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://iacn.me/2017/09/29/using-AS-debug-smali-code/" title="使用 Android Studio 动态调试 Smali 代码">https://iacn.me/2017/09/29/using-AS-debug-smali-code/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Android逆向/" rel="tag"># Android逆向</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/08/16/linux-netcat/" rel="next" title="Linux 下 nc 命令的简单介绍">
+                  <i class="fa fa-chevron-left"></i> Linux 下 nc 命令的简单介绍
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/01/07/jinan-bus-note1/" rel="prev" title="泉城公交开发手记（一） 说明">
+                  泉城公交开发手记（一） 说明 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzk4My8xMDUxOA=="></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cuteic</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/iAcn" title="GitHub &rarr; https://github.com/iAcn" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:cuteic@foxmail.com" title="E-Mail &rarr; mailto:cuteic@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.omico.me" title="https://blog.omico.me" rel="noopener" target="_blank">Omico</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nfz.moe" title="https://blog.nfz.moe" rel="noopener" target="_blank">neoFelhz</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x1-准备"><span class="nav-text">0x1 准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x2-开始"><span class="nav-text">0x2 开始</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cuteic</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>
