@@ -108,6 +108,31 @@
       </tags>
   </entry>
   <entry>
+    <title>Charles 抓包 Android 端 https</title>
+    <url>/2017/02/21/charles-https/</url>
+    <content><![CDATA[<ol>
+<li><p>在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文</p>
+<a id="more"></a>
+</li>
+<li><p>首先需要安装 Charles 的证书到手机端<br>点击下图位置的 Save Charles Root Certificate 将会把证书文件导出，你需要选择一个导出位置<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcb4bb8.png" alt="1.png"><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd05e86.png" alt="2.png"></p>
+</li>
+<li><p>导出后将其移动到手机的内置存储，然后在 <strong>设置 - 安全 - 从存储设备安装</strong> 安装该证书<br>（我的手机是 Android 原生 6.0 的 ROM，个别手机的位置可能不同）<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c2d282.png" alt="3.png"></p>
+</li>
+<li><p>需要注意的是，在安装时弹出的提示框中 <strong>凭据用途</strong> 一项，应该选择 <strong>WLAN</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c411e0.png" alt="4.png"></p>
+</li>
+<li><p>之后在 PC 端 Charles 的 SSL Proxying Settings 里 <strong>添加你想要抓包的链接的主机名</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd44721.png" alt="5.png"></p>
+</li>
+</ol>
+<ol start="6">
+<li>重新发起连接后，发现之前显示小锁图标的 https 请求已经可以正常抓取了<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcc9402.png" alt="6.png"></li>
+</ol>
+<p>Ps.关于抓包中抓到的 connect 请求<br>connect 是为了建立 http tunnel 而存在的。connect 是 http 众多方法中的其中一种，它跟 post、get、put、options 方法是并列的。但是它的使用场景很特殊，只有在受限制的网络环境中（防火墙、NAT、代理器）并且是 https 通信时，客户端会使用 http connect 请求代理服务器，代理服务器使用 connect 方法与目标服务器建立 http tunnel。通道建立后，客户端与服务器进行通信，代理服务器就像透明一样，只是接收、转发 tcp stream<br>这个引用自 <a href="http://blog.csdn.net/wangjun5159/article/details/54142016" target="_blank" rel="noopener">http://blog.csdn.net/wangjun5159/article/details/54142016</a>，详细的可以查看原文</p>
+]]></content>
+      <tags>
+        <tag>Android逆向</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一个团队里的 5 种人</title>
     <url>/2016/12/17/five-men-in-the-team/</url>
     <content><![CDATA[<p>一个团队里，人分为 5 种<br>人渣、人员、人手、人才、人物</p>
@@ -192,31 +217,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Charles 抓包 Android 端 https</title>
-    <url>/2017/02/21/charles-https/</url>
-    <content><![CDATA[<ol>
-<li><p>在阅读本文前，你应该已经会使用 Charles 进行 http 抓包。如果不会，请先掌握 http 抓包后再阅读本文</p>
-<a id="more"></a>
-</li>
-<li><p>首先需要安装 Charles 的证书到手机端<br>点击下图位置的 Save Charles Root Certificate 将会把证书文件导出，你需要选择一个导出位置<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcb4bb8.png" alt="1.png"><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd05e86.png" alt="2.png"></p>
-</li>
-<li><p>导出后将其移动到手机的内置存储，然后在 <strong>设置 - 安全 - 从存储设备安装</strong> 安装该证书<br>（我的手机是 Android 原生 6.0 的 ROM，个别手机的位置可能不同）<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c2d282.png" alt="3.png"></p>
-</li>
-<li><p>需要注意的是，在安装时弹出的提示框中 <strong>凭据用途</strong> 一项，应该选择 <strong>WLAN</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e47c411e0.png" alt="4.png"></p>
-</li>
-<li><p>之后在 PC 端 Charles 的 SSL Proxying Settings 里 <strong>添加你想要抓包的链接的主机名</strong><br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bd44721.png" alt="5.png"></p>
-</li>
-</ol>
-<ol start="6">
-<li>重新发起连接后，发现之前显示小锁图标的 https 请求已经可以正常抓取了<br><img src="https://ooo.0o0.ooo/2017/02/17/58a6e1bcc9402.png" alt="6.png"></li>
-</ol>
-<p>Ps.关于抓包中抓到的 connect 请求<br>connect 是为了建立 http tunnel 而存在的。connect 是 http 众多方法中的其中一种，它跟 post、get、put、options 方法是并列的。但是它的使用场景很特殊，只有在受限制的网络环境中（防火墙、NAT、代理器）并且是 https 通信时，客户端会使用 http connect 请求代理服务器，代理服务器使用 connect 方法与目标服务器建立 http tunnel。通道建立后，客户端与服务器进行通信，代理服务器就像透明一样，只是接收、转发 tcp stream<br>这个引用自 <a href="http://blog.csdn.net/wangjun5159/article/details/54142016" target="_blank" rel="noopener">http://blog.csdn.net/wangjun5159/article/details/54142016</a>，详细的可以查看原文</p>
-]]></content>
-      <tags>
-        <tag>Android逆向</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>泉城公交开发手记（一） 说明</title>
     <url>/2018/01/07/jinan-bus-note1/</url>
     <content><![CDATA[<p>泉城公交是我在 2015 年的时候开发的一个济南公交第三方客户端，基本实现了原生济南公交客户端的部分功能。但出于一些原因，不得不停止更新。我将所有源代码开源在了 GitHub。然后有网友邮件询问相关问题，所以，我整理了一下以前开发时的一些笔记，整理成几篇文章发出来。</p>
@@ -270,6 +270,140 @@
 ]]></content>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>合并两个 Git 仓库</title>
+    <url>/2016/11/16/merge-git-repo/</url>
+    <content><![CDATA[<p>本应在 /Project 下的 Git 根目录成了 /Project/app …</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── Project</span><br><span class="line">    ├── app</span><br><span class="line">    │   ├── xxx6.txt</span><br><span class="line">    │   ├── xxx7.txt</span><br><span class="line">    │   └── xxx8.txt</span><br><span class="line">    ├── xxx1.txt</span><br><span class="line">    └── xxx2.txt</span><br></pre></td></tr></table></figure>
+
+<p>就是这个样子，Git 的根目录成了 /app ，而需要的是 /Project ，但是 app 又是 Project 的子目录，想迁移过去又不想丢失 Commit 数据…</p>
+<p>简单点说就是<br>有 2 个 Git 仓库：repo1 和 repo2<br>repo1 是 repo2 的子目录<br>想要把 repo1 中的文件移入 repo2<br>repo1 的 Commit 记录要保留</p>
+<a id="more"></a>
+
+<p>当前文件结构如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2</span><br><span class="line">    ├── repo1 ==============&gt; Git 仓库</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
+
+<p>想要的结果是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2 ==============&gt; Git 仓库</span><br><span class="line">    ├── repo1</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
+
+<p>开始</p>
+<ol>
+<li><p>新建 repo1 子目录，将原 /repo1 的文件移动至 /repo1/repo1</p>
+<blockquote>
+<p>cd repo1<br>mkdir repo1<br>find -maxdepth 1 -not -name . -not -name repo1 -not -name .git -exec mv {} ./repo1 ;</p>
+</blockquote>
+<p>目录结构变成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── repo1</span><br><span class="line">│   └── repo1</span><br><span class="line">│       └── repo1.txt</span><br><span class="line">└── repo2.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 repo1 Git 提交刚才的操作</p>
+</li>
+<li><p>在 repo2 中 将 repo1 作为远程仓库，添加进来，设置别名为 temp</p>
+<blockquote>
+<p>cd ../repo2<br>git remote add temp ../repo1/</p>
+</blockquote>
+</li>
+<li><p>从 repo1 中抓取数据到当前 repo2 仓库</p>
+<blockquote>
+<p>git fetch temp</p>
+</blockquote>
+</li>
+<li><p>将 repo1 中抓来的 master 分支作为新分支 checkout 到本地，新分支名命名为 repo1</p>
+<blockquote>
+<p>git checkout -b repo1 temp/master</p>
+</blockquote>
+</li>
+</ol>
+<ol start="6">
+<li><p>切换回 repo2 的 master 分支，并将 repo1 分支合并到 master</p>
+<blockquote>
+<p>git checkout master<br>git merge repo1</p>
+</blockquote>
+</li>
+<li><p>删除 repo1 分支和远程地址 temp</p>
+<blockquote>
+<p>git branch -d repo1<br>git remote remove temp</p>
+</blockquote>
+</li>
+</ol>
+<p>这样就可以了。大致思路就是伪造远程 repo1 仓库为 repo2 的一个分支，然后合并进来</p>
+]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 6.0 上的双卡相关开发</title>
+    <url>/2017/06/07/multisim-for-android-6-0/</url>
+    <content><![CDATA[<p>在 Android 5.0 以前，各芯片厂商上的双卡开发没有一个统一的标准，以至于做起双卡适配来十分麻烦。<br>Android 5.0 之后，Google 官方统一了双卡平台的适配，并在 Framework 中添加了双卡相关的 API，这对于需要处理双卡的应用来说提供了很大的便利。</p>
+<p>因为 Android 5 上的双卡 API 还不是很完善<br>所以本文是介绍在 Android 6.0 平台上的双卡相关开发<br>后续还会有一篇文章来介绍在双卡处理 Android N 上的实现</p>
+<a id="more"></a>
+
+<p>言归正题<br>在 API 层面上，自 Android 5.0 开始，加入了 SubscriptionManager。双卡相关的处理主要是依赖这个 API，你可以通过 Context 类里面的 getSystemService 方法和 SubscriptionManager.from(Context) 来取得它的对象，当然它内部也是调用的 getSystemService。</p>
+<p>在数据库方面，TelephonyProvider 的 telephony.db 中新增了 siminfo 表来管理双卡的信息<br><img src="https://ooo.0o0.ooo/2017/06/07/5937b4b154014.png" alt="1.png"></p>
+<p><img src="https://ooo.0o0.ooo/2017/06/07/5937cdcfb238e.png" alt="Screenshot_20170607-171729.png"></p>
+<p>由于字段太多，我这里只截图了几个关键的字段<br>需要注意的是 <strong>_id</strong> 和 <strong>sim_id</strong> 这两个字段<br>_id: 这个不用多说，系统要求，自增长，从 0 开始<br>sim_id：该行的卡所在的卡槽值，有 0，1，-1 三个值<br>| 数值 | 描述                        |<br>| :–: |:—————————:|<br>| 0    | 该卡插在卡槽 1 中（主卡槽） |<br>| 1    | 该卡插在卡槽 2 中（副卡槽） |<br>| -1   | 手机内曾经插入过该卡        |<br><em>Ps. 在 Android 6.0+，-1 值已经被移除</em></p>
+<p>每插入一张新的 SIM 卡，siminfo 表中就会插入一行新的数据，然后 _id 会自增长加 1</p>
+<p>详细的各个 API 可以去查阅 API 文档。我这里仅以获取双卡手机两个卡的 IMSI 为例，介绍一下各平台所使用的方法<br>SubId 这个值对于双卡相关的操作来说是必要的</p>
+<p>Android 6.0：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回当前手机所插入 SIM 卡的个数</span></span><br><span class="line">TelePhonyManager.getPhoneCount()</span><br><span class="line"></span><br><span class="line">SubscriptionManager subManager = SubscriptionManager.from(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 这个方法传进手机的卡槽序号，返回对应所插 SIM 卡的信息</span></span><br><span class="line">SubscriptionInfo info = subManager.getActiveSubscriptionInfoForSimSlotIndex(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">int</span> subId = info.getSubscriptionId();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法在 Android 6.0 中还是 @hide 状态，可以反射调用</span></span><br><span class="line">TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">String imsi = teleManager.getSubscriberId(subId);</span><br></pre></td></tr></table></figure>
+
+<p>MTK：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">    Class&lt;?&gt; phoneClass = Class.forName(<span class="string">"com.android.internal.telephony.Phone"</span>);</span><br><span class="line"></span><br><span class="line">    Field gemni1Field = phoneClass.getField(<span class="string">"GEMINI_SIM_1"</span>);</span><br><span class="line">    Field gemni2Field = phoneClass.getField(<span class="string">"GEMINI_SIM_2"</span>);</span><br><span class="line">    gemni1Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    gemni2Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = (<span class="keyword">int</span>) gemni1Field.get(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">int</span> simId2 = (<span class="keyword">int</span>) gemni2Field.get(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    Method method = TelephonyManager.class.getDeclaredMethod(<span class="string">"getSubscriberIdGemini"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">    String imsi1 = (String) method.invoke(teleManager, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(teleManager, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>高通：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Class&lt;?&gt; msmTeleManager = Class.forName(<span class="string">"android.telephony.MSimTelephonyManager"</span>);</span><br><span class="line">    Method method = msmTeleManager.getMethod(<span class="string">"getSubscriberId"</span>, <span class="keyword">int</span>.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> simId2 = <span class="number">1</span>;</span><br><span class="line">    Object phoneMsim = getSystemService(<span class="string">"phone_msim"</span>);</span><br><span class="line"></span><br><span class="line">    String imsi1 = (String) method.invoke(phoneMsim, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(phoneMsim, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对比三种获取双卡 IMSI 的方式，可以看出 Android 原生支持的双卡 API 更加的规范标准。目前新出的 Android 5+ 的新机上基本都采用了原生 API，Android 的碎片化又缩小了一步</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改 Git 已提交的用户名和邮箱</title>
+    <url>/2016/11/10/modify-git-submitted-commit/</url>
+    <content><![CDATA[<p>有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？</p>
+<p>如果尝试修改 Git 的提交邮箱</p>
+<blockquote>
+<p>git config –global user.name “Your Name”<br>git config –global user.email “Your Email”</p>
+</blockquote>
+<p>这样可以修改作者的名字和邮箱</p>
+<p>但是<br>这种方法只对之后的 Commit 有效，之前提交过的就改不了了…</p>
+<p>还好，Google 到了一种解决办法，这里分享下，也算是做个记录</p>
+<ol>
+<li><p>打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可）</p>
+</li>
+<li><p>同步下来你的项目并进入目录（以 repo.git 为例）</p>
+<blockquote>
+<p>git clone –bare <a href="https://github.com/user/repo.git" target="_blank" rel="noopener">https://github.com/user/repo.git</a><br>cd repo.git</p>
+</blockquote>
+</li>
+<li><p>复制下面的脚本，可以直接复制到终端命令行里或新建 Shell 脚本<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">git filter-branch --env-filter <span class="string">'</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">oldEmail="Your Old Email"</span></span><br><span class="line"><span class="string">newName="Your New Name"</span></span><br><span class="line"><span class="string">newEmail="Your New Email"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_COMMITTER_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_AUTHOR_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'</span> --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行脚本，看到一堆 rewritten 的时候就说明写入完成了</p>
+</li>
+<li><p>git log 查看新的 Commit 信息是否正确</p>
+</li>
+<li><p>提交</p>
+<blockquote>
+<p>git push –force –tags origin ‘refs/heads/*’</p>
+</blockquote>
+</li>
+<li><p>删除临时文件</p>
+<blockquote>
+<p>cd ..<br>rm -rf repo.git</p>
+</blockquote>
+</li>
+</ol>
+<p>需要注意的是，上面的执行后，新 clone 出来的项目 Log 中 Name 和 Email 已经为最新的信息。在执行上面的几步之前已经 clone 出来的项目中，如果执行 git pull 的话，Log 中的 Name 和 Email 信息还是原来的信息</p>
+<p>这样就算是完成了</p>
+]]></content>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -555,175 +689,49 @@
       </tags>
   </entry>
   <entry>
-    <title>合并两个 Git 仓库</title>
-    <url>/2016/11/16/merge-git-repo/</url>
-    <content><![CDATA[<p>本应在 /Project 下的 Git 根目录成了 /Project/app …</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── Project</span><br><span class="line">    ├── app</span><br><span class="line">    │   ├── xxx6.txt</span><br><span class="line">    │   ├── xxx7.txt</span><br><span class="line">    │   └── xxx8.txt</span><br><span class="line">    ├── xxx1.txt</span><br><span class="line">    └── xxx2.txt</span><br></pre></td></tr></table></figure>
-
-<p>就是这个样子，Git 的根目录成了 /app ，而需要的是 /Project ，但是 app 又是 Project 的子目录，想迁移过去又不想丢失 Commit 数据…</p>
-<p>简单点说就是<br>有 2 个 Git 仓库：repo1 和 repo2<br>repo1 是 repo2 的子目录<br>想要把 repo1 中的文件移入 repo2<br>repo1 的 Commit 记录要保留</p>
-<a id="more"></a>
-
-<p>当前文件结构如下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2</span><br><span class="line">    ├── repo1 ==============&gt; Git 仓库</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
-
-<p>想要的结果是</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2 ==============&gt; Git 仓库</span><br><span class="line">    ├── repo1</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
-
-<p>开始</p>
-<ol>
-<li><p>新建 repo1 子目录，将原 /repo1 的文件移动至 /repo1/repo1</p>
-<blockquote>
-<p>cd repo1<br>mkdir repo1<br>find -maxdepth 1 -not -name . -not -name repo1 -not -name .git -exec mv {} ./repo1 ;</p>
-</blockquote>
-<p>目录结构变成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── repo1</span><br><span class="line">│   └── repo1</span><br><span class="line">│       └── repo1.txt</span><br><span class="line">└── repo2.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在 repo1 Git 提交刚才的操作</p>
-</li>
-<li><p>在 repo2 中 将 repo1 作为远程仓库，添加进来，设置别名为 temp</p>
-<blockquote>
-<p>cd ../repo2<br>git remote add temp ../repo1/</p>
-</blockquote>
-</li>
-<li><p>从 repo1 中抓取数据到当前 repo2 仓库</p>
-<blockquote>
-<p>git fetch temp</p>
-</blockquote>
-</li>
-<li><p>将 repo1 中抓来的 master 分支作为新分支 checkout 到本地，新分支名命名为 repo1</p>
-<blockquote>
-<p>git checkout -b repo1 temp/master</p>
-</blockquote>
-</li>
-</ol>
-<ol start="6">
-<li><p>切换回 repo2 的 master 分支，并将 repo1 分支合并到 master</p>
-<blockquote>
-<p>git checkout master<br>git merge repo1</p>
-</blockquote>
-</li>
-<li><p>删除 repo1 分支和远程地址 temp</p>
-<blockquote>
-<p>git branch -d repo1<br>git remote remove temp</p>
-</blockquote>
-</li>
-</ol>
-<p>这样就可以了。大致思路就是伪造远程 repo1 仓库为 repo2 的一个分支，然后合并进来</p>
-]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android 多主题之 EditText</title>
-    <url>/2017/02/14/modify-edittext-color/</url>
-    <content><![CDATA[<p>多主题的需求在很多 Android 应用中都有存在，实现方式也是多种多样。有以插件化方式实现的，也有以修改原生控件颜色的方式实现的。<br>本文所写的就是以修改原生控件颜色的方式应用主题的，EditText 的修改。</p>
-<p>然而，这个不是这么好做的。。QAQ<br>首先查阅 EditText 的 API 文档，发现还是提供了两个方法的</p>
-<p>使用 <strong>EditText.setBackgroundTintList(colorStateList)</strong> 可以设置 EditText 下划线的颜色</p>
-<p>使用 <strong>EditText.setHighlightColor(color)</strong> 可以设置 EditText 选中文字后的高亮颜色</p>
-<p>恩，改完后确实生效了<br><img src="https://ooo.0o0.ooo/2017/02/14/58a28d76add24.png" alt></p>
-<p>但是。。输入光标和光标控制滑块还是原来的颜色，反而不伦不类的了。。</p>
-<a id="more"></a>
-
-<p>于是查看 EditText 的源码，发现是在它的父类 —— TextView 中的 mEditor 这个对象中控制的，但是这个变量是 private 的，也没有提供公开的获得方法，无奈只好用反射了</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Field mEditor;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getEditorFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mEditor == <span class="keyword">null</span>) &#123;</span><br><span class="line">        mEditor = ReflectUtils.getDeclaredField(TextView.class, <span class="string">"mEditor"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>为了让反射达到最大的性能，声明了一个静态属性 mEditor，并在它为 null 的时候才进行反射（下同）</p>
+    <title>Android 上的 NFC 开发</title>
+    <url>/2019/10/14/nfc-develop-for-android/</url>
+    <content><![CDATA[<p>根据 Android 官方文档所写，支持 NFC 的 Android 设备有以下三种操作模式：</p>
 <ul>
-<li>ReflectUtils 是一个自定义的反射工具类</li>
+<li>读卡器模式：读取和写入 NFC 卡片（公交卡充值）</li>
+<li>仿真卡模式：将设备模拟成一张 NFC 卡片，可以通过其他 NFC 读卡器访问设备模拟的 NFC 卡（饭卡模拟）</li>
+<li>点对点模式：与 NFC 设备或其他支持非接触式射频传输的设备交换数据（Android Beam）<a id="more"></a>
+
+</li>
 </ul>
-<p>再获取输入光标的 Field 对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Field mCursorDrawableRes;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getCursorFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mCursorDrawableRes == <span class="keyword">null</span>) &#123;</span><br><span class="line">        mCursorDrawableRes = ReflectUtils.getDeclaredField(TextView.class,  <span class="string">"mCursorDrawableRes"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不同 NFC 卡片之间的差异也很大，有些只支持一次性写入，有些则可以支持读写操作，还有些 NFC 卡片内部支持加密功能。Android 对 NFC 卡片格式的支持主要为 NFC Forum 定义的 NDEF (NFC Data Exchange Format) 标准。</p>
+<p>支持 NFC 的 Android 设备在设置内打开了 NFC 功能开关，设备就会在屏幕解锁后，在可以支持的范围内扫描 NFC 卡片。如果发现了一个可识别的 NFC 卡片，会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用。如果设备中有多个可以处理该 NFC 卡片格式的应用，则会弹出选框由用户选择应使用哪个应用。</p>
+<h3 id="0x1-读卡器模式"><a href="#0x1-读卡器模式" class="headerlink" title="0x1 读卡器模式"></a>0x1 读卡器模式</h3><p>作为一个 NFC 处理应用，第一步先要在 Manifest 中声明自己可以处理 NFC 操作。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- NFC 硬件支持 --&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc"</span> <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">&lt;!-- NFC 权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.NFC"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- singleTop 确保扫描到新卡片时调用 onNewIntent()</span></span><br><span class="line"><span class="comment">        锁定竖屏防止丢失 Intent 信息 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:screenOrientation</span>=<span class="string">"portrait"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.NDEF_DISCOVERED"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>这样就获取了输入光标的原始 id，也就是 mCursorDrawableRes<br>由于原始的 CursorDrawable，是存在于 Android Framework 中的 framework-res.apk 中的，所以这里用一种曲线救国的方式，先获取到他的 id，进而获取到 Drawable，然后通过 Android 5.0 新增的 Tint 方式渲染 Drawable 的颜色，再设置进去</p>
-<p>实现代码如下</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setCursorColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color, Object editor)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cursorId = mCursorDrawableRes.getInt(editText);</span><br><span class="line">    Drawable drawable = editText.getContext().getDrawable(cursorId);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (drawable != <span class="keyword">null</span>) &#123;</span><br><span class="line">        drawable.setTint(color);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ReflectUtils.setObjectField(mEditor.getType(), <span class="string">"mCursorDrawable"</span>,</span><br><span class="line">                editor, <span class="keyword">new</span> Drawable[]&#123;drawable, drawable&#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>根据前文所述，Android 会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用，所以应用也要添加 <strong>IntentFilter</strong> 来匹配想要过滤的数据类型。</p>
+<p>由于对 NDEF 标准的支持最为完善，所以推荐使用 <strong>ACTION_NDEF_DISCOVERED</strong>；但是 Android 同样也对其他卡片格式有部分支持，可以使用 <strong>ACTION_TECH_DISCOVERED</strong>，使用此 action 需要在 xml 文件夹下指定 <strong>tech-list</strong> 来过滤想要使用的 NFC 技术标准；如果前两种 action 都无法匹配，就需要使用到 <strong>ACTION_TAG_DISCOVERED</strong>，但是此 action 过于笼统，要小心使用。</p>
+<p>在 Manifest 中正确声明之后，当扫描到 NFC 卡片时，系统就会打开处理 NFC 操作的 Activity 了：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">    mNfcAdapter = NfcAdapter.getDefaultAdapter(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> intent = Intent(<span class="keyword">this</span>, MainActivity::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">    <span class="keyword">val</span> requestCode = <span class="number">0</span></span><br><span class="line">    <span class="keyword">val</span> flag = <span class="number">0</span></span><br><span class="line">    mPendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>, requestCode, intent, flag)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume()</span><br><span class="line">    mNfcAdapter?.enableForegroundDispatch(<span class="keyword">this</span>, mPendingIntent, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onPause</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onPause()</span><br><span class="line">    mNfcAdapter?.disableForegroundDispatch(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这样输入光标的颜色就修改完成了</p>
-<p>之后就是光标控制滑块的颜色了<br>查看源码，发现这个对应的是三个 Drawable<br><img src="https://ooo.0o0.ooo/2017/02/14/58a295eae6bb5.png" alt></p>
-<p>只是这些的 id 是在 EditText 里的。于是，故技重施，和 mCursorDrawableRes 一样</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getSelectFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mSelectHandleLeft == <span class="keyword">null</span> || mSelectHandleRight == <span class="keyword">null</span> || mSelectHandleCenter == <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt; EditorClass = mEditor.getType();</span><br><span class="line"></span><br><span class="line">    mSelectHandleLeft = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleLeft"</span>);</span><br><span class="line">    mSelectHandleRight = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleRight"</span>);</span><br><span class="line">    mSelectHandleCenter = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleCenter"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，在 onResume() 和 onPause() 中分别调用的 NfcAdapter 的两个方法，会使系统在扫描到新的 NFC 卡片时优先使用当前 Activity 进行处理，不再弹出 Intent 选择，以免降低用户的体验。</p>
+<hr>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onNewIntent</span><span class="params">(intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onNewIntent(intent)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> tag: Tag? = intent?.getParcelableExtra(NfcAdapter.EXTRA_TAG)</span><br><span class="line">    println(tag)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setSelectHandleColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color, Object editor)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	Drawable leftDrawable = (Drawable) mSelectHandleLeft.get(editor);</span><br><span class="line">	Drawable rightDrawable = (Drawable) mSelectHandleRight.get(editor);</span><br><span class="line">	Drawable centerDrawable = (Drawable) mSelectHandleCenter.get(editor);</span><br><span class="line">	</span><br><span class="line">	updateSelectHandleColor(leftDrawable, <span class="string">"mTextSelectHandleLeftRes"</span>, editText, color);</span><br><span class="line">	updateSelectHandleColor(rightDrawable, <span class="string">"mTextSelectHandleRightRes"</span>, editText, color);</span><br><span class="line">	updateSelectHandleColor(centerDrawable, <span class="string">"mTextSelectHandleRes"</span>, editText, color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 onNewIntent() 中，即可通过 Intent 来获取卡片的信息了，输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">I/System.out: TAG: Tech [android.nfc.tech.NfcA, android.nfc.tech.MifareClassic, android.nfc.tech.NdefFormatable]</span><br></pre></td></tr></table></figure>
 
-<p>最后做个 setColor 的封装</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color)</span> </span>&#123;</span><br><span class="line">	setUnderlineColor(editText, color);</span><br><span class="line">	setHighlightColor(editText, color);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		getEditorFieldFromReflect();</span><br><span class="line">		getCursorFieldFromReflect();</span><br><span class="line">		getSelectFieldFromReflect();</span><br><span class="line">		Object editor = mEditor.get(editText);</span><br><span class="line">	</span><br><span class="line">		setCursorColor(editText, color, editor);</span><br><span class="line">		setSelectHandleColor(editText, color, editor);</span><br><span class="line">	</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处使用的是 Tag 格式的卡片实体类来获取，如果已经确定卡片是 NDEF 格式，则可以使用 <strong>NfcAdapter.EXTRA_NDEF_MESSAGES</strong>，来获取一个 NDEF 格式的卡片实体类。</p>
+<p>对于非 NDEF 格式的卡片，就需要使用 Android 提供的其他实体类来进行操作，可以使用 <strong>Tag::getTechList()</strong> 来查看卡片所支持的标准。</p>
+<h3 id="0x2-仿真卡模式"><a href="#0x2-仿真卡模式" class="headerlink" title="0x2 仿真卡模式"></a>0x2 仿真卡模式</h3><p>Android 上对 NFC 卡片的模拟的主要是通过 <strong>HCE(基于主机的卡模拟)</strong> 来实现的 (Android 4.4+)，如果使用安全元件进行卡片模拟，则需要部分安全元件的支持，例如 NFC-SIM 卡。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HCE 支持 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc.hce"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--仿真卡服务--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">service</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_NFC_SERVICE"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.action.HOST_APDU_SERVICE"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.host_apdu_service"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:resource</span>=<span class="string">"@xml/apduservice"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>需要时直接 EditColorHelper.setColor(EditText, Color) 就可以了<br><img src="https://ooo.0o0.ooo/2017/02/14/58a298a678c38.png" alt></p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>修改 Git 已提交的用户名和邮箱</title>
-    <url>/2016/11/10/modify-git-submitted-commit/</url>
-    <content><![CDATA[<p>有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？</p>
-<p>如果尝试修改 Git 的提交邮箱</p>
-<blockquote>
-<p>git config –global user.name “Your Name”<br>git config –global user.email “Your Email”</p>
-</blockquote>
-<p>这样可以修改作者的名字和邮箱</p>
-<p>但是<br>这种方法只对之后的 Commit 有效，之前提交过的就改不了了…</p>
-<p>还好，Google 到了一种解决办法，这里分享下，也算是做个记录</p>
-<ol>
-<li><p>打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可）</p>
-</li>
-<li><p>同步下来你的项目并进入目录（以 repo.git 为例）</p>
-<blockquote>
-<p>git clone –bare <a href="https://github.com/user/repo.git" target="_blank" rel="noopener">https://github.com/user/repo.git</a><br>cd repo.git</p>
-</blockquote>
-</li>
-<li><p>复制下面的脚本，可以直接复制到终端命令行里或新建 Shell 脚本<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
-<a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">git filter-branch --env-filter <span class="string">'</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">oldEmail="Your Old Email"</span></span><br><span class="line"><span class="string">newName="Your New Name"</span></span><br><span class="line"><span class="string">newEmail="Your New Email"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_COMMITTER_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_COMMITTER_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if [ "$GIT_AUTHOR_EMAIL" = "$oldEmail" ]; then</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_NAME="$newName"</span></span><br><span class="line"><span class="string">    export GIT_AUTHOR_EMAIL="$newEmail"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'</span> --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行脚本，看到一堆 rewritten 的时候就说明写入完成了</p>
-</li>
-<li><p>git log 查看新的 Commit 信息是否正确</p>
-</li>
-<li><p>提交</p>
-<blockquote>
-<p>git push –force –tags origin ‘refs/heads/*’</p>
-</blockquote>
-</li>
-<li><p>删除临时文件</p>
-<blockquote>
-<p>cd ..<br>rm -rf repo.git</p>
-</blockquote>
-</li>
-</ol>
-<p>需要注意的是，上面的执行后，新 clone 出来的项目 Log 中 Name 和 Email 已经为最新的信息。在执行上面的几步之前已经 clone 出来的项目中，如果执行 git pull 的话，Log 中的 Name 和 Email 信息还是原来的信息</p>
-<p>这样就算是完成了</p>
-]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android 6.0 上的双卡相关开发</title>
-    <url>/2017/06/07/multisim-for-android-6-0/</url>
-    <content><![CDATA[<p>在 Android 5.0 以前，各芯片厂商上的双卡开发没有一个统一的标准，以至于做起双卡适配来十分麻烦。<br>Android 5.0 之后，Google 官方统一了双卡平台的适配，并在 Framework 中添加了双卡相关的 API，这对于需要处理双卡的应用来说提供了很大的便利。</p>
-<p>因为 Android 5 上的双卡 API 还不是很完善<br>所以本文是介绍在 Android 6.0 平台上的双卡相关开发<br>后续还会有一篇文章来介绍在双卡处理 Android N 上的实现</p>
-<a id="more"></a>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">host-apdu-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:requireDeviceUnlock</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aid-group</span> <span class="attr">android:description</span>=<span class="string">"@string/aiddescription"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:category</span>=<span class="string">"other"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0010203040506"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0394148148100"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aid-group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">host-apdu-service</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>言归正题<br>在 API 层面上，自 Android 5.0 开始，加入了 SubscriptionManager。双卡相关的处理主要是依赖这个 API，你可以通过 Context 类里面的 getSystemService 方法和 SubscriptionManager.from(Context) 来取得它的对象，当然它内部也是调用的 getSystemService。</p>
-<p>在数据库方面，TelephonyProvider 的 telephony.db 中新增了 siminfo 表来管理双卡的信息<br><img src="https://ooo.0o0.ooo/2017/06/07/5937b4b154014.png" alt="1.png"></p>
-<p><img src="https://ooo.0o0.ooo/2017/06/07/5937cdcfb238e.png" alt="Screenshot_20170607-171729.png"></p>
-<p>由于字段太多，我这里只截图了几个关键的字段<br>需要注意的是 <strong>_id</strong> 和 <strong>sim_id</strong> 这两个字段<br>_id: 这个不用多说，系统要求，自增长，从 0 开始<br>sim_id：该行的卡所在的卡槽值，有 0，1，-1 三个值<br>| 数值 | 描述                        |<br>| :–: |:—————————:|<br>| 0    | 该卡插在卡槽 1 中（主卡槽） |<br>| 1    | 该卡插在卡槽 2 中（副卡槽） |<br>| -1   | 手机内曾经插入过该卡        |<br><em>Ps. 在 Android 6.0+，-1 值已经被移除</em></p>
-<p>每插入一张新的 SIM 卡，siminfo 表中就会插入一行新的数据，然后 _id 会自增长加 1</p>
-<p>详细的各个 API 可以去查阅 API 文档。我这里仅以获取双卡手机两个卡的 IMSI 为例，介绍一下各平台所使用的方法<br>SubId 这个值对于双卡相关的操作来说是必要的</p>
-<p>Android 6.0：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回当前手机所插入 SIM 卡的个数</span></span><br><span class="line">TelePhonyManager.getPhoneCount()</span><br><span class="line"></span><br><span class="line">SubscriptionManager subManager = SubscriptionManager.from(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 这个方法传进手机的卡槽序号，返回对应所插 SIM 卡的信息</span></span><br><span class="line">SubscriptionInfo info = subManager.getActiveSubscriptionInfoForSimSlotIndex(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">int</span> subId = info.getSubscriptionId();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法在 Android 6.0 中还是 @hide 状态，可以反射调用</span></span><br><span class="line">TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">String imsi = teleManager.getSubscriberId(subId);</span><br></pre></td></tr></table></figure>
+<p>在 Manifest 的 Service 声明中，引用到了一个 xml 文件夹下的 apduservice.xml 文件，其中 <strong>android:requireDeviceUnlock=false</strong> 可以让设备在亮屏但不解锁的情况下启动 HCE 服务；<strong>aid-filter</strong> 是必要的，Android 会根据 <strong>aid-filter</strong> 所定义的 <strong>AID</strong> 来选择合适的 HCE 服务，具体的 <strong>AID</strong> 数值参照要模拟的 NFC 卡片为准，须为十六进制格式，并且是偶数位。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CardService</span> : <span class="type">HostApduService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">processCommandApdu</span><span class="params">(commandApdu: <span class="type">ByteArray</span>, extras: <span class="type">Bundle</span>)</span></span>: ByteArray &#123;</span><br><span class="line">        <span class="keyword">val</span> aid = <span class="string">"F0010203040506"</span></span><br><span class="line">        <span class="keyword">val</span> header = <span class="string">"00A40400"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> selectApdu = (header + String.format(<span class="string">"%02X"</span>, aid.length / <span class="number">2</span>) + aid).toByteArray()</span><br><span class="line">        <span class="keyword">if</span> (selectApdu.contentEquals(commandApdu)) &#123;</span><br><span class="line">            <span class="keyword">return</span> aid.toByteArray()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> byteArrayOf()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDeactivated</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>MTK：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">    Class&lt;?&gt; phoneClass = Class.forName(<span class="string">"com.android.internal.telephony.Phone"</span>);</span><br><span class="line"></span><br><span class="line">    Field gemni1Field = phoneClass.getField(<span class="string">"GEMINI_SIM_1"</span>);</span><br><span class="line">    Field gemni2Field = phoneClass.getField(<span class="string">"GEMINI_SIM_2"</span>);</span><br><span class="line">    gemni1Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    gemni2Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = (<span class="keyword">int</span>) gemni1Field.get(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">int</span> simId2 = (<span class="keyword">int</span>) gemni2Field.get(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    Method method = TelephonyManager.class.getDeclaredMethod(<span class="string">"getSubscriberIdGemini"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">    String imsi1 = (String) method.invoke(teleManager, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(teleManager, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <strong>HostApduService::processCommandApdu</strong> 中，设备将作为一张模拟的 NFC 卡片，Android 系统会将其接收到的 APDU 数据传入进来，此方法运行在 UI 线程，需要返回一个 ByteArray 作为响应数据发送回 NFC 读取设备。</p>
+<h3 id="0x3-点对点模式"><a href="#0x3-点对点模式" class="headerlink" title="0x3 点对点模式"></a>0x3 点对点模式</h3><p>NFC 卡片有 <strong>ID</strong> 卡与 <strong>IC</strong> 卡之分。传统的 ID 卡片只有数据存储功能，能轻易的被读写，卡片本身只是记录一个 ID 数值；IC 卡则不同，内部具有微型 CPU，数据的读写会经过卡片的 CPU 进行处理，支持加密功能，更加安全。</p>
+<p>以笔者的卡片为例，卡片所使用的 IC 为 NXP MF1S50，ISO-14443 标准，数据的读写入需要与卡片进行 <strong>APDU(应用协议数据单元)</strong> 交互，具体的指令可以从 IC 的 datasheet 中获得。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> isoDep: IsoDep = IsoDep.<span class="keyword">get</span>(tag)</span><br><span class="line">isoDep.connect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> payload = byteArrayOf(<span class="number">0x93</span>.toByte(), <span class="number">0x70</span>.toByte())  <span class="comment">// SELECT</span></span><br><span class="line"><span class="keyword">val</span> result = isoDep.transceive(payload)</span><br></pre></td></tr></table></figure>
 
-<p>高通：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Class&lt;?&gt; msmTeleManager = Class.forName(<span class="string">"android.telephony.MSimTelephonyManager"</span>);</span><br><span class="line">    Method method = msmTeleManager.getMethod(<span class="string">"getSubscriberId"</span>, <span class="keyword">int</span>.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> simId2 = <span class="number">1</span>;</span><br><span class="line">    Object phoneMsim = getSystemService(<span class="string">"phone_msim"</span>);</span><br><span class="line"></span><br><span class="line">    String imsi1 = (String) method.invoke(phoneMsim, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(phoneMsim, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对比三种获取双卡 IMSI 的方式，可以看出 Android 原生支持的双卡 API 更加的规范标准。目前新出的 Android 5+ 的新机上基本都采用了原生 API，Android 的碎片化又缩小了一步</p>
+<p>这里使用 <strong>IsoDep::transceive()</strong> 向卡片发送指令，卡片会根据指令返回相应的数据，至于数据如何解析，就要参照不同卡片的技术规范了，可参考《中国金融集成电路 (IC卡) 规范》和《中国银联 IC 卡技术规范》。</p>
 ]]></content>
       <tags>
         <tag>Android</tag>
@@ -811,112 +819,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Android 上的 NFC 开发</title>
-    <url>/2019/10/14/nfc-develop-for-android/</url>
-    <content><![CDATA[<p>根据 Android 官方文档所写，支持 NFC 的 Android 设备有以下三种操作模式：</p>
-<ul>
-<li>读卡器模式：读取和写入 NFC 卡片（公交卡充值）</li>
-<li>仿真卡模式：将设备模拟成一张 NFC 卡片，可以通过其他 NFC 读卡器访问设备模拟的 NFC 卡（饭卡模拟）</li>
-<li>点对点模式：与 NFC 设备或其他支持非接触式射频传输的设备交换数据（Android Beam）<a id="more"></a>
-
-</li>
-</ul>
-<p>不同 NFC 卡片之间的差异也很大，有些只支持一次性写入，有些则可以支持读写操作，还有些 NFC 卡片内部支持加密功能。Android 对 NFC 卡片格式的支持主要为 NFC Forum 定义的 NDEF (NFC Data Exchange Format) 标准。</p>
-<p>支持 NFC 的 Android 设备在设置内打开了 NFC 功能开关，设备就会在屏幕解锁后，在可以支持的范围内扫描 NFC 卡片。如果发现了一个可识别的 NFC 卡片，会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用。如果设备中有多个可以处理该 NFC 卡片格式的应用，则会弹出选框由用户选择应使用哪个应用。</p>
-<h3 id="0x1-读卡器模式"><a href="#0x1-读卡器模式" class="headerlink" title="0x1 读卡器模式"></a>0x1 读卡器模式</h3><p>作为一个 NFC 处理应用，第一步先要在 Manifest 中声明自己可以处理 NFC 操作。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- NFC 硬件支持 --&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc"</span> <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">&lt;!-- NFC 权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.NFC"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- singleTop 确保扫描到新卡片时调用 onNewIntent()</span></span><br><span class="line"><span class="comment">        锁定竖屏防止丢失 Intent 信息 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:screenOrientation</span>=<span class="string">"portrait"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.NDEF_DISCOVERED"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>根据前文所述，Android 会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用，所以应用也要添加 <strong>IntentFilter</strong> 来匹配想要过滤的数据类型。</p>
-<p>由于对 NDEF 标准的支持最为完善，所以推荐使用 <strong>ACTION_NDEF_DISCOVERED</strong>；但是 Android 同样也对其他卡片格式有部分支持，可以使用 <strong>ACTION_TECH_DISCOVERED</strong>，使用此 action 需要在 xml 文件夹下指定 <strong>tech-list</strong> 来过滤想要使用的 NFC 技术标准；如果前两种 action 都无法匹配，就需要使用到 <strong>ACTION_TAG_DISCOVERED</strong>，但是此 action 过于笼统，要小心使用。</p>
-<p>在 Manifest 中正确声明之后，当扫描到 NFC 卡片时，系统就会打开处理 NFC 操作的 Activity 了：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">    mNfcAdapter = NfcAdapter.getDefaultAdapter(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> intent = Intent(<span class="keyword">this</span>, MainActivity::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">    <span class="keyword">val</span> requestCode = <span class="number">0</span></span><br><span class="line">    <span class="keyword">val</span> flag = <span class="number">0</span></span><br><span class="line">    mPendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>, requestCode, intent, flag)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume()</span><br><span class="line">    mNfcAdapter?.enableForegroundDispatch(<span class="keyword">this</span>, mPendingIntent, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onPause</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onPause()</span><br><span class="line">    mNfcAdapter?.disableForegroundDispatch(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是，在 onResume() 和 onPause() 中分别调用的 NfcAdapter 的两个方法，会使系统在扫描到新的 NFC 卡片时优先使用当前 Activity 进行处理，不再弹出 Intent 选择，以免降低用户的体验。</p>
-<hr>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onNewIntent</span><span class="params">(intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onNewIntent(intent)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> tag: Tag? = intent?.getParcelableExtra(NfcAdapter.EXTRA_TAG)</span><br><span class="line">    println(tag)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 onNewIntent() 中，即可通过 Intent 来获取卡片的信息了，输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">I/System.out: TAG: Tech [android.nfc.tech.NfcA, android.nfc.tech.MifareClassic, android.nfc.tech.NdefFormatable]</span><br></pre></td></tr></table></figure>
-
-<p>此处使用的是 Tag 格式的卡片实体类来获取，如果已经确定卡片是 NDEF 格式，则可以使用 <strong>NfcAdapter.EXTRA_NDEF_MESSAGES</strong>，来获取一个 NDEF 格式的卡片实体类。</p>
-<p>对于非 NDEF 格式的卡片，就需要使用 Android 提供的其他实体类来进行操作，可以使用 <strong>Tag::getTechList()</strong> 来查看卡片所支持的标准。</p>
-<h3 id="0x2-仿真卡模式"><a href="#0x2-仿真卡模式" class="headerlink" title="0x2 仿真卡模式"></a>0x2 仿真卡模式</h3><p>Android 上对 NFC 卡片的模拟的主要是通过 <strong>HCE(基于主机的卡模拟)</strong> 来实现的 (Android 4.4+)，如果使用安全元件进行卡片模拟，则需要部分安全元件的支持，例如 NFC-SIM 卡。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HCE 支持 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc.hce"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--仿真卡服务--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">service</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_NFC_SERVICE"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.action.HOST_APDU_SERVICE"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.host_apdu_service"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:resource</span>=<span class="string">"@xml/apduservice"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">host-apdu-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:requireDeviceUnlock</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aid-group</span> <span class="attr">android:description</span>=<span class="string">"@string/aiddescription"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:category</span>=<span class="string">"other"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0010203040506"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0394148148100"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aid-group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">host-apdu-service</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在 Manifest 的 Service 声明中，引用到了一个 xml 文件夹下的 apduservice.xml 文件，其中 <strong>android:requireDeviceUnlock=false</strong> 可以让设备在亮屏但不解锁的情况下启动 HCE 服务；<strong>aid-filter</strong> 是必要的，Android 会根据 <strong>aid-filter</strong> 所定义的 <strong>AID</strong> 来选择合适的 HCE 服务，具体的 <strong>AID</strong> 数值参照要模拟的 NFC 卡片为准，须为十六进制格式，并且是偶数位。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CardService</span> : <span class="type">HostApduService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">processCommandApdu</span><span class="params">(commandApdu: <span class="type">ByteArray</span>, extras: <span class="type">Bundle</span>)</span></span>: ByteArray &#123;</span><br><span class="line">        <span class="keyword">val</span> aid = <span class="string">"F0010203040506"</span></span><br><span class="line">        <span class="keyword">val</span> header = <span class="string">"00A40400"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> selectApdu = (header + String.format(<span class="string">"%02X"</span>, aid.length / <span class="number">2</span>) + aid).toByteArray()</span><br><span class="line">        <span class="keyword">if</span> (selectApdu.contentEquals(commandApdu)) &#123;</span><br><span class="line">            <span class="keyword">return</span> aid.toByteArray()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> byteArrayOf()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDeactivated</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 <strong>HostApduService::processCommandApdu</strong> 中，设备将作为一张模拟的 NFC 卡片，Android 系统会将其接收到的 APDU 数据传入进来，此方法运行在 UI 线程，需要返回一个 ByteArray 作为响应数据发送回 NFC 读取设备。</p>
-<h3 id="0x3-点对点模式"><a href="#0x3-点对点模式" class="headerlink" title="0x3 点对点模式"></a>0x3 点对点模式</h3><p>NFC 卡片有 <strong>ID</strong> 卡与 <strong>IC</strong> 卡之分。传统的 ID 卡片只有数据存储功能，能轻易的被读写，卡片本身只是记录一个 ID 数值；IC 卡则不同，内部具有微型 CPU，数据的读写会经过卡片的 CPU 进行处理，支持加密功能，更加安全。</p>
-<p>以笔者的卡片为例，卡片所使用的 IC 为 NXP MF1S50，ISO-14443 标准，数据的读写入需要与卡片进行 <strong>APDU(应用协议数据单元)</strong> 交互，具体的指令可以从 IC 的 datasheet 中获得。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> isoDep: IsoDep = IsoDep.<span class="keyword">get</span>(tag)</span><br><span class="line">isoDep.connect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> payload = byteArrayOf(<span class="number">0x93</span>.toByte(), <span class="number">0x70</span>.toByte())  <span class="comment">// SELECT</span></span><br><span class="line"><span class="keyword">val</span> result = isoDep.transceive(payload)</span><br></pre></td></tr></table></figure>
-
-<p>这里使用 <strong>IsoDep::transceive()</strong> 向卡片发送指令，卡片会根据指令返回相应的数据，至于数据如何解析，就要参照不同卡片的技术规范了，可参考《中国金融集成电路 (IC卡) 规范》和《中国银联 IC 卡技术规范》。</p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何判断一个页面是否更新？</title>
-    <url>/2020/05/21/whether-page-is-updated/</url>
-    <content><![CDATA[<p>对于需要长期运行的爬虫程序，在每次爬取前检查目标页面是否更新是十分重要的。如果不进行判断，就会对同一个页面重复爬取多次，浪费时间和性能。</p>
-<a id="more"></a>
-
-<h3 id="定时爬取"><a href="#定时爬取" class="headerlink" title="定时爬取"></a>定时爬取</h3><p>这种方式即为最传统的方式，无论页面是否更新，都会每隔一段时间对页面爬取一次。<br>同时，根据定时方式，又分为在程序内手动轮询计时和使用第三方定时程序两种。</p>
-<p>不推荐使用这种方法，效率低下。一定要用的话也建议使用 crontab 等其他程序定时调用，尽可能的在等待时间内不占用系统资源。</p>
-<hr>
-<h3 id="304-HTTP-状态码"><a href="#304-HTTP-状态码" class="headerlink" title="304 HTTP 状态码"></a>304 HTTP 状态码</h3><p>HTTP 头字段中定义了一个 304 状态码 ( 304 Not Modified )，这个请求头标签原本是供浏览器缓存用的，现代浏览器通常会缓存网页文件在自己的数据目录中，以便下次能更快的加载。</p>
-<p>在浏览器请求页面时，会把本地缓存的网页文件的最后修改时间放在请求头一起发送到服务器。服务器根据这个时间判断，如果页面有更新，会返回 HTTP 状态码 200，正常响应。如果页面没有更新，会返回 HTTP 状态码 304（不返回网页内容，只返回响应头）。</p>
-<p>那么作为爬虫，就可以模拟浏览器的这个行为，在本次爬取后记录爬取的时间，下一次爬取前在请求头中放入 <strong>If-Modified-Since</strong>，把上次爬取的时间一起发送给服务器，然后根据响应的 HTTP 状态码进行下一步操作。</p>
-<p>这种方法看似完美，但是很可惜，因为并不是所有服务器都会遵守规范返回 304 状态码。对于后端渲染的动态页面，或是前端渲染的单页面应用，这种方法也不合适。</p>
-<hr>
-<h3 id="Last-Modified-响应字段"><a href="#Last-Modified-响应字段" class="headerlink" title="Last-Modified 响应字段"></a>Last-Modified 响应字段</h3><p>根据 HTTP 规范，响应头中还有一个 <strong>Last-Modified</strong> 字段来返回页面最后一次的修改时间。<br>将这个时间与上一次爬取的时间做对比即可判断出页面是否更新。</p>
-<p>很可惜，这种方法基本只适用于静态页面。对于动态页面来说，返回的最后修改时间就是发回 Response 的时间，因为动态页面本来就是即时渲染的。</p>
-<hr>
-<h3 id="Etag-响应字段"><a href="#Etag-响应字段" class="headerlink" title="Etag 响应字段"></a>Etag 响应字段</h3><p><strong>Etag</strong> 主要为了解决前两个无法解决的一些问题而被创造出来的，例如：</p>
-<ul>
-<li>一些文件也许仅仅改变了修改时间，内容并没有改变</li>
-<li><strong>If-Modified-Since</strong> 的检查粒度是秒级的，无法做到更精确的检查</li>
-<li>服务器无法控制</li>
-</ul>
-<p>支持 <strong>Etag</strong> 的服务器会像返回 <strong>Last-Modified</strong> 那样返回一个<strong>Etag</strong> 字符串，客户端请求时根据需要在请求头的 <strong>If-Match</strong> 或 <strong>If-None-Match</strong>（更常用）字段中放入上次请求得来的 <strong>Etag</strong> 字符串，然后服务器会根据 <strong>Etag</strong> 作出与 <strong>If-Modified-Since</strong> 同样的响应。</p>
-<p>这种方法的最大问题就是服务器不一定支持。<strong>Etag</strong> 本身也是服务器根据一定规则计算出来的，有计算就有性能消耗，就看服务器愿不愿意支持了。</p>
-<hr>
-<h3 id="基于页面地址的比较"><a href="#基于页面地址的比较" class="headerlink" title="基于页面地址的比较"></a>基于页面地址的比较</h3><p>在本次爬取后，保存爬取的 URL，一段时间内爬过的就不用再爬了。如果页面 URL 中有诸如 ID 之类的参数的话，可以使用 ID，因为 ID 在后端中通常是唯一的。经常与 <strong>定时爬取</strong> 配合使用。</p>
-<hr>
-<h3 id="基于页面内容的比较"><a href="#基于页面内容的比较" class="headerlink" title="基于页面内容的比较"></a>基于页面内容的比较</h3><p>在本次爬取后，抽取页面关键元素的内容计算 MD5 并保存，下次爬取时比较 MD5 判断是否更新。如果关键内容不多的话，也可以不做 MD5 直接保存。</p>
-<p>不建议直接保存整个页面全部内容或其 MD5，因为如果页面中有 <em>本站已运行 xx 时间、访客：xx</em> 之类不断更新的内容，就会造成误判。</p>
-]]></content>
-      <tags>
-        <tag>爬虫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows10 删除多余的网络配置项</title>
-    <url>/2017/03/24/win10-delete-network-config/</url>
-    <content><![CDATA[<p>1.Win + R 运行，输入 <strong>regedit</strong>，打开注册表编辑器<br>2.找到下面两个键</p>
-<blockquote>
-<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Profiles</p>
-</blockquote>
-<blockquote>
-<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Signatures\Unmanaged</p>
-</blockquote>
-<p>3.在这两个键的下面有一堆 Hash 值命名的目录</p>
-<a id="more"></a>
-<p><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba75381.png" alt="snipaste20170324_092802.png"></p>
-<p>不需要哪个删除就是了</p>
-<p>可以根据目录里面 <strong>ProfileName</strong> 的值来判断这个目录是属于哪个网络配置的<br><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba4185f.png" alt="2.png"></p>
-<p>同样，如果需要修改网络配置的名字，也可以从这里修改 <strong>ProfileName</strong> 的值</p>
-<p>修改注册表有一定风险，请一定要仔细</p>
-]]></content>
-      <tags>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vShere Client 无法连接 vCenter 故障排查思路</title>
     <url>/2017/07/14/vsphere-server-problem-check/</url>
     <content><![CDATA[<p>问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误<br><img src="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg" alt></p>
@@ -955,6 +857,28 @@
       </tags>
   </entry>
   <entry>
+    <title>Windows10 删除多余的网络配置项</title>
+    <url>/2017/03/24/win10-delete-network-config/</url>
+    <content><![CDATA[<p>1.Win + R 运行，输入 <strong>regedit</strong>，打开注册表编辑器<br>2.找到下面两个键</p>
+<blockquote>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Profiles</p>
+</blockquote>
+<blockquote>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Signatures\Unmanaged</p>
+</blockquote>
+<p>3.在这两个键的下面有一堆 Hash 值命名的目录</p>
+<a id="more"></a>
+<p><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba75381.png" alt="snipaste20170324_092802.png"></p>
+<p>不需要哪个删除就是了</p>
+<p>可以根据目录里面 <strong>ProfileName</strong> 的值来判断这个目录是属于哪个网络配置的<br><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba4185f.png" alt="2.png"></p>
+<p>同样，如果需要修改网络配置的名字，也可以从这里修改 <strong>ProfileName</strong> 的值</p>
+<p>修改注册表有一定风险，请一定要仔细</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Windows 环境变量的设置是否需要重启</title>
     <url>/2016/12/25/windows-set-env-variable/</url>
     <content><![CDATA[<p>最近从 Android Studio 导入一个项目，提示需要配置一个叫 ANDROID_SDK_HOME 的环境变量，然而 Google 的提示是建议我配置完之后重启，但是我实测配置之后没有重启也生效了，这是怎么回事呢？</p>
@@ -964,19 +888,6 @@
 ]]></content>
       <tags>
         <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows10 USB-To-Console 串口驱动 (x86 x64)</title>
-    <url>/2017/02/28/win10-usb-to-console/</url>
-    <content><![CDATA[<p>最近将 Win10 更新到 14393，之前的 USB 转串口线一插上就蓝屏重启，费了好多功夫 Google 到了之前版本的驱动，试了试居然没事了，这里就分享下吧</p>
-<p>下载地址：<a href="https://lanzous.com/iQxbyers9ha" target="_blank" rel="noopener">蓝奏云</a></p>
-<p>Step1. 进入 Step1 文件夹，安装 Setup.exe。如果成功，则无需进行第二步了。</p>
-<p>Step2. 进入 Step2 文件夹，安装 CH341SER.EXE。不行的话再安装 HL-340.EXE。</p>
-<p>Windows10 专业版 x64 测试通过。</p>
-]]></content>
-      <tags>
-        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -995,6 +906,328 @@
 ]]></content>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 多主题之 EditText</title>
+    <url>/2017/02/14/modify-edittext-color/</url>
+    <content><![CDATA[<p>多主题的需求在很多 Android 应用中都有存在，实现方式也是多种多样。有以插件化方式实现的，也有以修改原生控件颜色的方式实现的。<br>本文所写的就是以修改原生控件颜色的方式应用主题的，EditText 的修改。</p>
+<p>然而，这个不是这么好做的。。QAQ<br>首先查阅 EditText 的 API 文档，发现还是提供了两个方法的</p>
+<p>使用 <strong>EditText.setBackgroundTintList(colorStateList)</strong> 可以设置 EditText 下划线的颜色</p>
+<p>使用 <strong>EditText.setHighlightColor(color)</strong> 可以设置 EditText 选中文字后的高亮颜色</p>
+<p>恩，改完后确实生效了<br><img src="https://ooo.0o0.ooo/2017/02/14/58a28d76add24.png" alt></p>
+<p>但是。。输入光标和光标控制滑块还是原来的颜色，反而不伦不类的了。。</p>
+<a id="more"></a>
+
+<p>于是查看 EditText 的源码，发现是在它的父类 —— TextView 中的 mEditor 这个对象中控制的，但是这个变量是 private 的，也没有提供公开的获得方法，无奈只好用反射了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Field mEditor;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getEditorFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mEditor == <span class="keyword">null</span>) &#123;</span><br><span class="line">        mEditor = ReflectUtils.getDeclaredField(TextView.class, <span class="string">"mEditor"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了让反射达到最大的性能，声明了一个静态属性 mEditor，并在它为 null 的时候才进行反射（下同）</p>
+<ul>
+<li>ReflectUtils 是一个自定义的反射工具类</li>
+</ul>
+<p>再获取输入光标的 Field 对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Field mCursorDrawableRes;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getCursorFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mCursorDrawableRes == <span class="keyword">null</span>) &#123;</span><br><span class="line">        mCursorDrawableRes = ReflectUtils.getDeclaredField(TextView.class,  <span class="string">"mCursorDrawableRes"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就获取了输入光标的原始 id，也就是 mCursorDrawableRes<br>由于原始的 CursorDrawable，是存在于 Android Framework 中的 framework-res.apk 中的，所以这里用一种曲线救国的方式，先获取到他的 id，进而获取到 Drawable，然后通过 Android 5.0 新增的 Tint 方式渲染 Drawable 的颜色，再设置进去</p>
+<p>实现代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setCursorColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color, Object editor)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cursorId = mCursorDrawableRes.getInt(editText);</span><br><span class="line">    Drawable drawable = editText.getContext().getDrawable(cursorId);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (drawable != <span class="keyword">null</span>) &#123;</span><br><span class="line">        drawable.setTint(color);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ReflectUtils.setObjectField(mEditor.getType(), <span class="string">"mCursorDrawable"</span>,</span><br><span class="line">                editor, <span class="keyword">new</span> Drawable[]&#123;drawable, drawable&#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样输入光标的颜色就修改完成了</p>
+<p>之后就是光标控制滑块的颜色了<br>查看源码，发现这个对应的是三个 Drawable<br><img src="https://ooo.0o0.ooo/2017/02/14/58a295eae6bb5.png" alt></p>
+<p>只是这些的 id 是在 EditText 里的。于是，故技重施，和 mCursorDrawableRes 一样</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getSelectFieldFromReflect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mSelectHandleLeft == <span class="keyword">null</span> || mSelectHandleRight == <span class="keyword">null</span> || mSelectHandleCenter == <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt; EditorClass = mEditor.getType();</span><br><span class="line"></span><br><span class="line">    mSelectHandleLeft = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleLeft"</span>);</span><br><span class="line">    mSelectHandleRight = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleRight"</span>);</span><br><span class="line">    mSelectHandleCenter = ReflectUtils.getDeclaredField(EditorClass, <span class="string">"mSelectHandleCenter"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setSelectHandleColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color, Object editor)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	Drawable leftDrawable = (Drawable) mSelectHandleLeft.get(editor);</span><br><span class="line">	Drawable rightDrawable = (Drawable) mSelectHandleRight.get(editor);</span><br><span class="line">	Drawable centerDrawable = (Drawable) mSelectHandleCenter.get(editor);</span><br><span class="line">	</span><br><span class="line">	updateSelectHandleColor(leftDrawable, <span class="string">"mTextSelectHandleLeftRes"</span>, editText, color);</span><br><span class="line">	updateSelectHandleColor(rightDrawable, <span class="string">"mTextSelectHandleRightRes"</span>, editText, color);</span><br><span class="line">	updateSelectHandleColor(centerDrawable, <span class="string">"mTextSelectHandleRes"</span>, editText, color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后做个 setColor 的封装</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">(EditText editText, <span class="keyword">int</span> color)</span> </span>&#123;</span><br><span class="line">	setUnderlineColor(editText, color);</span><br><span class="line">	setHighlightColor(editText, color);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		getEditorFieldFromReflect();</span><br><span class="line">		getCursorFieldFromReflect();</span><br><span class="line">		getSelectFieldFromReflect();</span><br><span class="line">		Object editor = mEditor.get(editText);</span><br><span class="line">	</span><br><span class="line">		setCursorColor(editText, color, editor);</span><br><span class="line">		setSelectHandleColor(editText, color, editor);</span><br><span class="line">	</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要时直接 EditColorHelper.setColor(EditText, Color) 就可以了<br><img src="https://ooo.0o0.ooo/2017/02/14/58a298a678c38.png" alt></p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10 USB-To-Console 串口驱动 (x86 x64)</title>
+    <url>/2017/02/28/win10-usb-to-console/</url>
+    <content><![CDATA[<p>最近将 Win10 更新到 14393，之前的 USB 转串口线一插上就蓝屏重启，费了好多功夫 Google 到了之前版本的驱动，试了试居然没事了，这里就分享下吧</p>
+<p>下载地址：<a href="https://lanzous.com/iQxbyers9ha" target="_blank" rel="noopener">蓝奏云</a></p>
+<p>Step1. 进入 Step1 文件夹，安装 Setup.exe。如果成功，则无需进行第二步了。</p>
+<p>Step2. 进入 Step2 文件夹，安装 CH341SER.EXE。不行的话再安装 HL-340.EXE。</p>
+<p>Windows10 专业版 x64 测试通过。</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>手动挡车速对应发动机转速的计算</title>
+    <url>/2020/07/23/mt-engine-rpm-calculation/</url>
+    <content><![CDATA[<p>在同样的车速下，手动变速箱的低档位具有更大的扭矩。相应的，提速也更快。<br>如果在高车速高档位下不减速尝试挂入低档位，会有两种可能：</p>
+<ul>
+<li>挂不进去档位</li>
+<li>挂进去档位后这部分转速差由同步器消耗，产生顿挫</li>
+</ul>
+<p>两种情况都不是期望结果，所以就需要驾驶者人工去补油，将这部分发动机转速差尽可能减小。</p>
+<a id="more"></a>
+<p>在降档补油挂入更低的目标档位之后，如果需要更大的扭矩，例如在超车时、在爬坡感到动力不足时，就要在抬离合后继续给油；如果需要减速，就不需要继续给油，通过发动机制动减缓车速，在长下坡路段可以防止刹车片热衰减。</p>
+<p>那么知晓了各档位下，车速所对应的发动机转速，对于降档补油是很有帮助的。有了这些数据作为参考，做起来自然得心应手。但需要注意：在实际驾驶中，不会有人换挡还要提前去看转速表算补油区间，在通过长时间的练习后，这应由经验和肌肉记忆去完成。</p>
+<hr>
+<p>轮胎型号中，各数字的含义是这样：<br><strong>205/50 R17 =&gt; 断面宽度(mm)/扁平比 R轮辋直径(英寸)</strong></p>
+<p>首先，需要计算出轮胎的周长，公式：<br><strong><code>轮胎周长(m) = π(轮辋直径 * 25.4 + 扁平比 * 断面宽度 / 100 * 2) / 1000</code></strong><br>这里将轮辋直径单位从英寸转换成了毫米再做计算。</p>
+<hr>
+<p>从发动机的输出轴将动力传到轮胎，主要会经过这些机构：<br><img src="https://i.loli.net/2020/08/09/t9YqQhI5rFM8JXi.png" alt="P2.png"><br>其中，差速器忽略不计。各档位的速比和主传动比可以在车辆一致性证书上找到。</p>
+<hr>
+<p>有了这些数据，就可以根据车速去计算发动机的转速了，公式是：<br><strong><code>发动机转速(rpm) = 车速 * 1000 / 60 / 轮胎周长 * 主传动比 * 速比</code></strong></p>
+<p>这里给出笔者所计算的数据作为参考：</p>
+<table>
+    <tr>
+        <th colspan="5" style="text-align:center">发动机转速(rpm)</th>
+        <th rowspan="2" style="text-align:center">车速(Km/h)</th>
+    </tr>
+    <tr>
+        <th style="text-align:center">1档</th>
+        <th style="text-align:center">2档</th>
+        <th style="text-align:center">3档</th>
+        <th style="text-align:center">4档</th>
+        <th style="text-align:center">5档</th>
+    </tr>
+    <tr>
+        <td style="text-align:center">557</td>
+        <td style="text-align:center">308</td>
+        <td style="text-align:center">197</td>
+        <td style="text-align:center">147</td>
+        <td style="text-align:center">111</td>
+        <td style="text-align:center"><b>5</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">1114</td>
+        <td style="text-align:center">615</td>
+        <td style="text-align:center">393</td>
+        <td style="text-align:center">294</td>
+        <td style="text-align:center">222</td>
+        <td style="text-align:center"><b>10</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">1671</td>
+        <td style="text-align:center">923</td>
+        <td style="text-align:center">590</td>
+        <td style="text-align:center">440</td>
+        <td style="text-align:center">333</td>
+        <td style="text-align:center"><b>15</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">2228</td>
+        <td style="text-align:center">1230</td>
+        <td style="text-align:center">786</td>
+        <td style="text-align:center">587</td>
+        <td style="text-align:center">443</td>
+        <td style="text-align:center"><b>20</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">2785</td>
+        <td style="text-align:center">1538</td>
+        <td style="text-align:center">983</td>
+        <td style="text-align:center">734</td>
+        <td style="text-align:center">554</td>
+        <td style="text-align:center"><b>25</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">3342</td>
+        <td style="text-align:center">1845</td>
+        <td style="text-align:center">1179</td>
+        <td style="text-align:center">881</td>
+        <td style="text-align:center">665</td>
+        <td style="text-align:center"><b>30</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">3899</td>
+        <td style="text-align:center">2153</td>
+        <td style="text-align:center">1376</td>
+        <td style="text-align:center">1027</td>
+        <td style="text-align:center">776</td>
+        <td style="text-align:center"><b>35</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">4456</td>
+        <td style="text-align:center">2460</td>
+        <td style="text-align:center">1572</td>
+        <td style="text-align:center">1174</td>
+        <td style="text-align:center">887</td>
+        <td style="text-align:center"><b>40</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">5013</td>
+        <td style="text-align:center">2768</td>
+        <td style="text-align:center">1769</td>
+        <td style="text-align:center">1321</td>
+        <td style="text-align:center">998</td>
+        <td style="text-align:center"><b>45</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">5570</td>
+        <td style="text-align:center">3075</td>
+        <td style="text-align:center">1965</td>
+        <td style="text-align:center">1468</td>
+        <td style="text-align:center">1109</td>
+        <td style="text-align:center"><b>50</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">6127</td>
+        <td style="text-align:center">3383</td>
+        <td style="text-align:center">2162</td>
+        <td style="text-align:center">1615</td>
+        <td style="text-align:center">1220</td>
+        <td style="text-align:center"><b>55</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">6684</td>
+        <td style="text-align:center">3690</td>
+        <td style="text-align:center">2358</td>
+        <td style="text-align:center">1761</td>
+        <td style="text-align:center">1330</td>
+        <td style="text-align:center"><b>60</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">7241</td>
+        <td style="text-align:center">3998</td>
+        <td style="text-align:center">2555</td>
+        <td style="text-align:center">1908</td>
+        <td style="text-align:center">1441</td>
+        <td style="text-align:center"><b>65</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">7799</td>
+        <td style="text-align:center">4305</td>
+        <td style="text-align:center">2751</td>
+        <td style="text-align:center">2055</td>
+        <td style="text-align:center">1552</td>
+        <td style="text-align:center"><b>70</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">8356</td>
+        <td style="text-align:center">4613</td>
+        <td style="text-align:center">2948</td>
+        <td style="text-align:center">2202</td>
+        <td style="text-align:center">1663</td>
+        <td style="text-align:center"><b>75</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">8913</td>
+        <td style="text-align:center">4920</td>
+        <td style="text-align:center">3144</td>
+        <td style="text-align:center">2348</td>
+        <td style="text-align:center">1774</td>
+        <td style="text-align:center"><b>80</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">9470</td>
+        <td style="text-align:center">5228</td>
+        <td style="text-align:center">3341</td>
+        <td style="text-align:center">2495</td>
+        <td style="text-align:center">1885</td>
+        <td style="text-align:center"><b>85</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">10027</td>
+        <td style="text-align:center">5535</td>
+        <td style="text-align:center">3537</td>
+        <td style="text-align:center">2642</td>
+        <td style="text-align:center">1996</td>
+        <td style="text-align:center"><b>90</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">10584</td>
+        <td style="text-align:center">5843</td>
+        <td style="text-align:center">3734</td>
+        <td style="text-align:center">2789</td>
+        <td style="text-align:center">2106</td>
+        <td style="text-align:center"><b>95</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">11141</td>
+        <td style="text-align:center">6150</td>
+        <td style="text-align:center">3930</td>
+        <td style="text-align:center">2936</td>
+        <td style="text-align:center">2217</td>
+        <td style="text-align:center"><b>100</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">11698</td>
+        <td style="text-align:center">6458</td>
+        <td style="text-align:center">4127</td>
+        <td style="text-align:center">3082</td>
+        <td style="text-align:center">2328</td>
+        <td style="text-align:center"><b>105</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">12255</td>
+        <td style="text-align:center">6765</td>
+        <td style="text-align:center">4323</td>
+        <td style="text-align:center">3229</td>
+        <td style="text-align:center">2439</td>
+        <td style="text-align:center"><b>110</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">12812</td>
+        <td style="text-align:center">7073</td>
+        <td style="text-align:center">4520</td>
+        <td style="text-align:center">3376</td>
+        <td style="text-align:center">2550</td>
+        <td style="text-align:center"><b>115</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">13369</td>
+        <td style="text-align:center">7380</td>
+        <td style="text-align:center">4716</td>
+        <td style="text-align:center">3523</td>
+        <td style="text-align:center">2661</td>
+        <td style="text-align:center"><b>120</b></td>
+    </tr>
+</table>
+
+<p>需要注意的是，这是根据汽车各部件参数计算出的理论数值。基于国家标准，有误差 <strong>0 ≤ 指示车速 - 实际车速 ≤ 实际车速 / 10 + 4Km/h</strong>，所以根据车速表所计算出的发动机理论转速会比实际转速偏高一些，这是正常的。此外，年数较长的轮胎磨损也会影响理论数值。</p>
+<p>如果需要更为精确的车速与发动机转速的对应数值，就需要通过 <strong>K线</strong> 或 <strong>CAN线</strong> 连接汽车的 OBD 接口，实际测试同步读取 ECU 中的车速和发动机转速，这种方法是最为精确的。不在本文的讨论范围之内。</p>
+]]></content>
+      <tags>
+        <tag>汽车</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何判断一个页面是否更新？</title>
+    <url>/2020/05/21/whether-page-is-updated/</url>
+    <content><![CDATA[<p>对于需要长期运行的爬虫程序，在每次爬取前检查目标页面是否更新是十分重要的。如果不进行判断，就会对同一个页面重复爬取多次，浪费时间和性能。</p>
+<a id="more"></a>
+
+<h3 id="定时爬取"><a href="#定时爬取" class="headerlink" title="定时爬取"></a>定时爬取</h3><p>这种方式即为最传统的方式，无论页面是否更新，都会每隔一段时间对页面爬取一次。<br>同时，根据定时方式，又分为在程序内手动轮询计时和使用第三方定时程序两种。</p>
+<p>不推荐使用这种方法，效率低下。一定要用的话也建议使用 crontab 等其他程序定时调用，尽可能的在等待时间内不占用系统资源。</p>
+<hr>
+<h3 id="304-HTTP-状态码"><a href="#304-HTTP-状态码" class="headerlink" title="304 HTTP 状态码"></a>304 HTTP 状态码</h3><p>HTTP 头字段中定义了一个 304 状态码 ( 304 Not Modified )，这个请求头标签原本是供浏览器缓存用的，现代浏览器通常会缓存网页文件在自己的数据目录中，以便下次能更快的加载。</p>
+<p>在浏览器请求页面时，会把本地缓存的网页文件的最后修改时间放在请求头一起发送到服务器。服务器根据这个时间判断，如果页面有更新，会返回 HTTP 状态码 200，正常响应。如果页面没有更新，会返回 HTTP 状态码 304（不返回网页内容，只返回响应头）。</p>
+<p>那么作为爬虫，就可以模拟浏览器的这个行为，在本次爬取后记录爬取的时间，下一次爬取前在请求头中放入 <strong>If-Modified-Since</strong>，把上次爬取的时间一起发送给服务器，然后根据响应的 HTTP 状态码进行下一步操作。</p>
+<p>这种方法看似完美，但是很可惜，因为并不是所有服务器都会遵守规范返回 304 状态码。对于后端渲染的动态页面，或是前端渲染的单页面应用，这种方法也不合适。</p>
+<hr>
+<h3 id="Last-Modified-响应字段"><a href="#Last-Modified-响应字段" class="headerlink" title="Last-Modified 响应字段"></a>Last-Modified 响应字段</h3><p>根据 HTTP 规范，响应头中还有一个 <strong>Last-Modified</strong> 字段来返回页面最后一次的修改时间。<br>将这个时间与上一次爬取的时间做对比即可判断出页面是否更新。</p>
+<p>很可惜，这种方法基本只适用于静态页面。对于动态页面来说，返回的最后修改时间就是发回 Response 的时间，因为动态页面本来就是即时渲染的。</p>
+<hr>
+<h3 id="Etag-响应字段"><a href="#Etag-响应字段" class="headerlink" title="Etag 响应字段"></a>Etag 响应字段</h3><p><strong>Etag</strong> 主要为了解决前两个无法解决的一些问题而被创造出来的，例如：</p>
+<ul>
+<li>一些文件也许仅仅改变了修改时间，内容并没有改变</li>
+<li><strong>If-Modified-Since</strong> 的检查粒度是秒级的，无法做到更精确的检查</li>
+<li>服务器无法控制</li>
+</ul>
+<p>支持 <strong>Etag</strong> 的服务器会像返回 <strong>Last-Modified</strong> 那样返回一个<strong>Etag</strong> 字符串，客户端请求时根据需要在请求头的 <strong>If-Match</strong> 或 <strong>If-None-Match</strong>（更常用）字段中放入上次请求得来的 <strong>Etag</strong> 字符串，然后服务器会根据 <strong>Etag</strong> 作出与 <strong>If-Modified-Since</strong> 同样的响应。</p>
+<p>这种方法的最大问题就是服务器不一定支持。<strong>Etag</strong> 本身也是服务器根据一定规则计算出来的，有计算就有性能消耗，就看服务器愿不愿意支持了。</p>
+<hr>
+<h3 id="基于页面地址的比较"><a href="#基于页面地址的比较" class="headerlink" title="基于页面地址的比较"></a>基于页面地址的比较</h3><p>在本次爬取后，保存爬取的 URL，一段时间内爬过的就不用再爬了。如果页面 URL 中有诸如 ID 之类的参数的话，可以使用 ID，因为 ID 在后端中通常是唯一的。经常与 <strong>定时爬取</strong> 配合使用。</p>
+<hr>
+<h3 id="基于页面内容的比较"><a href="#基于页面内容的比较" class="headerlink" title="基于页面内容的比较"></a>基于页面内容的比较</h3><p>在本次爬取后，抽取页面关键元素的内容计算 MD5 并保存，下次爬取时比较 MD5 判断是否更新。如果关键内容不多的话，也可以不做 MD5 直接保存。</p>
+<p>不建议直接保存整个页面全部内容或其 MD5，因为如果页面中有 <em>本站已运行 xx 时间、访客：xx</em> 之类不断更新的内容，就会造成误判。</p>
+]]></content>
+      <tags>
+        <tag>爬虫</tag>
       </tags>
   </entry>
 </search>

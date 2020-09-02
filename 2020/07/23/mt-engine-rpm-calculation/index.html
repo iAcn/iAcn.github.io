@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"iacn.me","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":160,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在同样的车速下，手动变速箱的低档位具有更大的扭矩。相应的，提速也更快。如果在高车速高档位下不减速尝试挂入低档位，会有两种可能：  挂不进去档位 挂进去档位后这部分转速差由同步器消耗，产生顿挫  两种情况都不是期望结果，所以就需要驾驶者人工去补油，将这部分发动机转速差尽可能减小。">
+<meta name="keywords" content="汽车">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手动挡车速对应发动机转速的计算">
+<meta property="og:url" content="https://iacn.me/2020/07/23/mt-engine-rpm-calculation/index.html">
+<meta property="og:site_name" content="碎流烟">
+<meta property="og:description" content="在同样的车速下，手动变速箱的低档位具有更大的扭矩。相应的，提速也更快。如果在高车速高档位下不减速尝试挂入低档位，会有两种可能：  挂不进去档位 挂进去档位后这部分转速差由同步器消耗，产生顿挫  两种情况都不是期望结果，所以就需要驾驶者人工去补油，将这部分发动机转速差尽可能减小。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/t9YqQhI5rFM8JXi.png">
+<meta property="og:updated_time" content="2020-08-10T11:39:34.895Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手动挡车速对应发动机转速的计算">
+<meta name="twitter:description" content="在同样的车速下，手动变速箱的低档位具有更大的扭矩。相应的，提速也更快。如果在高车速高档位下不减速尝试挂入低档位，会有两种可能：  挂不进去档位 挂进去档位后这部分转速差由同步器消耗，产生顿挫  两种情况都不是期望结果，所以就需要驾驶者人工去补油，将这部分发动机转速差尽可能减小。">
+<meta name="twitter:image" content="https://i.loli.net/2020/08/09/t9YqQhI5rFM8JXi.png">
+
+<link rel="canonical" href="https://iacn.me/2020/07/23/mt-engine-rpm-calculation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>手动挡车速对应发动机转速的计算 | 碎流烟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <h1 class="site-title">碎流烟</h1>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iacn.me/2020/07/23/mt-engine-rpm-calculation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Meolunr">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="碎流烟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          手动挡车速对应发动机转速的计算
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-23 14:00:35" itemprop="dateCreated datePublished" datetime="2020-07-23T14:00:35+08:00">2020-07-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在同样的车速下，手动变速箱的低档位具有更大的扭矩。相应的，提速也更快。<br>如果在高车速高档位下不减速尝试挂入低档位，会有两种可能：</p>
+<ul>
+<li>挂不进去档位</li>
+<li>挂进去档位后这部分转速差由同步器消耗，产生顿挫</li>
+</ul>
+<p>两种情况都不是期望结果，所以就需要驾驶者人工去补油，将这部分发动机转速差尽可能减小。</p>
+<a id="more"></a>
+<p>在降档补油挂入更低的目标档位之后，如果需要更大的扭矩，例如在超车时、在爬坡感到动力不足时，就要在抬离合后继续给油；如果需要减速，就不需要继续给油，通过发动机制动减缓车速，在长下坡路段可以防止刹车片热衰减。</p>
+<p>那么知晓了各档位下，车速所对应的发动机转速，对于降档补油是很有帮助的。有了这些数据作为参考，做起来自然得心应手。但需要注意：在实际驾驶中，不会有人换挡还要提前去看转速表算补油区间，在通过长时间的练习后，这应由经验和肌肉记忆去完成。</p>
+<hr>
+<p>轮胎型号中，各数字的含义是这样：<br><strong>205/50 R17 =&gt; 断面宽度(mm)/扁平比 R轮辋直径(英寸)</strong></p>
+<p>首先，需要计算出轮胎的周长，公式：<br><strong><code>轮胎周长(m) = π(轮辋直径 * 25.4 + 扁平比 * 断面宽度 / 100 * 2) / 1000</code></strong><br>这里将轮辋直径单位从英寸转换成了毫米再做计算。</p>
+<hr>
+<p>从发动机的输出轴将动力传到轮胎，主要会经过这些机构：<br><img src="https://i.loli.net/2020/08/09/t9YqQhI5rFM8JXi.png" alt="P2.png"><br>其中，差速器忽略不计。各档位的速比和主传动比可以在车辆一致性证书上找到。</p>
+<hr>
+<p>有了这些数据，就可以根据车速去计算发动机的转速了，公式是：<br><strong><code>发动机转速(rpm) = 车速 * 1000 / 60 / 轮胎周长 * 主传动比 * 速比</code></strong></p>
+<p>这里给出笔者所计算的数据作为参考：</p>
+<table>
+    <tr>
+        <th colspan="5" style="text-align:center">发动机转速(rpm)</th>
+        <th rowspan="2" style="text-align:center">车速(Km/h)</th>
+    </tr>
+    <tr>
+        <th style="text-align:center">1档</th>
+        <th style="text-align:center">2档</th>
+        <th style="text-align:center">3档</th>
+        <th style="text-align:center">4档</th>
+        <th style="text-align:center">5档</th>
+    </tr>
+    <tr>
+        <td style="text-align:center">557</td>
+        <td style="text-align:center">308</td>
+        <td style="text-align:center">197</td>
+        <td style="text-align:center">147</td>
+        <td style="text-align:center">111</td>
+        <td style="text-align:center"><b>5</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">1114</td>
+        <td style="text-align:center">615</td>
+        <td style="text-align:center">393</td>
+        <td style="text-align:center">294</td>
+        <td style="text-align:center">222</td>
+        <td style="text-align:center"><b>10</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">1671</td>
+        <td style="text-align:center">923</td>
+        <td style="text-align:center">590</td>
+        <td style="text-align:center">440</td>
+        <td style="text-align:center">333</td>
+        <td style="text-align:center"><b>15</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">2228</td>
+        <td style="text-align:center">1230</td>
+        <td style="text-align:center">786</td>
+        <td style="text-align:center">587</td>
+        <td style="text-align:center">443</td>
+        <td style="text-align:center"><b>20</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">2785</td>
+        <td style="text-align:center">1538</td>
+        <td style="text-align:center">983</td>
+        <td style="text-align:center">734</td>
+        <td style="text-align:center">554</td>
+        <td style="text-align:center"><b>25</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">3342</td>
+        <td style="text-align:center">1845</td>
+        <td style="text-align:center">1179</td>
+        <td style="text-align:center">881</td>
+        <td style="text-align:center">665</td>
+        <td style="text-align:center"><b>30</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">3899</td>
+        <td style="text-align:center">2153</td>
+        <td style="text-align:center">1376</td>
+        <td style="text-align:center">1027</td>
+        <td style="text-align:center">776</td>
+        <td style="text-align:center"><b>35</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">4456</td>
+        <td style="text-align:center">2460</td>
+        <td style="text-align:center">1572</td>
+        <td style="text-align:center">1174</td>
+        <td style="text-align:center">887</td>
+        <td style="text-align:center"><b>40</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">5013</td>
+        <td style="text-align:center">2768</td>
+        <td style="text-align:center">1769</td>
+        <td style="text-align:center">1321</td>
+        <td style="text-align:center">998</td>
+        <td style="text-align:center"><b>45</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">5570</td>
+        <td style="text-align:center">3075</td>
+        <td style="text-align:center">1965</td>
+        <td style="text-align:center">1468</td>
+        <td style="text-align:center">1109</td>
+        <td style="text-align:center"><b>50</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">6127</td>
+        <td style="text-align:center">3383</td>
+        <td style="text-align:center">2162</td>
+        <td style="text-align:center">1615</td>
+        <td style="text-align:center">1220</td>
+        <td style="text-align:center"><b>55</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">6684</td>
+        <td style="text-align:center">3690</td>
+        <td style="text-align:center">2358</td>
+        <td style="text-align:center">1761</td>
+        <td style="text-align:center">1330</td>
+        <td style="text-align:center"><b>60</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">7241</td>
+        <td style="text-align:center">3998</td>
+        <td style="text-align:center">2555</td>
+        <td style="text-align:center">1908</td>
+        <td style="text-align:center">1441</td>
+        <td style="text-align:center"><b>65</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">7799</td>
+        <td style="text-align:center">4305</td>
+        <td style="text-align:center">2751</td>
+        <td style="text-align:center">2055</td>
+        <td style="text-align:center">1552</td>
+        <td style="text-align:center"><b>70</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">8356</td>
+        <td style="text-align:center">4613</td>
+        <td style="text-align:center">2948</td>
+        <td style="text-align:center">2202</td>
+        <td style="text-align:center">1663</td>
+        <td style="text-align:center"><b>75</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">8913</td>
+        <td style="text-align:center">4920</td>
+        <td style="text-align:center">3144</td>
+        <td style="text-align:center">2348</td>
+        <td style="text-align:center">1774</td>
+        <td style="text-align:center"><b>80</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">9470</td>
+        <td style="text-align:center">5228</td>
+        <td style="text-align:center">3341</td>
+        <td style="text-align:center">2495</td>
+        <td style="text-align:center">1885</td>
+        <td style="text-align:center"><b>85</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">10027</td>
+        <td style="text-align:center">5535</td>
+        <td style="text-align:center">3537</td>
+        <td style="text-align:center">2642</td>
+        <td style="text-align:center">1996</td>
+        <td style="text-align:center"><b>90</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">10584</td>
+        <td style="text-align:center">5843</td>
+        <td style="text-align:center">3734</td>
+        <td style="text-align:center">2789</td>
+        <td style="text-align:center">2106</td>
+        <td style="text-align:center"><b>95</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">11141</td>
+        <td style="text-align:center">6150</td>
+        <td style="text-align:center">3930</td>
+        <td style="text-align:center">2936</td>
+        <td style="text-align:center">2217</td>
+        <td style="text-align:center"><b>100</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">11698</td>
+        <td style="text-align:center">6458</td>
+        <td style="text-align:center">4127</td>
+        <td style="text-align:center">3082</td>
+        <td style="text-align:center">2328</td>
+        <td style="text-align:center"><b>105</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">12255</td>
+        <td style="text-align:center">6765</td>
+        <td style="text-align:center">4323</td>
+        <td style="text-align:center">3229</td>
+        <td style="text-align:center">2439</td>
+        <td style="text-align:center"><b>110</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">12812</td>
+        <td style="text-align:center">7073</td>
+        <td style="text-align:center">4520</td>
+        <td style="text-align:center">3376</td>
+        <td style="text-align:center">2550</td>
+        <td style="text-align:center"><b>115</b></td>
+    </tr>
+    <tr>
+        <td style="text-align:center">13369</td>
+        <td style="text-align:center">7380</td>
+        <td style="text-align:center">4716</td>
+        <td style="text-align:center">3523</td>
+        <td style="text-align:center">2661</td>
+        <td style="text-align:center"><b>120</b></td>
+    </tr>
+</table>
+
+<p>需要注意的是，这是根据汽车各部件参数计算出的理论数值。基于国家标准，有误差 <strong>0 ≤ 指示车速 - 实际车速 ≤ 实际车速 / 10 + 4Km/h</strong>，所以根据车速表所计算出的发动机理论转速会比实际转速偏高一些，这是正常的。此外，年数较长的轮胎磨损也会影响理论数值。</p>
+<p>如果需要更为精确的车速与发动机转速的对应数值，就需要通过 <strong>K线</strong> 或 <strong>CAN线</strong> 连接汽车的 OBD 接口，实际测试同步读取 ECU 中的车速和发动机转速，这种方法是最为精确的。不在本文的讨论范围之内。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Meolunr
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://iacn.me/2020/07/23/mt-engine-rpm-calculation/" title="手动挡车速对应发动机转速的计算">https://iacn.me/2020/07/23/mt-engine-rpm-calculation/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/汽车/" rel="tag"># 汽车</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/21/whether-page-is-updated/" rel="prev" title="如何判断一个页面是否更新？">
+      <i class="fa fa-chevron-left"></i> 如何判断一个页面是否更新？
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzk4My8xMDUxOA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Meolunr</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/meolunr" title="GitHub → https://github.com/meolunr" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:meolunr@qq.com" title="E-Mail → mailto:meolunr@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.omico.me" title="https://blog.omico.me" rel="noopener" target="_blank">Omico</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.nfz.moe" title="https://blog.nfz.moe" rel="noopener" target="_blank">neoFelhz</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Meolunr</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
