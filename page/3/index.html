@@ -350,21 +350,18 @@
       
           <p>有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？</p>
 <p>如果尝试修改 Git 的提交邮箱</p>
-<blockquote>
-<p>git config –global user.name “Your Name”<br>git config –global user.email “Your Email”</p>
-</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "Your Name"</span><br><span class="line">git config --global user.email "Your Email"</span><br></pre></td></tr></table></figure>
+
 <p>这样可以修改作者的名字和邮箱</p>
-<p>但是<br>这种方法只对之后的 Commit 有效，之前提交过的就改不了了…</p>
+<p>但是<br>这种方法只对之后的 commit 有效，之前提交过的就改不了了…</p>
 <p>还好，Google 到了一种解决办法，这里分享下，也算是做个记录</p>
 <ol>
 <li><p>打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可）</p>
 </li>
 <li><p>同步下来你的项目并进入目录（以 repo.git 为例）</p>
-<blockquote>
-<p>git clone –bare <a href="https://github.com/user/repo.git" target="_blank" rel="noopener">https://github.com/user/repo.git</a><br>cd repo.git</p>
-</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone --bare https://github.com/user/repo.git</span><br><span class="line">cd repo.git</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>复制下面的脚本，可以直接复制到终端命令行里或新建 Shell 脚本<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
+<li><p>将下面的脚本，直接复制到终端命令行里<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2016/11/10/modify-git-submitted-commit/#more" rel="contents">
