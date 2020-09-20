@@ -1,55 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CentOS 7 + Python Flask + MySQL + Nginx 配置</title>
-    <url>/2017/04/14/centos-python-flask-nginx/</url>
-    <content><![CDATA[<p>不是很常用，算是给自己留个记录吧<br>部分资料参考自网络</p>
-<p>0.切换到 root 用户</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
-
-<p>1.安装并启动 Nginx</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install nginx</span><br><span class="line">systemctl start nginx.service   <span class="comment"># 开启 nginx 服务</span></span><br><span class="line">systemctl <span class="built_in">enable</span> nginx.service   <span class="comment"># 跟随系统启动</span></span><br></pre></td></tr></table></figure>
-
-<p>此时使用 localhost 应该会出现 Welcome to nginx 的欢迎页面了</p>
-<a id="more"></a>
-
-<p>2.安装并启动 MySQL<br>（这里我用的是 MariaDB，就是 MySQL 换个壳，没多大区别…）</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install mariadb-server mariadb</span><br><span class="line">systemctl start mariadb   <span class="comment"># 开启 mysql 服务</span></span><br><span class="line">systemctl <span class="built_in">enable</span> mariadb   <span class="comment"># 跟随系统启动</span></span><br></pre></td></tr></table></figure>
-
-<p>3.初始化 MySQL 安全策略</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
-
-<p>会提示输入 root 密码，默认为空，直接回车即可<br>然后就问是否重新设置 root 密码，当然是要重新设置的啦。设置完后还有几个问题都输入 y 同意就行了</p>
-<p>4.安装并配置 Python 和 pip</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install python34 <span class="comment"># 安装 3.4.x 版本</span></span><br></pre></td></tr></table></figure>
-
-<p>由于 CentOS 自带了 Python 2.7 的版本，所以某些情况下，直接替换掉原始的版本可能出现未知问题，比如 yum 没法用之类的，就需要手动去 /usr/bin/python 修改链接关系，使其正确链接到 Python2，可用 ls -l 命令检查，这里我上一张正确的连接图<br><img src="https://ooo.0o0.ooo/2017/02/02/589333313a72c.png" alt><br>后面执行命令的时候我将会用 Python3 来执行，python3 xxx</p>
-<p>5.安装 pip，Gunicorn 和 flask</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install python34-pip <span class="comment"># 安装 pip</span></span><br><span class="line">pip3 install flask</span><br><span class="line">pip3 install gunicorn</span><br></pre></td></tr></table></figure>
-
-<p>6.配置 Flask<br>编写文件 <strong>/home/web/api/api.py</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello World!'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
-
-<p>7.使用 Gunicorn 启动项目</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gunicorn -D -w 3 -b 127.0.0.1:8000 api:app</span><br><span class="line"></span><br><span class="line">注意要在项目根目录下执行这条命令</span><br><span class="line"></span><br><span class="line">-D 后台运行 </span><br><span class="line">-w 启动 3 个工作线程</span><br><span class="line">-b 指定 IP 和端口号</span><br><span class="line"></span><br><span class="line">最后的那个 api:app</span><br><span class="line">api 就是那个 Python 文件的名称（不包括后缀/模块名）</span><br><span class="line">app 就是 Flask 实例的名称</span><br><span class="line"></span><br><span class="line">可参见上文 api.py 的代码</span><br></pre></td></tr></table></figure>
-
-<p>可以使用 <strong>ps -aux</strong> 命令查看系统运行的进程<br>同样，你也可以使用 <strong>kill [PID]</strong> 来关闭 Gunicorn 的进程</p>
-<p>8.配置 Nginx<br>主要就是配置 nginx 目录，这里我以 api 为例</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/api.conf</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  api.iacn.me; <span class="comment"># 外部域名</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8000; <span class="comment"># 反向代理 Gunicorn 本地的服务地址</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>保存好然后重启 Nginx</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
-
-<p>9.可以查看一下端口信息<br><img src="https://ooo.0o0.ooo/2017/04/05/58e49752ba86f.png" alt="snipaste20170405_150243.png"></p>
-<p>10.已经可以从外部访问了<br><img src="https://ooo.0o0.ooo/2017/04/05/58e497850d5ff.png" alt="snipaste20170405_150322.png"></p>
-]]></content>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>百度搜索常用高级命令整理</title>
     <url>/2019/03/29/baidu-search-advanced/</url>
     <content><![CDATA[<p>本文适用于在无法使用其他搜索引擎时，不得已的情况下使用百度搜索，通过一些搜索技巧来获得更准确的搜索结果。在可以访问外网时，个人不推荐使用百度搜索。</p>
@@ -133,6 +84,55 @@
       </tags>
   </entry>
   <entry>
+    <title>CentOS 7 + Python Flask + MySQL + Nginx 配置</title>
+    <url>/2017/04/14/centos-python-flask-nginx/</url>
+    <content><![CDATA[<p>不是很常用，算是给自己留个记录吧<br>部分资料参考自网络</p>
+<p>0.切换到 root 用户</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
+
+<p>1.安装并启动 Nginx</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install nginx</span><br><span class="line">systemctl start nginx.service   <span class="comment"># 开启 nginx 服务</span></span><br><span class="line">systemctl <span class="built_in">enable</span> nginx.service   <span class="comment"># 跟随系统启动</span></span><br></pre></td></tr></table></figure>
+
+<p>此时使用 localhost 应该会出现 Welcome to nginx 的欢迎页面了</p>
+<a id="more"></a>
+
+<p>2.安装并启动 MySQL<br>（这里我用的是 MariaDB，就是 MySQL 换个壳，没多大区别…）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install mariadb-server mariadb</span><br><span class="line">systemctl start mariadb   <span class="comment"># 开启 mysql 服务</span></span><br><span class="line">systemctl <span class="built_in">enable</span> mariadb   <span class="comment"># 跟随系统启动</span></span><br></pre></td></tr></table></figure>
+
+<p>3.初始化 MySQL 安全策略</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<p>会提示输入 root 密码，默认为空，直接回车即可<br>然后就问是否重新设置 root 密码，当然是要重新设置的啦。设置完后还有几个问题都输入 y 同意就行了</p>
+<p>4.安装并配置 Python 和 pip</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install python34 <span class="comment"># 安装 3.4.x 版本</span></span><br></pre></td></tr></table></figure>
+
+<p>由于 CentOS 自带了 Python 2.7 的版本，所以某些情况下，直接替换掉原始的版本可能出现未知问题，比如 yum 没法用之类的，就需要手动去 /usr/bin/python 修改链接关系，使其正确链接到 Python2，可用 ls -l 命令检查，这里我上一张正确的连接图<br><img src="https://ooo.0o0.ooo/2017/02/02/589333313a72c.png" alt><br>后面执行命令的时候我将会用 Python3 来执行，python3 xxx</p>
+<p>5.安装 pip，Gunicorn 和 flask</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install python34-pip <span class="comment"># 安装 pip</span></span><br><span class="line">pip3 install flask</span><br><span class="line">pip3 install gunicorn</span><br></pre></td></tr></table></figure>
+
+<p>6.配置 Flask<br>编写文件 <strong>/home/web/api/api.py</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello World!'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>7.使用 Gunicorn 启动项目</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gunicorn -D -w 3 -b 127.0.0.1:8000 api:app</span><br><span class="line"></span><br><span class="line">注意要在项目根目录下执行这条命令</span><br><span class="line"></span><br><span class="line">-D 后台运行 </span><br><span class="line">-w 启动 3 个工作线程</span><br><span class="line">-b 指定 IP 和端口号</span><br><span class="line"></span><br><span class="line">最后的那个 api:app</span><br><span class="line">api 就是那个 Python 文件的名称（不包括后缀/模块名）</span><br><span class="line">app 就是 Flask 实例的名称</span><br><span class="line"></span><br><span class="line">可参见上文 api.py 的代码</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <strong>ps -aux</strong> 命令查看系统运行的进程<br>同样，你也可以使用 <strong>kill [PID]</strong> 来关闭 Gunicorn 的进程</p>
+<p>8.配置 Nginx<br>主要就是配置 nginx 目录，这里我以 api 为例</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/api.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  api.iacn.me; <span class="comment"># 外部域名</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8000; <span class="comment"># 反向代理 Gunicorn 本地的服务地址</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存好然后重启 Nginx</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>9.可以查看一下端口信息<br><img src="https://ooo.0o0.ooo/2017/04/05/58e49752ba86f.png" alt="snipaste20170405_150243.png"></p>
+<p>10.已经可以从外部访问了<br><img src="https://ooo.0o0.ooo/2017/04/05/58e497850d5ff.png" alt="snipaste20170405_150322.png"></p>
+]]></content>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一个团队里的 5 种人</title>
     <url>/2016/12/17/five-men-in-the-team/</url>
     <content><![CDATA[<p>一个团队里，人分为 5 种<br>人渣、人员、人手、人才、人物</p>
@@ -180,6 +180,20 @@
       </tags>
   </entry>
   <entry>
+    <title>泉城公交开发手记（一） 说明</title>
+    <url>/2018/01/07/jinan-bus-note1/</url>
+    <content><![CDATA[<p>泉城公交是我在 2015 年的时候开发的一个济南公交第三方客户端，基本实现了原生济南公交客户端的部分功能。但出于一些原因，不得不停止更新。我将所有源代码开源在了 GitHub。然后有网友邮件询问相关问题，所以，我整理了一下以前开发时的一些笔记，整理成几篇文章发出来。</p>
+<a id="more"></a>
+
+<p>这几篇文章大概分为以下几个部分<br>API 分析、通知模块实现、自定义线路图 View 等等，还有部分填坑的说明。路线规划不会写，因为这部分整个就是调用的百度离线地图 SDK。</p>
+<p>如果时间充裕的话，可能还会写一写济南公交（微步、369出行）新版的 NFC 公交卡充值实现。</p>
+<p>本系列文章仅供技术交流，请勿用于商业及非法用途，如产生法律纠纷与作者无关。</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java 反射获取类所实现接口的泛型实际值</title>
     <url>/2017/03/28/java-interface-generic-value/</url>
     <content><![CDATA[<p>1.有三个类</p>
@@ -214,20 +228,6 @@
 ]]></content>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>泉城公交开发手记（一） 说明</title>
-    <url>/2018/01/07/jinan-bus-note1/</url>
-    <content><![CDATA[<p>泉城公交是我在 2015 年的时候开发的一个济南公交第三方客户端，基本实现了原生济南公交客户端的部分功能。但出于一些原因，不得不停止更新。我将所有源代码开源在了 GitHub。然后有网友邮件询问相关问题，所以，我整理了一下以前开发时的一些笔记，整理成几篇文章发出来。</p>
-<a id="more"></a>
-
-<p>这几篇文章大概分为以下几个部分<br>API 分析、通知模块实现、自定义线路图 View 等等，还有部分填坑的说明。路线规划不会写，因为这部分整个就是调用的百度离线地图 SDK。</p>
-<p>如果时间充裕的话，可能还会写一写济南公交（微步、369出行）新版的 NFC 公交卡充值实现。</p>
-<p>本系列文章仅供技术交流，请勿用于商业及非法用途，如产生法律纠纷与作者无关。</p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -270,6 +270,67 @@
 ]]></content>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>合并两个 Git 仓库</title>
+    <url>/2016/11/16/merge-git-repo/</url>
+    <content><![CDATA[<p>本应在 /Project 下的 Git 根目录成了 /Project/app …</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── Project</span><br><span class="line">    ├── app</span><br><span class="line">    │   ├── xxx6.txt</span><br><span class="line">    │   ├── xxx7.txt</span><br><span class="line">    │   └── xxx8.txt</span><br><span class="line">    ├── xxx1.txt</span><br><span class="line">    └── xxx2.txt</span><br></pre></td></tr></table></figure>
+
+<p>就是这个样子，Git 的根目录成了 /app ，而需要的是 /Project ，但是 app 又是 Project 的子目录，想迁移过去又不想丢失 Commit 数据…</p>
+<p>简单点说就是<br>有 2 个 Git 仓库：repo1 和 repo2<br>repo1 是 repo2 的子目录<br>想要把 repo1 中的文件移入 repo2<br>repo1 的 Commit 记录要保留</p>
+<a id="more"></a>
+
+<p>当前文件结构如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2</span><br><span class="line">    ├── repo1 ==============&gt; Git 仓库</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
+
+<p>想要的结果是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2 ==============&gt; Git 仓库</span><br><span class="line">    ├── repo1</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
+
+<p>开始</p>
+<ol>
+<li><p>新建 repo1 子目录，将原 /repo1 的文件移动至 /repo1/repo1</p>
+<blockquote>
+<p>cd repo1<br>mkdir repo1<br>find -maxdepth 1 -not -name . -not -name repo1 -not -name .git -exec mv {} ./repo1 ;</p>
+</blockquote>
+<p>目录结构变成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── repo1</span><br><span class="line">│   └── repo1</span><br><span class="line">│       └── repo1.txt</span><br><span class="line">└── repo2.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 repo1 Git 提交刚才的操作</p>
+</li>
+<li><p>在 repo2 中 将 repo1 作为远程仓库，添加进来，设置别名为 temp</p>
+<blockquote>
+<p>cd ../repo2<br>git remote add temp ../repo1/</p>
+</blockquote>
+</li>
+<li><p>从 repo1 中抓取数据到当前 repo2 仓库</p>
+<blockquote>
+<p>git fetch temp</p>
+</blockquote>
+</li>
+<li><p>将 repo1 中抓来的 master 分支作为新分支 checkout 到本地，新分支名命名为 repo1</p>
+<blockquote>
+<p>git checkout -b repo1 temp/master</p>
+</blockquote>
+</li>
+</ol>
+<ol start="6">
+<li><p>切换回 repo2 的 master 分支，并将 repo1 分支合并到 master</p>
+<blockquote>
+<p>git checkout master<br>git merge repo1</p>
+</blockquote>
+</li>
+<li><p>删除 repo1 分支和远程地址 temp</p>
+<blockquote>
+<p>git branch -d repo1<br>git remote remove temp</p>
+</blockquote>
+</li>
+</ol>
+<p>这样就可以了。大致思路就是伪造远程 repo1 仓库为 repo2 的一个分支，然后合并进来</p>
+]]></content>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -555,67 +616,6 @@
       </tags>
   </entry>
   <entry>
-    <title>合并两个 Git 仓库</title>
-    <url>/2016/11/16/merge-git-repo/</url>
-    <content><![CDATA[<p>本应在 /Project 下的 Git 根目录成了 /Project/app …</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── Project</span><br><span class="line">    ├── app</span><br><span class="line">    │   ├── xxx6.txt</span><br><span class="line">    │   ├── xxx7.txt</span><br><span class="line">    │   └── xxx8.txt</span><br><span class="line">    ├── xxx1.txt</span><br><span class="line">    └── xxx2.txt</span><br></pre></td></tr></table></figure>
-
-<p>就是这个样子，Git 的根目录成了 /app ，而需要的是 /Project ，但是 app 又是 Project 的子目录，想迁移过去又不想丢失 Commit 数据…</p>
-<p>简单点说就是<br>有 2 个 Git 仓库：repo1 和 repo2<br>repo1 是 repo2 的子目录<br>想要把 repo1 中的文件移入 repo2<br>repo1 的 Commit 记录要保留</p>
-<a id="more"></a>
-
-<p>当前文件结构如下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2</span><br><span class="line">    ├── repo1 ==============&gt; Git 仓库</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
-
-<p>想要的结果是</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── repo2 ==============&gt; Git 仓库</span><br><span class="line">    ├── repo1</span><br><span class="line">    │   └── repo1.txt</span><br><span class="line">    └── repo2.txt</span><br></pre></td></tr></table></figure>
-
-<p>开始</p>
-<ol>
-<li><p>新建 repo1 子目录，将原 /repo1 的文件移动至 /repo1/repo1</p>
-<blockquote>
-<p>cd repo1<br>mkdir repo1<br>find -maxdepth 1 -not -name . -not -name repo1 -not -name .git -exec mv {} ./repo1 ;</p>
-</blockquote>
-<p>目录结构变成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── repo1</span><br><span class="line">│   └── repo1</span><br><span class="line">│       └── repo1.txt</span><br><span class="line">└── repo2.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在 repo1 Git 提交刚才的操作</p>
-</li>
-<li><p>在 repo2 中 将 repo1 作为远程仓库，添加进来，设置别名为 temp</p>
-<blockquote>
-<p>cd ../repo2<br>git remote add temp ../repo1/</p>
-</blockquote>
-</li>
-<li><p>从 repo1 中抓取数据到当前 repo2 仓库</p>
-<blockquote>
-<p>git fetch temp</p>
-</blockquote>
-</li>
-<li><p>将 repo1 中抓来的 master 分支作为新分支 checkout 到本地，新分支名命名为 repo1</p>
-<blockquote>
-<p>git checkout -b repo1 temp/master</p>
-</blockquote>
-</li>
-</ol>
-<ol start="6">
-<li><p>切换回 repo2 的 master 分支，并将 repo1 分支合并到 master</p>
-<blockquote>
-<p>git checkout master<br>git merge repo1</p>
-</blockquote>
-</li>
-<li><p>删除 repo1 分支和远程地址 temp</p>
-<blockquote>
-<p>git branch -d repo1<br>git remote remove temp</p>
-</blockquote>
-</li>
-</ol>
-<p>这样就可以了。大致思路就是伪造远程 repo1 仓库为 repo2 的一个分支，然后合并进来</p>
-]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Android 多主题之 EditText</title>
     <url>/2017/02/14/modify-edittext-color/</url>
     <content><![CDATA[<p>多主题的需求在很多 Android 应用中都有存在，实现方式也是多种多样。有以插件化方式实现的，也有以修改原生控件颜色的方式实现的。<br>本文所写的就是以修改原生控件颜色的方式应用主题的，EditText 的修改。</p>
@@ -654,6 +654,304 @@
 ]]></content>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 6.0 上的双卡相关开发</title>
+    <url>/2017/06/07/multisim-for-android-6-0/</url>
+    <content><![CDATA[<p>在 Android 5.0 以前，各芯片厂商上的双卡开发没有一个统一的标准，以至于做起双卡适配来十分麻烦。<br>Android 5.0 之后，Google 官方统一了双卡平台的适配，并在 Framework 中添加了双卡相关的 API，这对于需要处理双卡的应用来说提供了很大的便利。</p>
+<p>因为 Android 5 上的双卡 API 还不是很完善<br>所以本文是介绍在 Android 6.0 平台上的双卡相关开发<br>后续还会有一篇文章来介绍在双卡处理 Android N 上的实现</p>
+<a id="more"></a>
+
+<p>言归正题<br>在 API 层面上，自 Android 5.0 开始，加入了 SubscriptionManager。双卡相关的处理主要是依赖这个 API，你可以通过 Context 类里面的 getSystemService 方法和 SubscriptionManager.from(Context) 来取得它的对象，当然它内部也是调用的 getSystemService。</p>
+<p>在数据库方面，TelephonyProvider 的 telephony.db 中新增了 siminfo 表来管理双卡的信息<br><img src="https://ooo.0o0.ooo/2017/06/07/5937b4b154014.png" alt="1.png"></p>
+<p><img src="https://ooo.0o0.ooo/2017/06/07/5937cdcfb238e.png" alt="Screenshot_20170607-171729.png"></p>
+<p>由于字段太多，我这里只截图了几个关键的字段<br>需要注意的是 <strong>_id</strong> 和 <strong>sim_id</strong> 这两个字段<br>_id: 这个不用多说，系统要求，自增长，从 0 开始<br>sim_id：该行的卡所在的卡槽值，有 0，1，-1 三个值<br>| 数值 | 描述                        |<br>| :–: |:—————————:|<br>| 0    | 该卡插在卡槽 1 中（主卡槽） |<br>| 1    | 该卡插在卡槽 2 中（副卡槽） |<br>| -1   | 手机内曾经插入过该卡        |<br><em>Ps. 在 Android 6.0+，-1 值已经被移除</em></p>
+<p>每插入一张新的 SIM 卡，siminfo 表中就会插入一行新的数据，然后 _id 会自增长加 1</p>
+<p>详细的各个 API 可以去查阅 API 文档。我这里仅以获取双卡手机两个卡的 IMSI 为例，介绍一下各平台所使用的方法<br>SubId 这个值对于双卡相关的操作来说是必要的</p>
+<p>Android 6.0：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回当前手机所插入 SIM 卡的个数</span></span><br><span class="line">TelePhonyManager.getPhoneCount()</span><br><span class="line"></span><br><span class="line">SubscriptionManager subManager = SubscriptionManager.from(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 这个方法传进手机的卡槽序号，返回对应所插 SIM 卡的信息</span></span><br><span class="line">SubscriptionInfo info = subManager.getActiveSubscriptionInfoForSimSlotIndex(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">int</span> subId = info.getSubscriptionId();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法在 Android 6.0 中还是 @hide 状态，可以反射调用</span></span><br><span class="line">TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">String imsi = teleManager.getSubscriberId(subId);</span><br></pre></td></tr></table></figure>
+
+<p>MTK：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">    Class&lt;?&gt; phoneClass = Class.forName(<span class="string">"com.android.internal.telephony.Phone"</span>);</span><br><span class="line"></span><br><span class="line">    Field gemni1Field = phoneClass.getField(<span class="string">"GEMINI_SIM_1"</span>);</span><br><span class="line">    Field gemni2Field = phoneClass.getField(<span class="string">"GEMINI_SIM_2"</span>);</span><br><span class="line">    gemni1Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    gemni2Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = (<span class="keyword">int</span>) gemni1Field.get(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">int</span> simId2 = (<span class="keyword">int</span>) gemni2Field.get(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    Method method = TelephonyManager.class.getDeclaredMethod(<span class="string">"getSubscriberIdGemini"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">    String imsi1 = (String) method.invoke(teleManager, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(teleManager, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>高通：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Class&lt;?&gt; msmTeleManager = Class.forName(<span class="string">"android.telephony.MSimTelephonyManager"</span>);</span><br><span class="line">    Method method = msmTeleManager.getMethod(<span class="string">"getSubscriberId"</span>, <span class="keyword">int</span>.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> simId2 = <span class="number">1</span>;</span><br><span class="line">    Object phoneMsim = getSystemService(<span class="string">"phone_msim"</span>);</span><br><span class="line"></span><br><span class="line">    String imsi1 = (String) method.invoke(phoneMsim, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(phoneMsim, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对比三种获取双卡 IMSI 的方式，可以看出 Android 原生支持的双卡 API 更加的规范标准。目前新出的 Android 5+ 的新机上基本都采用了原生 API，Android 的碎片化又缩小了一步</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>绕过 Android 7.0+ 网络安全配置</title>
+    <url>/2018/03/14/network-security-configuration-newer-than-android-n/</url>
+    <content><![CDATA[<p>在 Android 7.0 以上的系统中，Google 引入了一种名为网络安全配置（Network Security Configuration）的功能。据官方文档所说，这个功能可以让开发者在一个安全的声明性 XML 配置文件中自定义应用的网络安全设置，而无需修改应用代码。也可以针对特定域和特定应用配置这些设置。<br>可以参考官方文档原文<a id="more"></a><br><a href="https://developer.android.google.cn/training/articles/security-config.html" target="_blank" rel="noopener">https://developer.android.google.cn/training/articles/security-config.html</a></p>
+<p>当然这篇文章并不是介绍 Network Security Configuration 的具体用法的，本篇文章主要讲如何绕过这种在 Android 7.0+ 的默认行为。</p>
+<p>如果了解过相关的知识，对于这个新增的功能，最直观的感觉可能就是，在运行着 Android 7.0 的手机上无法使用 Fiddler 或类似工具抓到 https 连接的包了。只有一些 https 的握手请求，无法查看到实际的数据，根本原因就是应用不再信任用户导入的 Fiddler 证书了。</p>
+<p>想要研究如何绕过这项功能，就必须先了解如何正常使用。据官方文档描述，需要在 <strong>res/xml</strong> 下创建一个 XML 文件来自定义网络配置：<br>下面给出几个样例，可参照注释</p>
+<h4 id="配置该应用的所有-HTTPS-链接"><a href="#配置该应用的所有-HTTPS-链接" class="headerlink" title="配置该应用的所有 HTTPS 链接"></a>配置该应用的所有 HTTPS 链接</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span>  <span class="comment">&lt;!-- 信任锚点集合 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span>  <span class="comment">&lt;!-- 信任系统自带的证书 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"user"</span>/&gt;</span>  <span class="comment">&lt;!-- 信任用户导入的证书 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="配置该应用的自定义-CA"><a href="#配置该应用的自定义-CA" class="headerlink" title="配置该应用的自定义 CA"></a>配置该应用的自定义 CA</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"@raw/my_custom_ca"</span>/&gt;</span>  <span class="comment">&lt;!-- 放在 res/raw 下的自定义 CA 文件 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="根据域名配置-HTTPS-可信域"><a href="#根据域名配置-HTTPS-可信域" class="headerlink" title="根据域名配置 HTTPS 可信域"></a>根据域名配置 HTTPS 可信域</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">domain-config</span>&gt;</span>  <span class="comment">&lt;!-- 与上文的 base-config 不同 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">domain</span> <span class="attr">includeSubdomains</span>=<span class="string">"true"</span>&gt;</span>example1.iacn.me<span class="tag">&lt;/<span class="name">domain</span>&gt;</span>  <span class="comment">&lt;!-- 过滤域名，可配置多个 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">domain</span> <span class="attr">includeSubdomains</span>=<span class="string">"true"</span>&gt;</span>example2.iacn.me<span class="tag">&lt;/<span class="name">domain</span>&gt;</span>  <span class="comment">&lt;!-- 一般会将 CDN 配置在此 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">domain-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="开发阶段的配置"><a href="#开发阶段的配置" class="headerlink" title="开发阶段的配置"></a>开发阶段的配置</h4><p>仅在 <strong>android:debuggable=”true”</strong> 时生效</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">debug-overrides</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">debug-overrides</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>除此之外，还需要在 AndroidManifest.xml 中引用自定义的网络安全配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:networkSecurityConfig</span>=<span class="string">"@xml/network_security_config"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">...</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>上面是 Network Security Configuration 的使用简介，那么如何绕过该功能呢？</p>
+<h4 id="重编译-APK-文件"><a href="#重编译-APK-文件" class="headerlink" title="重编译 APK 文件"></a>重编译 APK 文件</h4><p>如上文介绍，需要将目标 APK 文件反编译，然后修改 XML 配置文件，在 <strong>trust-anchors</strong> 中信任用户导入的证书，之后重新打包即可。</p>
+<h4 id="运行时-Hook"><a href="#运行时-Hook" class="headerlink" title="运行时 Hook"></a>运行时 Hook</h4><p>在某些情况下，第一种方法也许是不可行的。比如说，需要保留目标应用原始的签名文件。这是无法做到的，因为你不可能拿到开发者的原始证书去给重编译后的应用签名。这里就需要用到 Hook 技术，可以在不修改应用代码的前提下修改应用的行为。</p>
+<p>查看 Android 7.1.2_r36 源码，<strong>android.security.net.config.ManifestConfigSource</strong> 类 用于加载和处理网络安全配置 XML 文件的相关信息<br><strong>getConfigSource()</strong> 方法下，如果应用未配置网络信息，它将会加载默认配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ConfigSource <span class="title">getConfigSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            ...</span><br><span class="line"></span><br><span class="line">            ConfigSource source;</span><br><span class="line">            <span class="keyword">if</span> (mConfigResourceId != <span class="number">0</span>) &#123;</span><br><span class="line">                ...</span><br><span class="line">                source = <span class="keyword">new</span> XmlConfigSource(mContext, mConfigResourceId, debugBuild,</span><br><span class="line">                    mTargetSdkVersion, mTargetSandboxVesrsion);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ...</span><br><span class="line">                source = <span class="keyword">new</span> DefaultConfigSource(usesCleartextTraffic, mTargetSdkVersion,</span><br><span class="line">                    mTargetSandboxVesrsion);</span><br><span class="line">            &#125;</span><br><span class="line">            mConfigSource = source;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> mConfigSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>DefaultConfigSource</strong> 类是 <strong>ManifestConfigSource</strong> 类中一个内部类，即上文代码中返回的默认网络配置。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultConfigSource</span> <span class="keyword">implements</span> <span class="title">ConfigSource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">DefaultConfigSource</span><span class="params">(<span class="keyword">boolean</span> usesCleartextTraffic, <span class="keyword">int</span> targetSdkVersion,</span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">int</span> targetSandboxVesrsion)</span> </span>&#123;</span><br><span class="line">            mDefaultConfig = NetworkSecurityConfig.getDefaultBuilder(targetSdkVersion,</span><br><span class="line">                    targetSandboxVesrsion)</span><br><span class="line">                    .setCleartextTrafficPermitted(usesCleartextTraffic)</span><br><span class="line">                    .build();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在其构造方法中，调用了 <strong>android.security.net.config.NetworkSecurityConfig</strong> 类中的 <strong>getDefaultBuilder()</strong> 去构造一个默认配置。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Builder <span class="title">getDefaultBuilder</span><span class="params">(<span class="keyword">int</span> targetSdkVersion, <span class="keyword">int</span> targetSandboxVesrsion)</span> </span>&#123;</span><br><span class="line">        Builder builder = <span class="keyword">new</span> Builder()</span><br><span class="line">                .setHstsEnforced(DEFAULT_HSTS_ENFORCED)</span><br><span class="line">                .addCertificatesEntryRef(</span><br><span class="line">                        <span class="keyword">new</span> CertificatesEntryRef(SystemCertificateSource.getInstance(), <span class="keyword">false</span>));</span><br><span class="line">        </span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (targetSdkVersion &lt;= Build.VERSION_CODES.M) &#123;</span><br><span class="line">            builder.addCertificatesEntryRef(</span><br><span class="line">                    <span class="keyword">new</span> CertificatesEntryRef(UserCertificateSource.getInstance(), <span class="keyword">false</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> builder;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，在应用的 <strong>targetSdkVersion</strong> &lt;= M 时（Android 6.0 及以下），有一个 <strong>addCertificatesEntryRef(UserCertificateSource)</strong>，系统将默认信任用户导入的证书。</p>
+<p>那么以 Xposed 为例，Hook <strong>getDefaultBuilder()</strong>，在调用前将第一个参数 <strong>targetSdkVersion</strong> 改为 Android N 以下就可以了。这里给出核心代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initZygote</span><span class="params">(StartupParam startupParam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    Class&lt;?&gt; targetClass = findClass(<span class="string">"android.security.net.config.NetworkSecurityConfig"</span>, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">if</span> (targetClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">        XposedBridge.hookAllMethods(targetClass, <span class="string">"getDefaultBuilder"</span>, <span class="keyword">new</span> XC_MethodHook() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                param.args[<span class="number">0</span>] = Build.VERSION_CODES.M;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加系统-CA-证书"><a href="#添加系统-CA-证书" class="headerlink" title="添加系统 CA 证书"></a>添加系统 CA 证书</h4><p>在上文中可以发现，应用是会默认信任系统证书的。那么我们也可以将自己的 CA 文件添加至系统。<br>从 Charles 里导出二进制格式证书，但要使 Android 能够识别，还需要做一些转换，我们可以很方便的使用 openssl 工具来做到。</p>
+<p>这里以导出的 cert.cer 证书文件为例。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ openssl x509 -inform DER -subject_hash_old -in cert.cer</span><br></pre></td></tr></table></figure>
+
+<p>执行该命令，并复制输出结果的第一行哈希字符串，后面会用。如下图所示。<br><img src="https://i.loli.net/2019/08/14/hi7UkoMPXbJxRAn.png" alt="snipaste_20190814_191102.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ openssl x509 -inform DER -text -in cert.cer -out 7ef3ba8a.0</span><br></pre></td></tr></table></figure>
+
+<p>以刚才复制的哈希字符串为文件名，.0 结尾，如 <strong>7ef3ba8a.0</strong>，当做输出的文件名。<br>执行后就会输出 7ef3ba8a.0 这个文件。</p>
+<p>复制输出的文件到 Android 上 <strong>/system/etc/security/cacerts/</strong> 这个目录下，644 权限。<br>然后重启手机，你的证书就被添加到系统里了。</p>
+]]></content>
+      <tags>
+        <tag>Android逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Android Studio 动态调试 Smali 代码</title>
+    <url>/2017/09/29/using-as-debug-smali-code/</url>
+    <content><![CDATA[<h3 id="0x1-准备"><a href="#0x1-准备" class="headerlink" title="0x1 准备"></a>0x1 准备</h3><p>一台可以正常运行 Android Studio / IDEA 的电脑<br>一个顺手的 Smali 代码反编译工具<br>smalidea 插件，可从 <a href="https://bitbucket.org/JesusFreke/smali/downloads/" target="_blank" rel="noopener">这里</a> 获取，baksmali 工具也有<br>你需要有一个目标 APK 文件，这里我新建的一个测试项目为例</p>
+<h3 id="0x2-开始"><a href="#0x2-开始" class="headerlink" title="0x2 开始"></a>0x2 开始</h3><a id="more"></a>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 方便测试，尽可能多用些中间变量</span></span><br><span class="line">        <span class="keyword">double</span> radius = <span class="number">15</span>;</span><br><span class="line">        <span class="keyword">double</span> square = Math.pow(radius, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">double</span> area = Math.PI * square;</span><br><span class="line"></span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, String.valueOf(area), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打开 Android Studio，进入 <strong>File -&gt; Settings -&gt; Plugins</strong>，点击 <strong>Install plugin from disk</strong> 按钮，选择并安装 smalidea 插件</p>
+<p>反编译源 apk 文件，生成 out 文件夹，然后从 Android Studio 的 <strong>File -&gt; New -&gt; Import Project</strong>，导入 out 文件夹，记得选择 Source Folder</p>
+<p>成功导入后你就可以发现 Smali 代码的关键字已经可以高亮显示了</p>
+<p>再次打开 Android Studio，点击 <strong>Run -&gt; Edit Configurations</strong>，新建 Remote 类型的调试器，如图<br><img src="https://i.loli.net/2017/09/29/59ce048d5612b.png" alt="snipaste_20170929_162948.png"></p>
+<p>以调试模式在手机端或模拟器运行目标应用</p>
+<blockquote>
+<p>adb shell am start -D -n me.iacn.testapplication/.MainActivity</p>
+</blockquote>
+<p>此时目标应用会在打开时处于挂起状态，然后</p>
+<blockquote>
+<p>adb shell ps</p>
+</blockquote>
+<p>在其中找到以目标应用包名为 NAME 的一个进程，查看他的 PID<br><img src="https://i.loli.net/2017/09/29/59ce0733c6924.png" alt="snipaste_20170929_164110.png"></p>
+<blockquote>
+<p>adb forward tcp:6666 jdwp:5444</p>
+</blockquote>
+<p>其中，forward 为刚才新建 Remote 调试器时所填的本地端口。jdwp 为在上面所查看的目标应用 PID。此种方式实际上是利用 Remote 调试器，通过本地端口 6666 连接手机调试目标应用</p>
+<p>此时回到 Android Studio，下一个断点，然后 <strong>Run -&gt; debug Unnameed</strong>，稍等一会儿，就可以从 Debugger 面板里查看调试结果了<br><img src="https://i.loli.net/2017/09/29/59ce164cd918e.png" alt="snipaste_20170929_174415.png"></p>
+<p>需要注意的是，有时寄存器的值不会直接在 Variables 面板里显示出来，需要将想要查看的变量添加到 Watch 中，然后在 Watch 面板中查看</p>
+]]></content>
+      <tags>
+        <tag>Android逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vShere Client 无法连接 vCenter 故障排查思路</title>
+    <url>/2017/07/14/vsphere-server-problem-check/</url>
+    <content><![CDATA[<p>问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误<br><img src="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg" alt></p>
+<p>这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路</p>
+<a id="more"></a>
+
+<p><strong>1. 检查网络连接情况；检查 vCenter 的 IP，用户名，密码是否正确</strong></p>
+<blockquote>
+<p>这个在大多数出现在实验环境中，生产环境中一般不会出现这种错误<br>解决办法也没什么好说的，ping 检查连接，用户名密码换成正确的</p>
+</blockquote>
+<p><strong>2. 检查 vCenter 的 Web Client 能否正常访问</strong></p>
+<blockquote>
+<p>vCenter 是可以从 Web 端访问管理的<br>URL 是：<a href="https://client-hostname:port/vsphere-client" target="_blank" rel="noopener">https://client-hostname:port/vsphere-client</a><br>默认情况下此端口为 9443，但可在 vSphere Web Client 安装过程中更改此端口</p>
+</blockquote>
+<p>这里打开并输入正确的用户名密码，发现可以正常访问，说明 vCenter 整个本身是没有什么问题的</p>
+<p><strong>3. 检查 VMware VirtualCenter Server 服务是否已经启动</strong></p>
+<blockquote>
+<p>VMware VirtualCenter Server 是 vCenter 的核心服务，无法连接的原因大部分是因为这个服务没有启动<br>使用 <strong>远程桌面</strong> 连接到 vCenter 所在的虚拟机，打开 <strong>服务器管理器 - 诊断 - 服务</strong>，找到这个服务，检查其状态</p>
+</blockquote>
+<p>我所在的环境是一个 vCenter 虚拟机通过 Platform Services Controller 去管理多个安装了 VMWare ESXi 底机。由于所在环境出于安全起见，在 vCenter Server 安装时禁止了 vCenter 虚拟机的远程桌面权限，所以这里采用另一种方式跳转上去</p>
+<p>由于 VMWare ESXi 底机是允许通过 vSphere Client 连接去管理单个的实体服务器的，而这种方式不需要依赖 VMware VirtualCenter Server 服务。所以我这里先连接 vCenter 虚拟机所在的那台实体服务器，再在其中打开控制台</p>
+<p>打开后检查，发现这个服务确实是没有正常启动<br><img src="https://i.loli.net/2017/07/14/5968b6b4dfdaf.png" alt="2.png"></p>
+<p><strong>4. VMware VirtualCenter Server 服务无法正常启动</strong></p>
+<blockquote>
+<p>一般来说，若是该服务没有启动，手动启用后便可恢复正常。但有些情况下无法手动启动，这时候就要结合具体情况来分析了<br>vCenter Server 的正常运行是需要依赖数据库的，所以先应该检查数据库的相关服务有没有正常运行<br>vCenter Server 在安装时是会将其核心服务设置为开机自启的。所以，如果在其启动时数据库服务没有正常运行，就会出现问题。我习惯的做法是将数据库相关服务的启动类型设置为 <strong>自动</strong>，而把 vCenter Server 相关服务设置为 <strong>自动（延迟启动）</strong>，来保证数据库服务优于 vCenter Server 服务启动。</p>
+</blockquote>
+<p><strong>5. VMware VirtualCenter Server 服务正常启动了还是不能连接</strong></p>
+<blockquote>
+<p>通常情况下，vCenter Server，vCenter 依赖的数据库和其他业务服务都是分开机器安装的，但也有安装在一台虚拟机中的情况<br>因为 vCenter Server 需要使用 80 端口，所以保证该端口的正常通信是必要的。可以使用 telnet 命令来检查端口是否已经开启，例如 telnet 10.100.100.14 80。如果不通，就要检查各防火墙的出入栈规则了<br>另外 Web 服务也会占用 80 端口来进行通信，这个也要仔细甄别</p>
+</blockquote>
+<p>关于 vCenter 服务的相关问题实在太多，这里只是整理了一些思路来帮助检查<br>对于这种问题没有什么好办法，就是查看日志来找问题原因。</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+        <tag>vSphere</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10 删除多余的网络配置项</title>
+    <url>/2017/03/24/win10-delete-network-config/</url>
+    <content><![CDATA[<p>1.Win + R 运行，输入 <strong>regedit</strong>，打开注册表编辑器<br>2.找到下面两个键</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged</span><br></pre></td></tr></table></figure>
+
+<p>3.在这两个键的下面有一堆 Hash 值命名的目录</p>
+<a id="more"></a>
+<p><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba75381.png" alt="snipaste20170324_092802.png"></p>
+<p>不需要哪个删除就是了</p>
+<p>可以根据目录里面 <strong>ProfileName</strong> 的值来判断这个目录是属于哪个网络配置的<br><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba4185f.png" alt="2.png"></p>
+<p>同样，如果需要修改网络配置的名字，也可以从这里修改 <strong>ProfileName</strong> 的值</p>
+<p>修改注册表有一定风险，请一定要仔细</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10 USB-To-Console 串口驱动 (x86 x64)</title>
+    <url>/2017/02/28/win10-usb-to-console/</url>
+    <content><![CDATA[<p>最近将 Win10 更新到 14393，之前的 USB 转串口线一插上就蓝屏重启，费了好多功夫 Google 到了之前版本的驱动，试了试居然没事了，这里就分享下吧</p>
+<p>下载地址：<a href="https://lanzous.com/iQxbyers9ha" target="_blank" rel="noopener">蓝奏云</a></p>
+<p>Step1. 进入 Step1 文件夹，安装 Setup.exe。如果成功，则无需进行第二步了。</p>
+<p>Step2. 进入 Step2 文件夹，安装 CH341SER.EXE。不行的话再安装 HL-340.EXE。</p>
+<p>Windows10 专业版 x64 测试通过。</p>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows 环境变量的设置是否需要重启</title>
+    <url>/2016/12/25/windows-set-env-variable/</url>
+    <content><![CDATA[<p>最近从 Android Studio 导入一个项目，提示需要配置一个叫 ANDROID_SDK_HOME 的环境变量，然而 Google 的提示是建议我配置完之后重启，但是我实测配置之后没有重启也生效了，这是怎么回事呢？</p>
+<p>原来，环境变量就是属于 Windows 系统的一些预定义好的变量，其中分为用户变量和系统变量。用户变量只对当前设置环境变量的这个用户生效，系统变量则对整个系统生效。这些变量在用户登录时被设置，应用到系统里，对系统里运行的每一个程序都生效。</p>
+<p>在一个程序启动的时候，它所可以读取的环境变量就会被复制到它所在的环境中。也就是说，每个程序在运行时都会拥有原始环境变量的一份复制体，不会受其他程序的影响。</p>
+<p>所以结果就是，只要重新运行该程序，程序就会重新读取系统的环境变量，环境变量也就发生改变了。而如果修改的是系统要使用的环境变量，也就必须重启系统了。</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Xshell SSH 连接 Linux 中文乱码</title>
+    <url>/2017/04/29/xshell-ssh-chinaese-utf8/</url>
+    <content><![CDATA[<h2 id="0x0"><a href="#0x0" class="headerlink" title="0x0"></a>0x0</h2><p>首先需要确保你的 Xshell 的连接编码是 UTF-8。<br>虽然可以修改 Linux 端的字符集去迎合 Windows 端做到中文的正常显示，但在当前 I18N 的大环境下，还是尽量用 UTF-8 吧。</p>
+<p>打开 Xshell 的会话属性窗口，在左边选择到 <strong>终端</strong>，编码一项内，如果不是 Unicode 的话请改成 Unicode</p>
+<a id="more"></a>
+<p><img src="https://ooo.0o0.ooo/2017/04/15/58f1eda7c1d25.png" alt="1.png"></p>
+<h2 id="0x2"><a href="#0x2" class="headerlink" title="0x2"></a>0x2</h2><p>不出意外的话，重新连接你的 SSH 应该已经能正常显示中文了，因为大部分 Linux 的默认连接编码就是 UTF-8 的。</p>
+<p>如果还是不能正常显示，你需要这样做<br>修改 <strong>/etc/profile</strong> 这个文件<br>在其中添加</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LC_ALL=<span class="string">"zh_CN.UTF-8"</span></span><br></pre></td></tr></table></figure>
+
+<p>这条命令的意思是设置 Locale 为 UTF-8，会在用户初始化时执行</p>
+<p>重启系统，这里中文已经能正常显示了<br><img src="https://ooo.0o0.ooo/2017/04/15/58f1eec23e82d.png" alt="2.png"></p>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 上的 NFC 开发</title>
+    <url>/2019/10/14/nfc-develop-for-android/</url>
+    <content><![CDATA[<p>根据 Android 官方文档所写，支持 NFC 的 Android 设备有以下三种操作模式：</p>
+<ul>
+<li>读卡器模式：读取和写入 NFC 卡片（公交卡充值）</li>
+<li>仿真卡模式：将设备模拟成一张 NFC 卡片，可以通过其他 NFC 读卡器访问设备模拟的 NFC 卡（饭卡模拟）</li>
+<li>点对点模式：与 NFC 设备或其他支持非接触式射频传输的设备交换数据（Android Beam）<a id="more"></a>
+
+</li>
+</ul>
+<p>不同 NFC 卡片之间的差异也很大，有些只支持一次性写入，有些则可以支持读写操作，还有些 NFC 卡片内部支持加密功能。Android 对 NFC 卡片格式的支持主要为 NFC Forum 定义的 NDEF (NFC Data Exchange Format) 标准。</p>
+<p>支持 NFC 的 Android 设备在设置内打开了 NFC 功能开关，设备就会在屏幕解锁后，在可以支持的范围内扫描 NFC 卡片。如果发现了一个可识别的 NFC 卡片，会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用。如果设备中有多个可以处理该 NFC 卡片格式的应用，则会弹出选框由用户选择应使用哪个应用。</p>
+<h3 id="0x1-读卡器模式"><a href="#0x1-读卡器模式" class="headerlink" title="0x1 读卡器模式"></a>0x1 读卡器模式</h3><p>作为一个 NFC 处理应用，第一步先要在 Manifest 中声明自己可以处理 NFC 操作。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- NFC 硬件支持 --&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc"</span> <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">&lt;!-- NFC 权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.NFC"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- singleTop 确保扫描到新卡片时调用 onNewIntent()</span></span><br><span class="line"><span class="comment">        锁定竖屏防止丢失 Intent 信息 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:screenOrientation</span>=<span class="string">"portrait"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.NDEF_DISCOVERED"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>根据前文所述，Android 会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用，所以应用也要添加 <strong>IntentFilter</strong> 来匹配想要过滤的数据类型。</p>
+<p>由于对 NDEF 标准的支持最为完善，所以推荐使用 <strong>ACTION_NDEF_DISCOVERED</strong>；但是 Android 同样也对其他卡片格式有部分支持，可以使用 <strong>ACTION_TECH_DISCOVERED</strong>，使用此 action 需要在 xml 文件夹下指定 <strong>tech-list</strong> 来过滤想要使用的 NFC 技术标准；如果前两种 action 都无法匹配，就需要使用到 <strong>ACTION_TAG_DISCOVERED</strong>，但是此 action 过于笼统，要小心使用。</p>
+<p>在 Manifest 中正确声明之后，当扫描到 NFC 卡片时，系统就会打开处理 NFC 操作的 Activity 了：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">    mNfcAdapter = NfcAdapter.getDefaultAdapter(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> intent = Intent(<span class="keyword">this</span>, MainActivity::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">    <span class="keyword">val</span> requestCode = <span class="number">0</span></span><br><span class="line">    <span class="keyword">val</span> flag = <span class="number">0</span></span><br><span class="line">    mPendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>, requestCode, intent, flag)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume()</span><br><span class="line">    mNfcAdapter?.enableForegroundDispatch(<span class="keyword">this</span>, mPendingIntent, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onPause</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onPause()</span><br><span class="line">    mNfcAdapter?.disableForegroundDispatch(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，在 onResume() 和 onPause() 中分别调用的 NfcAdapter 的两个方法，会使系统在扫描到新的 NFC 卡片时优先使用当前 Activity 进行处理，不再弹出 Intent 选择，以免降低用户的体验。</p>
+<hr>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onNewIntent</span><span class="params">(intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onNewIntent(intent)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> tag: Tag? = intent?.getParcelableExtra(NfcAdapter.EXTRA_TAG)</span><br><span class="line">    println(tag)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 onNewIntent() 中，即可通过 Intent 来获取卡片的信息了，输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">I/System.out: TAG: Tech [android.nfc.tech.NfcA, android.nfc.tech.MifareClassic, android.nfc.tech.NdefFormatable]</span><br></pre></td></tr></table></figure>
+
+<p>此处使用的是 Tag 格式的卡片实体类来获取，如果已经确定卡片是 NDEF 格式，则可以使用 <strong>NfcAdapter.EXTRA_NDEF_MESSAGES</strong>，来获取一个 NDEF 格式的卡片实体类。</p>
+<p>对于非 NDEF 格式的卡片，就需要使用 Android 提供的其他实体类来进行操作，可以使用 <strong>Tag::getTechList()</strong> 来查看卡片所支持的标准。</p>
+<h3 id="0x2-仿真卡模式"><a href="#0x2-仿真卡模式" class="headerlink" title="0x2 仿真卡模式"></a>0x2 仿真卡模式</h3><p>Android 上对 NFC 卡片的模拟的主要是通过 <strong>HCE(基于主机的卡模拟)</strong> 来实现的 (Android 4.4+)，如果使用安全元件进行卡片模拟，则需要部分安全元件的支持，例如 NFC-SIM 卡。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HCE 支持 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc.hce"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--仿真卡服务--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">service</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_NFC_SERVICE"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.action.HOST_APDU_SERVICE"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.host_apdu_service"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:resource</span>=<span class="string">"@xml/apduservice"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">host-apdu-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:requireDeviceUnlock</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aid-group</span> <span class="attr">android:description</span>=<span class="string">"@string/aiddescription"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:category</span>=<span class="string">"other"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0010203040506"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0394148148100"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aid-group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">host-apdu-service</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Manifest 的 Service 声明中，引用到了一个 xml 文件夹下的 apduservice.xml 文件，其中 <strong>android:requireDeviceUnlock=false</strong> 可以让设备在亮屏但不解锁的情况下启动 HCE 服务；<strong>aid-filter</strong> 是必要的，Android 会根据 <strong>aid-filter</strong> 所定义的 <strong>AID</strong> 来选择合适的 HCE 服务，具体的 <strong>AID</strong> 数值参照要模拟的 NFC 卡片为准，须为十六进制格式，并且是偶数位。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CardService</span> : <span class="type">HostApduService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">processCommandApdu</span><span class="params">(commandApdu: <span class="type">ByteArray</span>, extras: <span class="type">Bundle</span>)</span></span>: ByteArray &#123;</span><br><span class="line">        <span class="keyword">val</span> aid = <span class="string">"F0010203040506"</span></span><br><span class="line">        <span class="keyword">val</span> header = <span class="string">"00A40400"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> selectApdu = (header + String.format(<span class="string">"%02X"</span>, aid.length / <span class="number">2</span>) + aid).toByteArray()</span><br><span class="line">        <span class="keyword">if</span> (selectApdu.contentEquals(commandApdu)) &#123;</span><br><span class="line">            <span class="keyword">return</span> aid.toByteArray()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> byteArrayOf()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDeactivated</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <strong>HostApduService::processCommandApdu</strong> 中，设备将作为一张模拟的 NFC 卡片，Android 系统会将其接收到的 APDU 数据传入进来，此方法运行在 UI 线程，需要返回一个 ByteArray 作为响应数据发送回 NFC 读取设备。</p>
+<h3 id="0x3-点对点模式"><a href="#0x3-点对点模式" class="headerlink" title="0x3 点对点模式"></a>0x3 点对点模式</h3><p>NFC 卡片有 <strong>ID</strong> 卡与 <strong>IC</strong> 卡之分。传统的 ID 卡片只有数据存储功能，能轻易的被读写，卡片本身只是记录一个 ID 数值；IC 卡则不同，内部具有微型 CPU，数据的读写会经过卡片的 CPU 进行处理，支持加密功能，更加安全。</p>
+<p>以笔者的卡片为例，卡片所使用的 IC 为 NXP MF1S50，ISO-14443 标准，数据的读写入需要与卡片进行 <strong>APDU(应用协议数据单元)</strong> 交互，具体的指令可以从 IC 的 datasheet 中获得。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> isoDep: IsoDep = IsoDep.<span class="keyword">get</span>(tag)</span><br><span class="line">isoDep.connect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> payload = byteArrayOf(<span class="number">0x93</span>.toByte(), <span class="number">0x70</span>.toByte())  <span class="comment">// SELECT</span></span><br><span class="line"><span class="keyword">val</span> result = isoDep.transceive(payload)</span><br></pre></td></tr></table></figure>
+
+<p>这里使用 <strong>IsoDep::transceive()</strong> 向卡片发送指令，卡片会根据指令返回相应的数据，至于数据如何解析，就要参照不同卡片的技术规范了，可参考《中国金融集成电路 (IC卡) 规范》和《中国银联 IC 卡技术规范》。</p>
+]]></content>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改 Git 已提交的用户名和邮箱</title>
+    <url>/2016/11/10/modify-git-submitted-commit/</url>
+    <content><![CDATA[<p>有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？</p>
+<p>如果尝试修改 Git 的提交邮箱</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global user.name "Your Name"</span><br><span class="line">git config --global user.email "Your Email"</span><br></pre></td></tr></table></figure>
+
+<p>这样可以修改作者的名字和邮箱</p>
+<p>但是<br>这种方法只对之后的 commit 有效，之前提交过的就改不了了…</p>
+<p>还好，Google 到了一种解决办法，这里分享下，也算是做个记录</p>
+<ol>
+<li><p>打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可）</p>
+</li>
+<li><p>同步下来你的项目并进入目录（以 repo.git 为例）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone --bare https://github.com/user/repo.git</span><br><span class="line">cd repo.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将下面的脚本，直接复制到终端命令行里<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
+<a id="more"></a>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git filter-branch --env-filter '</span><br><span class="line"></span><br><span class="line">oldEmail="Your Old Email"</span><br><span class="line">newName="Your New Name"</span><br><span class="line">newEmail="Your New Email"</span><br><span class="line"></span><br><span class="line">if [ "$GIT_COMMITTER_EMAIL" = "$oldEmail" ]; then</span><br><span class="line">    export GIT_COMMITTER_NAME="$newName"</span><br><span class="line">    export GIT_COMMITTER_EMAIL="$newEmail"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ "$GIT_AUTHOR_EMAIL" = "$oldEmail" ]; then</span><br><span class="line">    export GIT_AUTHOR_NAME="$newName"</span><br><span class="line">    export GIT_AUTHOR_EMAIL="$newEmail"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">' --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行脚本，看到一堆 rewritten 的时候就说明写入完成了</p>
+</li>
+<li><p>git log 查看新的 Commit 信息是否正确</p>
+</li>
+<li><p>提交</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git push --force --tags origin 'refs/heads/*'</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除临时文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ..</span><br><span class="line">rm -rf repo.git</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>需要注意的是，上面的执行后，新 clone 出来的项目 Log 中 Name 和 Email 已经为最新的信息。在执行上面的几步之前已经 clone 出来的项目中，如果执行 git pull 的话，Log 中的 Name 和 Email 信息还是原来的信息</p>
+<p>这样就算是完成了</p>
+]]></content>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -890,241 +1188,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Android 上的 NFC 开发</title>
-    <url>/2019/10/14/nfc-develop-for-android/</url>
-    <content><![CDATA[<p>根据 Android 官方文档所写，支持 NFC 的 Android 设备有以下三种操作模式：</p>
-<ul>
-<li>读卡器模式：读取和写入 NFC 卡片（公交卡充值）</li>
-<li>仿真卡模式：将设备模拟成一张 NFC 卡片，可以通过其他 NFC 读卡器访问设备模拟的 NFC 卡（饭卡模拟）</li>
-<li>点对点模式：与 NFC 设备或其他支持非接触式射频传输的设备交换数据（Android Beam）<a id="more"></a>
-
-</li>
-</ul>
-<p>不同 NFC 卡片之间的差异也很大，有些只支持一次性写入，有些则可以支持读写操作，还有些 NFC 卡片内部支持加密功能。Android 对 NFC 卡片格式的支持主要为 NFC Forum 定义的 NDEF (NFC Data Exchange Format) 标准。</p>
-<p>支持 NFC 的 Android 设备在设置内打开了 NFC 功能开关，设备就会在屏幕解锁后，在可以支持的范围内扫描 NFC 卡片。如果发现了一个可识别的 NFC 卡片，会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用。如果设备中有多个可以处理该 NFC 卡片格式的应用，则会弹出选框由用户选择应使用哪个应用。</p>
-<h3 id="0x1-读卡器模式"><a href="#0x1-读卡器模式" class="headerlink" title="0x1 读卡器模式"></a>0x1 读卡器模式</h3><p>作为一个 NFC 处理应用，第一步先要在 Manifest 中声明自己可以处理 NFC 操作。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- NFC 硬件支持 --&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc"</span> <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">&lt;!-- NFC 权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.NFC"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- singleTop 确保扫描到新卡片时调用 onNewIntent()</span></span><br><span class="line"><span class="comment">        锁定竖屏防止丢失 Intent 信息 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:screenOrientation</span>=<span class="string">"portrait"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.NDEF_DISCOVERED"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>根据前文所述，Android 会通过 <strong>Intent</strong> 打开可以处理 NFC 操作的应用，所以应用也要添加 <strong>IntentFilter</strong> 来匹配想要过滤的数据类型。</p>
-<p>由于对 NDEF 标准的支持最为完善，所以推荐使用 <strong>ACTION_NDEF_DISCOVERED</strong>；但是 Android 同样也对其他卡片格式有部分支持，可以使用 <strong>ACTION_TECH_DISCOVERED</strong>，使用此 action 需要在 xml 文件夹下指定 <strong>tech-list</strong> 来过滤想要使用的 NFC 技术标准；如果前两种 action 都无法匹配，就需要使用到 <strong>ACTION_TAG_DISCOVERED</strong>，但是此 action 过于笼统，要小心使用。</p>
-<p>在 Manifest 中正确声明之后，当扫描到 NFC 卡片时，系统就会打开处理 NFC 操作的 Activity 了：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">    mNfcAdapter = NfcAdapter.getDefaultAdapter(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> intent = Intent(<span class="keyword">this</span>, MainActivity::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">    <span class="keyword">val</span> requestCode = <span class="number">0</span></span><br><span class="line">    <span class="keyword">val</span> flag = <span class="number">0</span></span><br><span class="line">    mPendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>, requestCode, intent, flag)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume()</span><br><span class="line">    mNfcAdapter?.enableForegroundDispatch(<span class="keyword">this</span>, mPendingIntent, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onPause</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onPause()</span><br><span class="line">    mNfcAdapter?.disableForegroundDispatch(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是，在 onResume() 和 onPause() 中分别调用的 NfcAdapter 的两个方法，会使系统在扫描到新的 NFC 卡片时优先使用当前 Activity 进行处理，不再弹出 Intent 选择，以免降低用户的体验。</p>
-<hr>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onNewIntent</span><span class="params">(intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onNewIntent(intent)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> tag: Tag? = intent?.getParcelableExtra(NfcAdapter.EXTRA_TAG)</span><br><span class="line">    println(tag)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 onNewIntent() 中，即可通过 Intent 来获取卡片的信息了，输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">I/System.out: TAG: Tech [android.nfc.tech.NfcA, android.nfc.tech.MifareClassic, android.nfc.tech.NdefFormatable]</span><br></pre></td></tr></table></figure>
-
-<p>此处使用的是 Tag 格式的卡片实体类来获取，如果已经确定卡片是 NDEF 格式，则可以使用 <strong>NfcAdapter.EXTRA_NDEF_MESSAGES</strong>，来获取一个 NDEF 格式的卡片实体类。</p>
-<p>对于非 NDEF 格式的卡片，就需要使用 Android 提供的其他实体类来进行操作，可以使用 <strong>Tag::getTechList()</strong> 来查看卡片所支持的标准。</p>
-<h3 id="0x2-仿真卡模式"><a href="#0x2-仿真卡模式" class="headerlink" title="0x2 仿真卡模式"></a>0x2 仿真卡模式</h3><p>Android 上对 NFC 卡片的模拟的主要是通过 <strong>HCE(基于主机的卡模拟)</strong> 来实现的 (Android 4.4+)，如果使用安全元件进行卡片模拟，则需要部分安全元件的支持，例如 NFC-SIM 卡。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HCE 支持 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc.hce"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--仿真卡服务--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">service</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_NFC_SERVICE"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.action.HOST_APDU_SERVICE"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.nfc.cardemulation.host_apdu_service"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:resource</span>=<span class="string">"@xml/apduservice"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">host-apdu-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:requireDeviceUnlock</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aid-group</span> <span class="attr">android:description</span>=<span class="string">"@string/aiddescription"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:category</span>=<span class="string">"other"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0010203040506"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aid-filter</span> <span class="attr">android:name</span>=<span class="string">"F0394148148100"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aid-group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">host-apdu-service</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在 Manifest 的 Service 声明中，引用到了一个 xml 文件夹下的 apduservice.xml 文件，其中 <strong>android:requireDeviceUnlock=false</strong> 可以让设备在亮屏但不解锁的情况下启动 HCE 服务；<strong>aid-filter</strong> 是必要的，Android 会根据 <strong>aid-filter</strong> 所定义的 <strong>AID</strong> 来选择合适的 HCE 服务，具体的 <strong>AID</strong> 数值参照要模拟的 NFC 卡片为准，须为十六进制格式，并且是偶数位。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CardService</span> : <span class="type">HostApduService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">processCommandApdu</span><span class="params">(commandApdu: <span class="type">ByteArray</span>, extras: <span class="type">Bundle</span>)</span></span>: ByteArray &#123;</span><br><span class="line">        <span class="keyword">val</span> aid = <span class="string">"F0010203040506"</span></span><br><span class="line">        <span class="keyword">val</span> header = <span class="string">"00A40400"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> selectApdu = (header + String.format(<span class="string">"%02X"</span>, aid.length / <span class="number">2</span>) + aid).toByteArray()</span><br><span class="line">        <span class="keyword">if</span> (selectApdu.contentEquals(commandApdu)) &#123;</span><br><span class="line">            <span class="keyword">return</span> aid.toByteArray()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> byteArrayOf()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDeactivated</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 <strong>HostApduService::processCommandApdu</strong> 中，设备将作为一张模拟的 NFC 卡片，Android 系统会将其接收到的 APDU 数据传入进来，此方法运行在 UI 线程，需要返回一个 ByteArray 作为响应数据发送回 NFC 读取设备。</p>
-<h3 id="0x3-点对点模式"><a href="#0x3-点对点模式" class="headerlink" title="0x3 点对点模式"></a>0x3 点对点模式</h3><p>NFC 卡片有 <strong>ID</strong> 卡与 <strong>IC</strong> 卡之分。传统的 ID 卡片只有数据存储功能，能轻易的被读写，卡片本身只是记录一个 ID 数值；IC 卡则不同，内部具有微型 CPU，数据的读写会经过卡片的 CPU 进行处理，支持加密功能，更加安全。</p>
-<p>以笔者的卡片为例，卡片所使用的 IC 为 NXP MF1S50，ISO-14443 标准，数据的读写入需要与卡片进行 <strong>APDU(应用协议数据单元)</strong> 交互，具体的指令可以从 IC 的 datasheet 中获得。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> isoDep: IsoDep = IsoDep.<span class="keyword">get</span>(tag)</span><br><span class="line">isoDep.connect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> payload = byteArrayOf(<span class="number">0x93</span>.toByte(), <span class="number">0x70</span>.toByte())  <span class="comment">// SELECT</span></span><br><span class="line"><span class="keyword">val</span> result = isoDep.transceive(payload)</span><br></pre></td></tr></table></figure>
-
-<p>这里使用 <strong>IsoDep::transceive()</strong> 向卡片发送指令，卡片会根据指令返回相应的数据，至于数据如何解析，就要参照不同卡片的技术规范了，可参考《中国金融集成电路 (IC卡) 规范》和《中国银联 IC 卡技术规范》。</p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>绕过 Android 7.0+ 网络安全配置</title>
-    <url>/2018/03/14/network-security-configuration-newer-than-android-n/</url>
-    <content><![CDATA[<p>在 Android 7.0 以上的系统中，Google 引入了一种名为网络安全配置（Network Security Configuration）的功能。据官方文档所说，这个功能可以让开发者在一个安全的声明性 XML 配置文件中自定义应用的网络安全设置，而无需修改应用代码。也可以针对特定域和特定应用配置这些设置。<br>可以参考官方文档原文<a id="more"></a><br><a href="https://developer.android.google.cn/training/articles/security-config.html" target="_blank" rel="noopener">https://developer.android.google.cn/training/articles/security-config.html</a></p>
-<p>当然这篇文章并不是介绍 Network Security Configuration 的具体用法的，本篇文章主要讲如何绕过这种在 Android 7.0+ 的默认行为。</p>
-<p>如果了解过相关的知识，对于这个新增的功能，最直观的感觉可能就是，在运行着 Android 7.0 的手机上无法使用 Fiddler 或类似工具抓到 https 连接的包了。只有一些 https 的握手请求，无法查看到实际的数据，根本原因就是应用不再信任用户导入的 Fiddler 证书了。</p>
-<p>想要研究如何绕过这项功能，就必须先了解如何正常使用。据官方文档描述，需要在 <strong>res/xml</strong> 下创建一个 XML 文件来自定义网络配置：<br>下面给出几个样例，可参照注释</p>
-<h4 id="配置该应用的所有-HTTPS-链接"><a href="#配置该应用的所有-HTTPS-链接" class="headerlink" title="配置该应用的所有 HTTPS 链接"></a>配置该应用的所有 HTTPS 链接</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span>  <span class="comment">&lt;!-- 信任锚点集合 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span>  <span class="comment">&lt;!-- 信任系统自带的证书 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"user"</span>/&gt;</span>  <span class="comment">&lt;!-- 信任用户导入的证书 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="配置该应用的自定义-CA"><a href="#配置该应用的自定义-CA" class="headerlink" title="配置该应用的自定义 CA"></a>配置该应用的自定义 CA</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"@raw/my_custom_ca"</span>/&gt;</span>  <span class="comment">&lt;!-- 放在 res/raw 下的自定义 CA 文件 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="根据域名配置-HTTPS-可信域"><a href="#根据域名配置-HTTPS-可信域" class="headerlink" title="根据域名配置 HTTPS 可信域"></a>根据域名配置 HTTPS 可信域</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">domain-config</span>&gt;</span>  <span class="comment">&lt;!-- 与上文的 base-config 不同 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">domain</span> <span class="attr">includeSubdomains</span>=<span class="string">"true"</span>&gt;</span>example1.iacn.me<span class="tag">&lt;/<span class="name">domain</span>&gt;</span>  <span class="comment">&lt;!-- 过滤域名，可配置多个 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">domain</span> <span class="attr">includeSubdomains</span>=<span class="string">"true"</span>&gt;</span>example2.iacn.me<span class="tag">&lt;/<span class="name">domain</span>&gt;</span>  <span class="comment">&lt;!-- 一般会将 CDN 配置在此 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">domain-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="开发阶段的配置"><a href="#开发阶段的配置" class="headerlink" title="开发阶段的配置"></a>开发阶段的配置</h4><p>仅在 <strong>android:debuggable=”true”</strong> 时生效</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">debug-overrides</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span> <span class="attr">src</span>=<span class="string">"system"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">debug-overrides</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>除此之外，还需要在 AndroidManifest.xml 中引用自定义的网络安全配置</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:networkSecurityConfig</span>=<span class="string">"@xml/network_security_config"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">...</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>上面是 Network Security Configuration 的使用简介，那么如何绕过该功能呢？</p>
-<h4 id="重编译-APK-文件"><a href="#重编译-APK-文件" class="headerlink" title="重编译 APK 文件"></a>重编译 APK 文件</h4><p>如上文介绍，需要将目标 APK 文件反编译，然后修改 XML 配置文件，在 <strong>trust-anchors</strong> 中信任用户导入的证书，之后重新打包即可。</p>
-<h4 id="运行时-Hook"><a href="#运行时-Hook" class="headerlink" title="运行时 Hook"></a>运行时 Hook</h4><p>在某些情况下，第一种方法也许是不可行的。比如说，需要保留目标应用原始的签名文件。这是无法做到的，因为你不可能拿到开发者的原始证书去给重编译后的应用签名。这里就需要用到 Hook 技术，可以在不修改应用代码的前提下修改应用的行为。</p>
-<p>查看 Android 7.1.2_r36 源码，<strong>android.security.net.config.ManifestConfigSource</strong> 类 用于加载和处理网络安全配置 XML 文件的相关信息<br><strong>getConfigSource()</strong> 方法下，如果应用未配置网络信息，它将会加载默认配置</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ConfigSource <span class="title">getConfigSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            ...</span><br><span class="line"></span><br><span class="line">            ConfigSource source;</span><br><span class="line">            <span class="keyword">if</span> (mConfigResourceId != <span class="number">0</span>) &#123;</span><br><span class="line">                ...</span><br><span class="line">                source = <span class="keyword">new</span> XmlConfigSource(mContext, mConfigResourceId, debugBuild,</span><br><span class="line">                    mTargetSdkVersion, mTargetSandboxVesrsion);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ...</span><br><span class="line">                source = <span class="keyword">new</span> DefaultConfigSource(usesCleartextTraffic, mTargetSdkVersion,</span><br><span class="line">                    mTargetSandboxVesrsion);</span><br><span class="line">            &#125;</span><br><span class="line">            mConfigSource = source;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> mConfigSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>DefaultConfigSource</strong> 类是 <strong>ManifestConfigSource</strong> 类中一个内部类，即上文代码中返回的默认网络配置。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultConfigSource</span> <span class="keyword">implements</span> <span class="title">ConfigSource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">DefaultConfigSource</span><span class="params">(<span class="keyword">boolean</span> usesCleartextTraffic, <span class="keyword">int</span> targetSdkVersion,</span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">int</span> targetSandboxVesrsion)</span> </span>&#123;</span><br><span class="line">            mDefaultConfig = NetworkSecurityConfig.getDefaultBuilder(targetSdkVersion,</span><br><span class="line">                    targetSandboxVesrsion)</span><br><span class="line">                    .setCleartextTrafficPermitted(usesCleartextTraffic)</span><br><span class="line">                    .build();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在其构造方法中，调用了 <strong>android.security.net.config.NetworkSecurityConfig</strong> 类中的 <strong>getDefaultBuilder()</strong> 去构造一个默认配置。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkSecurityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Builder <span class="title">getDefaultBuilder</span><span class="params">(<span class="keyword">int</span> targetSdkVersion, <span class="keyword">int</span> targetSandboxVesrsion)</span> </span>&#123;</span><br><span class="line">        Builder builder = <span class="keyword">new</span> Builder()</span><br><span class="line">                .setHstsEnforced(DEFAULT_HSTS_ENFORCED)</span><br><span class="line">                .addCertificatesEntryRef(</span><br><span class="line">                        <span class="keyword">new</span> CertificatesEntryRef(SystemCertificateSource.getInstance(), <span class="keyword">false</span>));</span><br><span class="line">        </span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (targetSdkVersion &lt;= Build.VERSION_CODES.M) &#123;</span><br><span class="line">            builder.addCertificatesEntryRef(</span><br><span class="line">                    <span class="keyword">new</span> CertificatesEntryRef(UserCertificateSource.getInstance(), <span class="keyword">false</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> builder;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，在应用的 <strong>targetSdkVersion</strong> &lt;= M 时（Android 6.0 及以下），有一个 <strong>addCertificatesEntryRef(UserCertificateSource)</strong>，系统将默认信任用户导入的证书。</p>
-<p>那么以 Xposed 为例，Hook <strong>getDefaultBuilder()</strong>，在调用前将第一个参数 <strong>targetSdkVersion</strong> 改为 Android N 以下就可以了。这里给出核心代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initZygote</span><span class="params">(StartupParam startupParam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    Class&lt;?&gt; targetClass = findClass(<span class="string">"android.security.net.config.NetworkSecurityConfig"</span>, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">if</span> (targetClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">        XposedBridge.hookAllMethods(targetClass, <span class="string">"getDefaultBuilder"</span>, <span class="keyword">new</span> XC_MethodHook() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                param.args[<span class="number">0</span>] = Build.VERSION_CODES.M;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="添加系统-CA-证书"><a href="#添加系统-CA-证书" class="headerlink" title="添加系统 CA 证书"></a>添加系统 CA 证书</h4><p>在上文中可以发现，应用是会默认信任系统证书的。那么我们也可以将自己的 CA 文件添加至系统。<br>从 Charles 里导出二进制格式证书，但要使 Android 能够识别，还需要做一些转换，我们可以很方便的使用 openssl 工具来做到。</p>
-<p>这里以导出的 cert.cer 证书文件为例。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ openssl x509 -inform DER -subject_hash_old -in cert.cer</span><br></pre></td></tr></table></figure>
-
-<p>执行该命令，并复制输出结果的第一行哈希字符串，后面会用。如下图所示。<br><img src="https://i.loli.net/2019/08/14/hi7UkoMPXbJxRAn.png" alt="snipaste_20190814_191102.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ openssl x509 -inform DER -text -in cert.cer -out 7ef3ba8a.0</span><br></pre></td></tr></table></figure>
-
-<p>以刚才复制的哈希字符串为文件名，.0 结尾，如 <strong>7ef3ba8a.0</strong>，当做输出的文件名。<br>执行后就会输出 7ef3ba8a.0 这个文件。</p>
-<p>复制输出的文件到 Android 上 <strong>/system/etc/security/cacerts/</strong> 这个目录下，644 权限。<br>然后重启手机，你的证书就被添加到系统里了。</p>
-]]></content>
-      <tags>
-        <tag>Android逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android 6.0 上的双卡相关开发</title>
-    <url>/2017/06/07/multisim-for-android-6-0/</url>
-    <content><![CDATA[<p>在 Android 5.0 以前，各芯片厂商上的双卡开发没有一个统一的标准，以至于做起双卡适配来十分麻烦。<br>Android 5.0 之后，Google 官方统一了双卡平台的适配，并在 Framework 中添加了双卡相关的 API，这对于需要处理双卡的应用来说提供了很大的便利。</p>
-<p>因为 Android 5 上的双卡 API 还不是很完善<br>所以本文是介绍在 Android 6.0 平台上的双卡相关开发<br>后续还会有一篇文章来介绍在双卡处理 Android N 上的实现</p>
-<a id="more"></a>
-
-<p>言归正题<br>在 API 层面上，自 Android 5.0 开始，加入了 SubscriptionManager。双卡相关的处理主要是依赖这个 API，你可以通过 Context 类里面的 getSystemService 方法和 SubscriptionManager.from(Context) 来取得它的对象，当然它内部也是调用的 getSystemService。</p>
-<p>在数据库方面，TelephonyProvider 的 telephony.db 中新增了 siminfo 表来管理双卡的信息<br><img src="https://ooo.0o0.ooo/2017/06/07/5937b4b154014.png" alt="1.png"></p>
-<p><img src="https://ooo.0o0.ooo/2017/06/07/5937cdcfb238e.png" alt="Screenshot_20170607-171729.png"></p>
-<p>由于字段太多，我这里只截图了几个关键的字段<br>需要注意的是 <strong>_id</strong> 和 <strong>sim_id</strong> 这两个字段<br>_id: 这个不用多说，系统要求，自增长，从 0 开始<br>sim_id：该行的卡所在的卡槽值，有 0，1，-1 三个值<br>| 数值 | 描述                        |<br>| :–: |:—————————:|<br>| 0    | 该卡插在卡槽 1 中（主卡槽） |<br>| 1    | 该卡插在卡槽 2 中（副卡槽） |<br>| -1   | 手机内曾经插入过该卡        |<br><em>Ps. 在 Android 6.0+，-1 值已经被移除</em></p>
-<p>每插入一张新的 SIM 卡，siminfo 表中就会插入一行新的数据，然后 _id 会自增长加 1</p>
-<p>详细的各个 API 可以去查阅 API 文档。我这里仅以获取双卡手机两个卡的 IMSI 为例，介绍一下各平台所使用的方法<br>SubId 这个值对于双卡相关的操作来说是必要的</p>
-<p>Android 6.0：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回当前手机所插入 SIM 卡的个数</span></span><br><span class="line">TelePhonyManager.getPhoneCount()</span><br><span class="line"></span><br><span class="line">SubscriptionManager subManager = SubscriptionManager.from(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 这个方法传进手机的卡槽序号，返回对应所插 SIM 卡的信息</span></span><br><span class="line">SubscriptionInfo info = subManager.getActiveSubscriptionInfoForSimSlotIndex(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">int</span> subId = info.getSubscriptionId();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法在 Android 6.0 中还是 @hide 状态，可以反射调用</span></span><br><span class="line">TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">String imsi = teleManager.getSubscriberId(subId);</span><br></pre></td></tr></table></figure>
-
-<p>MTK：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    TelephonyManager teleManager = getSystemService(TelephonyManager.class);</span><br><span class="line">    Class&lt;?&gt; phoneClass = Class.forName(<span class="string">"com.android.internal.telephony.Phone"</span>);</span><br><span class="line"></span><br><span class="line">    Field gemni1Field = phoneClass.getField(<span class="string">"GEMINI_SIM_1"</span>);</span><br><span class="line">    Field gemni2Field = phoneClass.getField(<span class="string">"GEMINI_SIM_2"</span>);</span><br><span class="line">    gemni1Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    gemni2Field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = (<span class="keyword">int</span>) gemni1Field.get(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">int</span> simId2 = (<span class="keyword">int</span>) gemni2Field.get(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    Method method = TelephonyManager.class.getDeclaredMethod(<span class="string">"getSubscriberIdGemini"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">    String imsi1 = (String) method.invoke(teleManager, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(teleManager, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>高通：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Class&lt;?&gt; msmTeleManager = Class.forName(<span class="string">"android.telephony.MSimTelephonyManager"</span>);</span><br><span class="line">    Method method = msmTeleManager.getMethod(<span class="string">"getSubscriberId"</span>, <span class="keyword">int</span>.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> simId1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> simId2 = <span class="number">1</span>;</span><br><span class="line">    Object phoneMsim = getSystemService(<span class="string">"phone_msim"</span>);</span><br><span class="line"></span><br><span class="line">    String imsi1 = (String) method.invoke(phoneMsim, simId1);</span><br><span class="line">    String imsi2 = (String) method.invoke(phoneMsim, simId2);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对比三种获取双卡 IMSI 的方式，可以看出 Android 原生支持的双卡 API 更加的规范标准。目前新出的 Android 5+ 的新机上基本都采用了原生 API，Android 的碎片化又缩小了一步</p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>修改 Git 已提交的用户名和邮箱</title>
-    <url>/2016/11/10/modify-git-submitted-commit/</url>
-    <content><![CDATA[<p>有些时候，可能你在 Git 提交的时候不经意间提交了错误的 Commit 作者信息，那么如何修改成正确的呢？</p>
-<p>如果尝试修改 Git 的提交邮箱</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global user.name "Your Name"</span><br><span class="line">git config --global user.email "Your Email"</span><br></pre></td></tr></table></figure>
-
-<p>这样可以修改作者的名字和邮箱</p>
-<p>但是<br>这种方法只对之后的 commit 有效，之前提交过的就改不了了…</p>
-<p>还好，Google 到了一种解决办法，这里分享下，也算是做个记录</p>
-<ol>
-<li><p>打开终端（Linux 的终端或 Windows 下 Git 客户端的 git-bash.exe 均可）</p>
-</li>
-<li><p>同步下来你的项目并进入目录（以 repo.git 为例）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone --bare https://github.com/user/repo.git</span><br><span class="line">cd repo.git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将下面的脚本，直接复制到终端命令行里<br>并修改 <strong>oldEmail</strong>, <strong>newName</strong>, <strong>newEmail</strong> 三个变量为你自己的</p>
-<a id="more"></a>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git filter-branch --env-filter '</span><br><span class="line"></span><br><span class="line">oldEmail="Your Old Email"</span><br><span class="line">newName="Your New Name"</span><br><span class="line">newEmail="Your New Email"</span><br><span class="line"></span><br><span class="line">if [ "$GIT_COMMITTER_EMAIL" = "$oldEmail" ]; then</span><br><span class="line">    export GIT_COMMITTER_NAME="$newName"</span><br><span class="line">    export GIT_COMMITTER_EMAIL="$newEmail"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ "$GIT_AUTHOR_EMAIL" = "$oldEmail" ]; then</span><br><span class="line">    export GIT_AUTHOR_NAME="$newName"</span><br><span class="line">    export GIT_AUTHOR_EMAIL="$newEmail"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">' --tag-name-filter cat -- --branches --tags</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行脚本，看到一堆 rewritten 的时候就说明写入完成了</p>
-</li>
-<li><p>git log 查看新的 Commit 信息是否正确</p>
-</li>
-<li><p>提交</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git push --force --tags origin 'refs/heads/*'</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除临时文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ..</span><br><span class="line">rm -rf repo.git</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>需要注意的是，上面的执行后，新 clone 出来的项目 Log 中 Name 和 Email 已经为最新的信息。在执行上面的几步之前已经 clone 出来的项目中，如果执行 git pull 的话，Log 中的 Name 和 Email 信息还是原来的信息</p>
-<p>这样就算是完成了</p>
-]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Android Studio 动态调试 Smali 代码</title>
-    <url>/2017/09/29/using-as-debug-smali-code/</url>
-    <content><![CDATA[<h3 id="0x1-准备"><a href="#0x1-准备" class="headerlink" title="0x1 准备"></a>0x1 准备</h3><p>一台可以正常运行 Android Studio / IDEA 的电脑<br>一个顺手的 Smali 代码反编译工具<br>smalidea 插件，可从 <a href="https://bitbucket.org/JesusFreke/smali/downloads/" target="_blank" rel="noopener">这里</a> 获取，baksmali 工具也有<br>你需要有一个目标 APK 文件，这里我新建的一个测试项目为例</p>
-<h3 id="0x2-开始"><a href="#0x2-开始" class="headerlink" title="0x2 开始"></a>0x2 开始</h3><a id="more"></a>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 方便测试，尽可能多用些中间变量</span></span><br><span class="line">        <span class="keyword">double</span> radius = <span class="number">15</span>;</span><br><span class="line">        <span class="keyword">double</span> square = Math.pow(radius, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">double</span> area = Math.PI * square;</span><br><span class="line"></span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, String.valueOf(area), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>打开 Android Studio，进入 <strong>File -&gt; Settings -&gt; Plugins</strong>，点击 <strong>Install plugin from disk</strong> 按钮，选择并安装 smalidea 插件</p>
-<p>反编译源 apk 文件，生成 out 文件夹，然后从 Android Studio 的 <strong>File -&gt; New -&gt; Import Project</strong>，导入 out 文件夹，记得选择 Source Folder</p>
-<p>成功导入后你就可以发现 Smali 代码的关键字已经可以高亮显示了</p>
-<p>再次打开 Android Studio，点击 <strong>Run -&gt; Edit Configurations</strong>，新建 Remote 类型的调试器，如图<br><img src="https://i.loli.net/2017/09/29/59ce048d5612b.png" alt="snipaste_20170929_162948.png"></p>
-<p>以调试模式在手机端或模拟器运行目标应用</p>
-<blockquote>
-<p>adb shell am start -D -n me.iacn.testapplication/.MainActivity</p>
-</blockquote>
-<p>此时目标应用会在打开时处于挂起状态，然后</p>
-<blockquote>
-<p>adb shell ps</p>
-</blockquote>
-<p>在其中找到以目标应用包名为 NAME 的一个进程，查看他的 PID<br><img src="https://i.loli.net/2017/09/29/59ce0733c6924.png" alt="snipaste_20170929_164110.png"></p>
-<blockquote>
-<p>adb forward tcp:6666 jdwp:5444</p>
-</blockquote>
-<p>其中，forward 为刚才新建 Remote 调试器时所填的本地端口。jdwp 为在上面所查看的目标应用 PID。此种方式实际上是利用 Remote 调试器，通过本地端口 6666 连接手机调试目标应用</p>
-<p>此时回到 Android Studio，下一个断点，然后 <strong>Run -&gt; debug Unnameed</strong>，稍等一会儿，就可以从 Debugger 面板里查看调试结果了<br><img src="https://i.loli.net/2017/09/29/59ce164cd918e.png" alt="snipaste_20170929_174415.png"></p>
-<p>需要注意的是，有时寄存器的值不会直接在 Variables 面板里显示出来，需要将想要查看的变量添加到 Watch 中，然后在 Watch 面板中查看</p>
-]]></content>
-      <tags>
-        <tag>Android逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vShere Client 无法连接 vCenter 故障排查思路</title>
-    <url>/2017/07/14/vsphere-server-problem-check/</url>
-    <content><![CDATA[<p>问题如图所示，vSphere Client 弹框无法连接到 vCenter，只提示出现未知错误<br><img src="https://ooo.0o0.ooo/2017/07/14/5968a5d706d37.jpg" alt></p>
-<p>这类问题一般不好排查，因为没有给出错误的具体信息，错误提示或者错误代码。我这里结合实例，总结一下该类问题的排查思路</p>
-<a id="more"></a>
-
-<p><strong>1. 检查网络连接情况；检查 vCenter 的 IP，用户名，密码是否正确</strong></p>
-<blockquote>
-<p>这个在大多数出现在实验环境中，生产环境中一般不会出现这种错误<br>解决办法也没什么好说的，ping 检查连接，用户名密码换成正确的</p>
-</blockquote>
-<p><strong>2. 检查 vCenter 的 Web Client 能否正常访问</strong></p>
-<blockquote>
-<p>vCenter 是可以从 Web 端访问管理的<br>URL 是：<a href="https://client-hostname:port/vsphere-client" target="_blank" rel="noopener">https://client-hostname:port/vsphere-client</a><br>默认情况下此端口为 9443，但可在 vSphere Web Client 安装过程中更改此端口</p>
-</blockquote>
-<p>这里打开并输入正确的用户名密码，发现可以正常访问，说明 vCenter 整个本身是没有什么问题的</p>
-<p><strong>3. 检查 VMware VirtualCenter Server 服务是否已经启动</strong></p>
-<blockquote>
-<p>VMware VirtualCenter Server 是 vCenter 的核心服务，无法连接的原因大部分是因为这个服务没有启动<br>使用 <strong>远程桌面</strong> 连接到 vCenter 所在的虚拟机，打开 <strong>服务器管理器 - 诊断 - 服务</strong>，找到这个服务，检查其状态</p>
-</blockquote>
-<p>我所在的环境是一个 vCenter 虚拟机通过 Platform Services Controller 去管理多个安装了 VMWare ESXi 底机。由于所在环境出于安全起见，在 vCenter Server 安装时禁止了 vCenter 虚拟机的远程桌面权限，所以这里采用另一种方式跳转上去</p>
-<p>由于 VMWare ESXi 底机是允许通过 vSphere Client 连接去管理单个的实体服务器的，而这种方式不需要依赖 VMware VirtualCenter Server 服务。所以我这里先连接 vCenter 虚拟机所在的那台实体服务器，再在其中打开控制台</p>
-<p>打开后检查，发现这个服务确实是没有正常启动<br><img src="https://i.loli.net/2017/07/14/5968b6b4dfdaf.png" alt="2.png"></p>
-<p><strong>4. VMware VirtualCenter Server 服务无法正常启动</strong></p>
-<blockquote>
-<p>一般来说，若是该服务没有启动，手动启用后便可恢复正常。但有些情况下无法手动启动，这时候就要结合具体情况来分析了<br>vCenter Server 的正常运行是需要依赖数据库的，所以先应该检查数据库的相关服务有没有正常运行<br>vCenter Server 在安装时是会将其核心服务设置为开机自启的。所以，如果在其启动时数据库服务没有正常运行，就会出现问题。我习惯的做法是将数据库相关服务的启动类型设置为 <strong>自动</strong>，而把 vCenter Server 相关服务设置为 <strong>自动（延迟启动）</strong>，来保证数据库服务优于 vCenter Server 服务启动。</p>
-</blockquote>
-<p><strong>5. VMware VirtualCenter Server 服务正常启动了还是不能连接</strong></p>
-<blockquote>
-<p>通常情况下，vCenter Server，vCenter 依赖的数据库和其他业务服务都是分开机器安装的，但也有安装在一台虚拟机中的情况<br>因为 vCenter Server 需要使用 80 端口，所以保证该端口的正常通信是必要的。可以使用 telnet 命令来检查端口是否已经开启，例如 telnet 10.100.100.14 80。如果不通，就要检查各防火墙的出入栈规则了<br>另外 Web 服务也会占用 80 端口来进行通信，这个也要仔细甄别</p>
-</blockquote>
-<p>关于 vCenter 服务的相关问题实在太多，这里只是整理了一些思路来帮助检查<br>对于这种问题没有什么好办法，就是查看日志来找问题原因。</p>
-]]></content>
-      <tags>
-        <tag>网络</tag>
-        <tag>vSphere</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何判断一个页面是否更新？</title>
     <url>/2020/05/21/whether-page-is-updated/</url>
     <content><![CDATA[<p>对于需要长期运行的爬虫程序，在每次爬取前检查目标页面是否更新是十分重要的。如果不进行判断，就会对同一个页面重复爬取多次，浪费时间和性能。</p>
@@ -1157,71 +1220,6 @@
 ]]></content>
       <tags>
         <tag>爬虫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows10 删除多余的网络配置项</title>
-    <url>/2017/03/24/win10-delete-network-config/</url>
-    <content><![CDATA[<p>1.Win + R 运行，输入 <strong>regedit</strong>，打开注册表编辑器<br>2.找到下面两个键</p>
-<blockquote>
-<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Profiles</p>
-</blockquote>
-<blockquote>
-<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\NetworkList\Signatures\Unmanaged</p>
-</blockquote>
-<p>3.在这两个键的下面有一堆 Hash 值命名的目录</p>
-<a id="more"></a>
-<p><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba75381.png" alt="snipaste20170324_092802.png"></p>
-<p>不需要哪个删除就是了</p>
-<p>可以根据目录里面 <strong>ProfileName</strong> 的值来判断这个目录是属于哪个网络配置的<br><img src="https://ooo.0o0.ooo/2017/03/24/58d476ba4185f.png" alt="2.png"></p>
-<p>同样，如果需要修改网络配置的名字，也可以从这里修改 <strong>ProfileName</strong> 的值</p>
-<p>修改注册表有一定风险，请一定要仔细</p>
-]]></content>
-      <tags>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows10 USB-To-Console 串口驱动 (x86 x64)</title>
-    <url>/2017/02/28/win10-usb-to-console/</url>
-    <content><![CDATA[<p>最近将 Win10 更新到 14393，之前的 USB 转串口线一插上就蓝屏重启，费了好多功夫 Google 到了之前版本的驱动，试了试居然没事了，这里就分享下吧</p>
-<p>下载地址：<a href="https://lanzous.com/iQxbyers9ha" target="_blank" rel="noopener">蓝奏云</a></p>
-<p>Step1. 进入 Step1 文件夹，安装 Setup.exe。如果成功，则无需进行第二步了。</p>
-<p>Step2. 进入 Step2 文件夹，安装 CH341SER.EXE。不行的话再安装 HL-340.EXE。</p>
-<p>Windows10 专业版 x64 测试通过。</p>
-]]></content>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows 环境变量的设置是否需要重启</title>
-    <url>/2016/12/25/windows-set-env-variable/</url>
-    <content><![CDATA[<p>最近从 Android Studio 导入一个项目，提示需要配置一个叫 ANDROID_SDK_HOME 的环境变量，然而 Google 的提示是建议我配置完之后重启，但是我实测配置之后没有重启也生效了，这是怎么回事呢？</p>
-<p>原来，环境变量就是属于 Windows 系统的一些预定义好的变量，其中分为用户变量和系统变量。用户变量只对当前设置环境变量的这个用户生效，系统变量则对整个系统生效。这些变量在用户登录时被设置，应用到系统里，对系统里运行的每一个程序都生效。</p>
-<p>在一个程序启动的时候，它所可以读取的环境变量就会被复制到它所在的环境中。也就是说，每个程序在运行时都会拥有原始环境变量的一份复制体，不会受其他程序的影响。</p>
-<p>所以结果就是，只要重新运行该程序，程序就会重新读取系统的环境变量，环境变量也就发生改变了。而如果修改的是系统要使用的环境变量，也就必须重启系统了。</p>
-]]></content>
-      <tags>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Xshell SSH 连接 Linux 中文乱码</title>
-    <url>/2017/04/29/xshell-ssh-chinaese-utf8/</url>
-    <content><![CDATA[<h2 id="0x0"><a href="#0x0" class="headerlink" title="0x0"></a>0x0</h2><p>首先需要确保你的 Xshell 的连接编码是 UTF-8。<br>虽然可以修改 Linux 端的字符集去迎合 Windows 端做到中文的正常显示，但在当前 I18N 的大环境下，还是尽量用 UTF-8 吧。</p>
-<p>打开 Xshell 的会话属性窗口，在左边选择到 <strong>终端</strong>，编码一项内，如果不是 Unicode 的话请改成 Unicode</p>
-<a id="more"></a>
-<p><img src="https://ooo.0o0.ooo/2017/04/15/58f1eda7c1d25.png" alt="1.png"></p>
-<h2 id="0x2"><a href="#0x2" class="headerlink" title="0x2"></a>0x2</h2><p>不出意外的话，重新连接你的 SSH 应该已经能正常显示中文了，因为大部分 Linux 的默认连接编码就是 UTF-8 的。</p>
-<p>如果还是不能正常显示，你需要这样做<br>修改 <strong>/etc/profile</strong> 这个文件<br>在其中添加</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LC_ALL=<span class="string">"zh_CN.UTF-8"</span></span><br></pre></td></tr></table></figure>
-
-<p>这条命令的意思是设置 Locale 为 UTF-8，会在用户初始化时执行</p>
-<p>重启系统，这里中文已经能正常显示了<br><img src="https://ooo.0o0.ooo/2017/04/15/58f1eec23e82d.png" alt="2.png"></p>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
