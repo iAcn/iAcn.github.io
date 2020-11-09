@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="碎流烟">
 <meta property="og:description" content="自 Android 7.0 开始引入的 APK 签名方案 V2 不再使用以往的 Jar 签名方式 (V1)，V1 签名方案会对 APK 中大部分文件做单个的摘要计算，而 V2 签名方案是将数据分割成每个 1MB 做摘要计算，速度更快。以往 V1 签名方案不会校验 META-INF 中的数据，所以在不修改签名的情况下往 APK 中写入数据是很容易的，直接放在该目录下就可以，而 V2/V3 签名就需要">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-09T08:11:28.009Z">
+<meta property="og:updated_time" content="2020-11-09T08:13:56.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android V2&#x2F;V3 签名下写入 APK 信息">
 <meta name="twitter:description" content="自 Android 7.0 开始引入的 APK 签名方案 V2 不再使用以往的 Jar 签名方式 (V1)，V1 签名方案会对 APK 中大部分文件做单个的摘要计算，而 V2 签名方案是将数据分割成每个 1MB 做摘要计算，速度更快。以往 V1 签名方案不会校验 META-INF 中的数据，所以在不修改签名的情况下往 APK 中写入数据是很容易的，直接放在该目录下就可以，而 V2/V3 签名就需要">
@@ -215,6 +215,8 @@
 
       
         <p>自 Android 7.0 开始引入的 APK 签名方案 V2 不再使用以往的 Jar 签名方式 (V1)，V1 签名方案会对 APK 中大部分文件做单个的摘要计算，而 V2 签名方案是将数据分割成每个 1MB 做摘要计算，速度更快。<br>以往 V1 签名方案不会校验 <strong>META-INF</strong> 中的数据，所以在不修改签名的情况下往 APK 中写入数据是很容易的，直接放在该目录下就可以，而 V2/V3 签名就需要使用其他方式。</p>
+<a id="more"></a>
+
 <h3 id="0x1-ZIP-文件结构"><a href="#0x1-ZIP-文件结构" class="headerlink" title="0x1 ZIP 文件结构"></a>0x1 ZIP 文件结构</h3><p>APK 文件本质上就是修改了扩展名的 ZIP 格式。根据 Android 官方文档所写，V2 签名方案会在 APK 文件的「中央目录」部分之前，插入一个 APK 签名分块，在APK 签名分块内，存储签名信息。</p>
 <table>
 <thead>
